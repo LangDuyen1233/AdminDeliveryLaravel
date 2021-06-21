@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Controller;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,19 +17,33 @@ use App\Http\Controllers\Controller;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 //auth
-Route::get('login', "Auth\LoginController@getLogin")->name('login');
-Route::post('login', "Auth\LoginController@doLogin");
+Route::get('login', [LoginController::class, 'getLogin']
+)->name('login');
+Route::post('login', [LoginController::class, 'doLogin'])->name('login');
+
+Route::get('forgotpass', [ForgotPasswordController::class, 'forgotPass'])->name('forgotpass');
+Route::post('forgotpass', [ForgotPasswordController::class, 'doForgotPass'])->name('forgotpass');
+Route::get('confirmforgotpass/{email}/{key}', [ForgotPasswordController::class, 'doConfirmPassword'])->name('doconfirmpass');
+Route::post('resetpass/{email}/{key}', [ForgotPasswordController::class, 'resetPass'])->name('resetpass');
 
 Route::get('register', "AuthController@getRegister")->name('register');
-//Route::get('login', function (){
-//    return view(('auth.login'));
-//});
 Route::get('profile', "AuthController@getProfile")->name('profile');
 //end auth
+
+//admin user
+Route::resource( 'admin-user', UserController::class )->only( [ 'index','create', 'store', 'update', 'edit', 'destroy' ] );
+
+//admin restaurant
+Route::resource( 'admin-restaurant', RestaurantController::class )->only( [ 'index','create', 'store', 'update', 'edit', 'destroy' ] );
+
+//Route::get('addUser', function () {
+//    return view('user.addUser');
+//})->name('addUser');
+//
+//Route::get('editUser', function () {
+//    return view('pages.edit');
+//})->name('editUser');
 
 //page
 Route::get('index', function () {
@@ -38,17 +53,12 @@ Route::get('home', function () {
     return view('pages.home');
 })->name('home');
 
-Route::get('user', function () {
-    return view('pages.users');
-})->name('user');
+//Route::get('user', function () {
+//    return view('pages.user');
+//})->name('user');
 
-Route::get('addUser', function () {
-    return view('pages.addUser');
-})->name('addUser');
 
-Route::get('editUser', function () {
-    return view('pages.edit');
-})->name('editUser');
+
 
 Route::get('orders', function () {
     return view('pages.orders');

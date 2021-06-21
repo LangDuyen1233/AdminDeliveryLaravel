@@ -2,7 +2,7 @@
     <!-- Logo -->
     <div class="logo-sn ms-d-block-lg">
         <a class="pl-0 ml-0 text-center" href="{{route('home')}}">
-            <img src="assets/img/costic/costic-logo-216x62.png" alt="logo">
+            <img src="{{asset('assets/img/costic/costic-logo-216x62.png')}}" alt="logo">
         </a>
     </div>
     <!-- Navigation -->
@@ -12,7 +12,7 @@
 {{--            <a href="#" class="has-chevron" data-toggle="collapse" data-target="#dashboard" aria-expanded="false"--}}
 {{--               aria-controls="dashboard"> <span><i class="material-icons fs-16">dashboard</i>Dashboard </span>--}}
 {{--            </a>--}}
-            <a href="{{route('home')}}"> <span><i class="material-icons fs-16">dashboard</i>Home </span>
+            <a href="{{route('home')}}" class="{{(request()->routeIs('home')?'active':'')}}"> <span><i class="material-icons fs-16">dashboard</i>Home </span>
             </a>
 {{--            <ul id="dashboard" class="collapse" aria-labelledby="dashboard" data-parent="#side-nav-accordion">--}}
 {{--                <li><a href="index.html">Costic</a>--}}
@@ -23,11 +23,19 @@
             {{--            <a href="#" class="has-chevron" data-toggle="collapse" data-target="#dashboard" aria-expanded="false"--}}
             {{--               aria-controls="dashboard"> <span><i class="material-icons fs-16">dashboard</i>Dashboard </span>--}}
             {{--            </a>--}}
-            <a href="{{route('user')}}"> <span><i class="fas fa-user-friends fs-16"></i>Users</span></a>
+            <a href="{{route('admin-user.index')}}" class="{{(Route::is('admin-user.*')?'active':'')}}">
+                <span><i class="fas fa-user-friends fs-16"></i>Users</span></a>
             {{--            <ul id="dashboard" class="collapse" aria-labelledby="dashboard" data-parent="#side-nav-accordion">--}}
             {{--                <li><a href="index.html">Costic</a>--}}
             {{--                </li>--}}
             {{--            </ul>--}}
+        </li>
+        <li class="menu-item">
+            {{--            <a href="#" class="has-chevron" data-toggle="collapse" data-target="#dashboard" aria-expanded="false"--}}
+            {{--               aria-controls="dashboard"> <span><i class="material-icons fs-16">dashboard</i>Dashboard </span>--}}
+            {{--            </a>--}}
+            <a href="{{route('admin-restaurant.index')}}" class="{{(Route::is('admin-restaurant.*')?'active':'')}}">
+                <span><i class="fas fa-store fs-16"></i>Restaurants</span></a>
         </li>
         <li class="menu-item">
             <a href="{{route('listMenu')}}"> <span><i class="fa fa-archive fs-16"></i>Menus</span></a>

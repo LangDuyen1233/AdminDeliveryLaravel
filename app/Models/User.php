@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class   User extends Authenticatable
+class  User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
@@ -23,13 +23,12 @@ class   User extends Authenticatable
         'phone_number',
         'password',
         'gender',
-        'dbo',
+        'dob',
         'bio',
         'token',
         'remember_token',
         'active',
         'role_id',
-        'status',
     ];
 
     /**
@@ -51,8 +50,8 @@ class   User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function roles()
+    public function role()
     {
-        return $this->belongsToMany('App\Role');
+        return $this->belongsTo(Role::class,'role_id');
     }
 }

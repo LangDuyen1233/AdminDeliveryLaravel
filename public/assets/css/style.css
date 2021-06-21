@@ -801,7 +801,7 @@ span,
 .driver-highlighted-element p,
 .driver-highlighted-element span,
 .ms-dark-theme .driver-highlighted-element span {
-    color: #333333;
+    /*color: #333333;*/
 }
 
 a {
@@ -945,7 +945,7 @@ pre {
 .ms-panel-body,
 .ms-panel-footer {
     position: relative;
-    padding: 1.5rem;
+    padding: 0.5rem;
 }
 
 .ms-img-small {
@@ -6045,7 +6045,7 @@ table img + span {
 }
 
 table i {
-    margin-right: 10px;
+    /*margin-right: 10px;*/
     font-size: 18px;
 }
 
@@ -6165,7 +6165,7 @@ table.dataTable thead .sorting_desc_disabled:after {
 }
 
 .ms-auth-form form {
-    /*width: 25%;*/
+    width: 25%;
 }
 
 .ms-auth-form .btn-social-login span {

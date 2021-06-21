@@ -93,7 +93,7 @@
   });
 
   /* Engaged Users */
-  var engagedUsersCtx = document.getElementById('engaged-users').getContext("2d");
+  var engagedUsersCtx = document.getElementById('engaged-user').getContext("2d");
   var gradientStrokeengagedUsers = engagedUsersCtx.createLinearGradient(0, 0, 0, 450);
   gradientStrokeengagedUsers.addColorStop(0, '#07be6e');
 
