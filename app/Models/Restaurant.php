@@ -17,7 +17,7 @@ class Restaurant extends Model
         'longtitude',
         'phone',
         'rating',
-        'decription',
+        'description',
     ];
 
 }

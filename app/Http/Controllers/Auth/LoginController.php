@@ -38,7 +38,9 @@ class LoginController extends Controller
                 $u = User::select('id', 'email', 'username')
                     ->where('id', '=', $users->id)
                     ->where('active', '=', '1')->first();
-                Session::put('login', $u);
+                Session::put('auth', $u);
+                $_SESSION['auth']  = true;
+//                $url               = Session::get( 'url' );
                 return redirect('/home');
             } else {
                 return redirect()->back()

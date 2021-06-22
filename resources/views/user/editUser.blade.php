@@ -31,9 +31,9 @@
                                                     {{$error}} <br/>
                                                 @endforeach
                                             </div>
-                                        @endif
+                                        @endif{{ method_field('PUT') }}
                                         <form method="post" action="{{route('admin-user.update',$users->id)}}">
-                                            {{ method_field('PUT') }}
+
                                             {{ csrf_field() }}
                                             <div class="row">
                                                 <div class="col-sm-6">

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Middleware\CheckLogin;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,8 +17,6 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-//auth
 Route::get('login', [LoginController::class, 'getLogin']
 )->name('login');
 Route::post('login', [LoginController::class, 'doLogin'])->name('login');
@@ -29,14 +28,20 @@ Route::post('resetpass/{email}/{key}', [ForgotPasswordController::class, 'resetP
 
 Route::get('register', "AuthController@getRegister")->name('register');
 Route::get('profile', "AuthController@getProfile")->name('profile');
+
+//auth
+Route::middleware([CheckLogin::class])->group(function () {
+    Route::get('home', function () {
+        return view('pages.home');
+    })->name('home');
 //end auth
 
 //admin user
-Route::resource( 'admin-user', UserController::class )->only( [ 'index','create', 'store', 'update', 'edit', 'destroy' ] );
+    Route::resource('admin-user', UserController::class)->only(['index', 'create', 'store', 'update', 'edit', 'destroy']);
 
 //admin restaurant
-Route::resource( 'admin-restaurant', RestaurantController::class )->only( [ 'index','create', 'store', 'update', 'edit', 'destroy' ] );
-
+    Route::resource('admin-restaurant', RestaurantController::class)->only(['index', 'create', 'store', 'update', 'edit', 'destroy']);
+});
 //Route::get('addUser', function () {
 //    return view('user.addUser');
 //})->name('addUser');
@@ -49,15 +54,11 @@ Route::resource( 'admin-restaurant', RestaurantController::class )->only( [ 'ind
 Route::get('index', function () {
     return view('layouts.master');
 });
-Route::get('home', function () {
-    return view('pages.home');
-})->name('home');
+
 
 //Route::get('user', function () {
 //    return view('pages.user');
 //})->name('user');
-
-
 
 
 Route::get('orders', function () {

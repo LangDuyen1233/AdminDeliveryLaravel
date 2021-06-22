@@ -78,15 +78,15 @@
                 n = a.$element.val();
             a.initialValue = t.isEmpty(n) ? 0 : n, a._setDefault("min", a._parseAttr("min", e)), a._setDefault("max", a._parseAttr("max", e)), a._setDefault("step", a._parseAttr("step", e)), (isNaN(a.min) || t.isEmpty(a.min)) && (a.min = t.DEFAULT_MIN), (isNaN(a.max) || t.isEmpty(a.max)) && (a.max = t.DEFAULT_MAX), (isNaN(a.step) || t.isEmpty(a.step) || 0 === a.step) && (a.step = t.DEFAULT_STEP), a.diff = a.max - a.min
         },
-        _initHighlight: function (e) {
-            var t, a = this,
-                n = a._getCaption();
-            e || (e = a.$element.val()), t = a.getWidthFromValue(e) + "%", a.$filledStars.width(t), a.cache = {
-                caption: n,
-                width: t,
-                val: e
-            }
-        },
+        // _initHighlight: function (e) {
+        //     var t, a = this,
+        //         n = a._getCaption();
+        //     e || (e = a.$element.val()), t = a.getWidthFromValue(e) + "%", a.$filledStars.width(t), a.cache = {
+        //         caption: n,
+        //         width: t,
+        //         val: e
+        //     }
+        // },
         _getContainerCss: function () {
             var e = this;
             return "rating-container" + t.getCss(e.theme, "theme-" + e.theme) + t.getCss(e.rtl, "rating-rtl") + t.getCss(e.size, "rating-" + e.size) + t.getCss(e.animate, "rating-animate") + t.getCss(e.disabled || e.readonly, "rating-disabled") + t.getCss(e.containerClass, e.containerClass)
@@ -106,11 +106,11 @@
                 r = "clear" === e;
             return a.rtl ? r ? n.append(t) : n.prepend(t) : r ? n.prepend(t) : n.append(t)
         },
-        _generateRating: function () {
-            var a, n, r, i = this,
-                l = i.$element;
-            n = i.$container = e(document.createElement("div")).insertBefore(l), t.addCss(n, i._getContainerCss()), i.$rating = a = e(document.createElement("div")).attr("class", "rating-stars").appendTo(n).append(i._getStars("empty")).append(i._getStars("filled")), i.$emptyStars = a.find(".empty-stars"), i.$filledStars = a.find(".filled-stars"), i._renderCaption(), i._renderClear(), i._initHighlight(), n.append(l), i.rtl && (r = Math.max(i.$emptyStars.outerWidth(), i.$filledStars.outerWidth()), i.$emptyStars.width(r)), l.appendTo(a)
-        },
+        // _generateRating: function () {
+        //     var a, n, r, i = this,
+        //         l = i.$element;
+        //     n = i.$container = e(document.createElement("div")).insertBefore(l), t.addCss(n, i._getContainerCss()), i.$rating = a = e(document.createElement("div")).attr("class", "rating-stars").appendTo(n).append(i._getStars("empty")).append(i._getStars("filled")), i.$emptyStars = a.find(".empty-stars"), i.$filledStars = a.find(".filled-stars"), i._renderCaption(), i._renderClear(), i._initHighlight(), n.append(l), i.rtl && (r = Math.max(i.$emptyStars.outerWidth(), i.$filledStars.outerWidth()), i.$emptyStars.width(r)), l.appendTo(a)
+        // },
         _getCaption: function () {
             var e = this;
             return e.$caption && e.$caption.length ? e.$caption.html() : e.defaultCaption

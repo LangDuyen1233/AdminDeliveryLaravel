@@ -88,35 +88,74 @@
                                             </thead>
                                             <tbody>
                                             @foreach($restaurant as $res)
+{{--                                                {{$numberRating = $res-> rating*20}}--}}
                                                 <tr role="row" class="odd">
                                                     <td class="sorting_1" style="text-align: center">{{$res->id}}</td>
                                                     <td>
-                                                        {{--                                                        <img src="../../assets/img/costic/customer-3.jpg" --}}
-                                                        {{--                                                             style="width:50px; height:30px;">--}}
                                                         {{$res->name}}
                                                     </td>
                                                     <td>{{$res->address}}</td>
                                                     <td>{{$res->phone}}</td>
-                                                    {{--                                                    klsedrftgyhjkl--}}
                                                     <td style="display: flex;justify-content: center">
-                                                        <div class="container" style="width: 80%;height: 25px">
-                                                            <input id="input-1" name="input-1"
-                                                                   class="rating" data-min="0"
-                                                                   data-max="5" data-step="0.5" value="{{$res->rating}}">
-                                                            <br/>
+                                                        <div class="container" style="width: 85%;height: 25px">
+                                                            <div class="rating-container rating-xs rating-animate">
+                                                                <div class="rating-stars">
+                                                                    <span class="empty-stars">
+                                                                        <span class="star"><i
+                                                                                class="fas fa-star empty-star"></i></span>
+                                                                        <span class="star"><i
+                                                                                class="fas fa-star empty-star"></i></span>
+                                                                        <span class="star"><i
+                                                                                class="fas fa-star empty-star"></i></span>
+                                                                        <span class="star"><i
+                                                                                class="fas fa-star empty-star"></i></span>
+                                                                        <span class="star"><i
+                                                                                class="fas fa-star empty-star"></i></span>
+                                                                    </span>
+                                                                    <span class="filled-stars"
+                                                                          style="width: {{$numberRating = $res-> rating*20 }}%">
+                                                                        <span
+                                                                            class="star"><i
+                                                                                class="fas fa-star"></i></span>
+                                                                        <span class="star"><i
+                                                                                class="fas fa-star"></i></span>
+                                                                        <span class="star"><i
+                                                                                class="fas fa-star"></i></span>
+                                                                        <span class="star"><i
+                                                                                class="fas fa-star"></i></span>
+                                                                        <span class="star"><i
+                                                                                class="fas fa-star"></i></span>
+                                                                    </span>
+                                                                    <input
+                                                                        id="input-1" name="input-1"
+                                                                        class="rating rating-loading rating-input"
+                                                                        data-min="0" data-max="5" data-step="0.5"
+                                                                        value="{{$res->rating}}"></div>
+                                                                <div class="caption"><span
+                                                                        class="label label-danger">{{$res-> rating}}</span>
+                                                                </div>
+                                                            </div>
                                                         </div>
+                                                        {{--                                                        @if($res->rating>0)--}}
+                                                        {{--                                                            <div class="container" style="width: 85%;height: 25px">--}}
+                                                        {{--                                                                <input id="input-1" name="input-1"--}}
+                                                        {{--                                                                       class="rating" data-min="0"--}}
+                                                        {{--                                                                       data-max="5" data-step="0.5"--}}
+                                                        {{--                                                                       value="{{$res->rating}}">--}}
+                                                        {{--                                                            </div>--}}
+                                                        {{--                                                        @endif--}}
 
                                                     </td>
                                                     <td>{{$res->longtitude}}</td>
                                                     <td>{{$res->lattitude}}</td>
-                                                    <td>{{$res->decription}}</td>
+                                                    <td>{{$res->description}}</td>
                                                     <td style="text-align: center">
                                                         <a class="edit hvicon" style="color: green"
-                                                            {{--                                                           href="{{route('admin-restaurant.edit',$user->id)}}"--}}
+                                                           href="{{route('admin-restaurant.edit',$res->id)}}"
                                                         ><i
                                                                 class="material-icons">&#xE254;</i></a>
                                                         <a class="delete hvicon" data-toggle="modal"
-                                                           {{--                                                           href="{{route('admin-user.destroy',$user->id)}}"--}}
+                                                           href="{{route('admin-restaurant.destroy',$res->id)}}"
                                                            data-target="#modal-delete{{$res->id}}"
                                                            style="color: red"><i
                                                                 class=" material-icons">&#xE872;</i></a>
@@ -131,8 +170,7 @@
                                                         <div class="modal-content">
                                                             <div class="modal-body text-center">
                                                                 <form method="post"
-                                                                    {{--                                                                      action="{{route('admin-user.destroy',$res->id)}}"--}}
-                                                                >
+                                                                      action="{{route('admin-restaurant.destroy',$res->id)}}">
                                                                     {{ method_field('Delete') }}
                                                                     {{ csrf_field() }}
                                                                     <button type="button" class="close"
@@ -142,7 +180,7 @@
                                                                     </button>
                                                                     <i class="flaticon-secure-shield d-block"></i>
                                                                     <h1>Delete User</h1>
-                                                                    <p>Are you sure want delete user?</p>
+                                                                    <p>Are you sure want delete restaurant?</p>
                                                                     <button type="submit"
                                                                             class="btn btn-secondary btn-lg mr-2 rounded-lg"
                                                                             data-dismiss="modal">
