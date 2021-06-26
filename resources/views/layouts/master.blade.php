@@ -229,12 +229,11 @@
 <script src="{{asset('assets/js/jquery-ui.min.js')}}"></script>
 <!-- Global Required Scripts End -->
 <!-- Page Specific Scripts Start -->
-{{--<script src="{{asset('assets/js/Chart.bundle.min.js')}}">--}}
-    </script>
+{{--<script src="{{asset('assets/js/Chart.bundle.min.js')}}"></script>--}}
 {{--<script src="{{asset('assets/js/widgets.js')}}"></script>--}}
 {{--<script src="{{asset('assets/js/clients.js')}}"></script>--}}
 {{--<script src="{{asset('assets/js/Chart.Financial.js')}}"></script>--}}
-<script src = "{{asset('assets/js/d3.v3.min.js')}}" ></script>
+<script src="{{asset('assets/js/d3.v3.min.js')}}"></script>
 <script src="{{asset('assets/js/topojson.v1.min.js')}}"></script>
 {{--<script src="{{asset('assets/js/datatables.min.js')}}"></script>--}}
 {{--<script src="{{asset('assets/js/data-tables.js')}}"></script>--}}
