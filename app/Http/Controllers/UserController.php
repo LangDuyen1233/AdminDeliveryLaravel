@@ -34,6 +34,10 @@ class UserController extends Controller
     {
         return View('user.addUser');
     }
+    public function popup()
+    {
+        return View('user.popup');
+    }
 
     public function store(Request $request)
     {

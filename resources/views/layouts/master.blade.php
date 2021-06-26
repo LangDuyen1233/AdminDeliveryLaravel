@@ -34,7 +34,6 @@
     <!-- Favicon -->
     {{--    <link rel="icon" type="image/png" sizes="32x32" href="{{asset('favicon.ico')}}">--}}
     {{--    <link href="{{asset('assets/css/select2.min.css')}}" rel="stylesheet">--}}
-
 </head>
 
 <body class="ms-body ms-aside-left-open ms-primary-theme ms-has-quickbar">
@@ -225,8 +224,6 @@
 
 {{--<script src="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>--}}
 {{----}}
-
-
 <script src="{{asset('assets/js/jquery-3.3.1.min.js')}}"></script>
 <script src="{{asset('assets/js/popper.min.js')}}"></script>
 <script src="{{asset('assets/js/bootstrap.min.js')}}"></script>
@@ -234,8 +231,7 @@
 <script src="{{asset('assets/js/jquery-ui.min.js')}}"></script>
 <!-- Global Required Scripts End -->
 <!-- Page Specific Scripts Start -->
-{{--<script src="{{asset('assets/js/Chart.bundle.min.js')}}">--}}
-</script>
+{{--<script src="{{asset('assets/js/Chart.bundle.min.js')}}"></script>--}}
 {{--<script src="{{asset('assets/js/widgets.js')}}"></script>--}}
 {{--<script src="{{asset('assets/js/clients.js')}}"></script>--}}
 {{--<script src="{{asset('assets/js/Chart.Financial.js')}}"></script>--}}
