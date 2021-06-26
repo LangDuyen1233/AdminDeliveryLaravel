@@ -30,7 +30,9 @@ class  User extends Authenticatable
         'remember_token',
         'active',
         'role_id',
-        'uid'
+        'uid',
+        'key_time',
+        'random_key',
     ];
 
     /**
