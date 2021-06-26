@@ -1291,7 +1291,7 @@ body:not(.ms-aside-left-open) .ms-aside-toggler .ms-toggler-bar {
     left: 0;
     display: flex;
     flex-direction: column;
-    /*width: 255px;*/
+    width: 210px;
     margin: 0;
     height: 100%;
     float: left;
@@ -3898,8 +3898,8 @@ input:checked + .ms-switch-slider.ms-switch-dark {
 .btn {
     font-size: 14px;
     outline: none;
-    padding: 0.625rem 1rem;
-    min-width: 120px;
+    /*padding: 0.625rem 1rem;*/
+    /*min-width: 120px;*/
     margin-top: 1rem;
 }
 
@@ -4130,8 +4130,8 @@ input:checked + .ms-switch-slider.ms-switch-dark {
 
 .ms-btn-icon-outline.btn-secondary,
 .btn-outline-secondary {
-    color: #374eae;
-    border-color: #374eae;
+    /*color: #374eae;*/
+    /*border-color: #374eae;*/
 }
 
 .ms-btn-icon-outline.btn-success,
@@ -6029,8 +6029,8 @@ div#driver-popover-item .driver-popover-footer .driver-close-btn:hover {
 }
 
 table img {
-    max-width: 30px;
-    border-radius: 50%;
+    max-width: 55px;
+    /*border-radius: 50%;*/
     margin-right: 5px;
 }
 

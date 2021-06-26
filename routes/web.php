@@ -41,6 +41,12 @@ Route::middleware([CheckLogin::class])->group(function () {
 
 //admin restaurant
     Route::resource('admin-restaurant', RestaurantController::class)->only(['index', 'create', 'store', 'update', 'edit', 'destroy']);
+//admin category
+    Route::resource('admin-category', CategoryController::class)->only(['index', 'create', 'store', 'update', 'edit', 'destroy']);
+
+    Route::resource('admin-food', FoodController::class)->only(['index', 'create', 'store', 'update', 'edit', 'destroy']);
+    Route::get('food/list', [FoodController::class, 'getFoods'])->name('foods.list');
+
 });
 //Route::get('addUser', function () {
 //    return view('user.addUser');
@@ -51,6 +57,7 @@ Route::middleware([CheckLogin::class])->group(function () {
 //})->name('editUser');
 
 //page
+
 Route::get('index', function () {
     return view('layouts.master');
 });
