@@ -8,22 +8,19 @@ use App\Models\Category;
 use App\Models\Food;
 use App\Models\Image;
 use App\Models\Restaurant;
-use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Yajra\DataTables\Facades\DataTables;
 
-class FoodController extends Controller
+class OrderController extends Controller
 {
     public function index()
     {
-        $food = Food::all();
-        $image = Image::all();
-        return view('food.index',
+//        $food = Food::all();
+//        $image = Image::all();
+        return view('order.index',
             [
-                'food' => $food,
-                'image' => $image,
+//                'food' => $food,
+//                'image' => $image,
             ]
         );
     }

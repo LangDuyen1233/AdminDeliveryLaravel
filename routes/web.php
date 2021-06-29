@@ -45,12 +45,13 @@ Route::middleware([CheckLogin::class])->group(function () {
     Route::resource('admin-category', CategoryController::class)->only(['index', 'create', 'store', 'update', 'edit', 'destroy']);
 
     Route::resource('admin-food', FoodController::class)->only(['index', 'create', 'store', 'update', 'edit', 'destroy']);
-    Route::get('food/list', [FoodController::class, 'getFoods'])->name('foods.list');
+
+    Route::resource('admin-order', OrderController::class)->only(['index', 'create', 'store', 'update', 'edit', 'destroy']);
 
 });
 //Route::get('addUser', function () {
 //    return view('user.addUser');
-//})->name('addUser');
+//})->name('addUser'
 //
 //Route::get('editUser', function () {
 //    return view('pages.edit');

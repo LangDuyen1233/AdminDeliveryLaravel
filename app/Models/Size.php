@@ -6,18 +6,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Category extends Model
+class Size extends Model
 {
-    protected $table = 'categories';
+    protected $table ="sizes";
+    public $timestamps = false;
     protected $fillable = [
         'id',
         'name',
-        'image',
-        'description',
+        'price',
     ];
-
     public function foods()
     {
-        return $this->hasMany(Food::class,'category_id');
+        return $this->belongsTo('App\Food');
     }
 }

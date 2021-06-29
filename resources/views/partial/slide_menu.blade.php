@@ -11,30 +11,35 @@
         <li class="menu-item">
 
             <a href="{{route('home')}}" class="{{(request()->routeIs('home')?'active':'')}}"> <span><i
-                        class="material-icons fs-16">dashboard</i>Home </span>
+                        class="material-icons fs-16">dashboard</i>Trang chủ</span>
             </a>
 
         </li>
         <li class="menu-item">
 
             <a href="{{route('admin-user.index')}}" class="{{(Route::is('admin-user.*')?'active':'')}}">
-                <span><i class="fas fa-user-friends fs-16"></i>Users</span></a>
+                <span><i class="fas fa-user-friends fs-16"></i>Ql người dùng</span></a>
 
         </li>
         <li class="menu-item">
 
             <a href="{{route('admin-restaurant.index')}}" class="{{(Route::is('admin-restaurant.*')?'active':'')}}">
-                <span><i class="fas fa-utensils"></i>Restaurants</span></a>
+                <span><i class="fas fa-utensils"></i>QL quán ăn</span></a>
         </li>
         <li class="menu-item">
 
             <a href="{{route('admin-category.index')}}" class="{{(Route::is('admin-category.*')?'active':'')}}">
-                <span><i class="fas fa-list-alt  fs-16"></i>Category</span></a>
+                <span><i class="fas fa-list-alt  fs-16"></i>Thể loại</span></a>
         </li>
         <li class="menu-item">
 
             <a href="{{route('admin-food.index')}}" class="{{(Route::is('admin-food.*')?'active':'')}}">
-                <span><i class="fas fa-poop"></i>Food</span></a>
+                <span><i class="fa fa-archive fs-16"></i>Đồ ăn</span></a>
+        </li>
+        <li class="menu-item">
+
+            <a href="{{route('admin-order.index')}}" class="{{(Route::is('admin-order.*')?'active':'')}}">
+                <span><i class="nav-icon fa fa-shopping-basket"></i>QL đơn hàng</span></a>
         </li>
         <li class="menu-item">
             <a href="{{route('listMenu')}}"> <span><i class="fa fa-archive fs-16"></i>Menus</span></a>

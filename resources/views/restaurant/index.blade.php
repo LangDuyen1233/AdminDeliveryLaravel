@@ -37,10 +37,13 @@
                             </tr>
                             </thead>
                             <tbody>
+                            @php
+                                $i = 1;
+                            @endphp
                             @foreach($restaurant as $res)
-                                {{--                                                {{$numberRating = $res-> rating*20}}--}}
+                                {{ $i}}
                                 <tr role="row" class="odd">
-                                    <td class="sorting_1" style="text-align: center">{{$res->id}}</td>
+                                    <td class="sorting_1" style="text-align: center">{{$i++}}</td>
                                     <td>
                                         {{$res->name}}
                                     </td>

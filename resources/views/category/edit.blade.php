@@ -3,15 +3,6 @@
     <div class="ms-content-wrapper">
         <div class="row">
             <div class="col-md-12">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb pl-0">
-                        <li class="breadcrumb-item"><a href="#"><i class="material-icons">home</i> Trang chủ</a>
-                        </li>
-                        <li class="breadcrumb-item"><a href="#">Người dùng</a>
-                        </li>
-                        <li class="breadcrumb-item active" aria-current="page">Thêm danh mục</li>
-                    </ol>
-                </nav>
                 <div class="ms-panel">
                     <div class="ms-panel-header">
                         <div class="d-flex justify-content-between">

@@ -13,6 +13,7 @@ class Food extends Model
         'id',
         'name',
         'price',
+        'weight',
         'ingredients',
         'status',
         'note',
@@ -21,10 +22,23 @@ class Food extends Model
     ];
     public function restaurant()
     {
-        return $this->belongsTo('App\Restaurant');
+        return $this->belongsTo(Restaurant::class);
     }
     public function category()
     {
-        return $this->belongsTo('App\Category');
+        return $this->belongsTo(Category::class);
+    }
+
+    public function toppings()
+    {
+        return $this->hasMany('App\Toppings');
+    }
+    public function sizes()
+    {
+        return $this->hasMany('App\Size');
+    }
+
+    public function image() {
+        return $this->belongsToMany( Image::class, 'image_foods' );
     }
 }

@@ -23,6 +23,6 @@ class Restaurant extends Model
 //một nhà hàng có nhiều món ăn
     public function foods()
     {
-        return $this->hasMany('App\Food');
+        return $this->hasMany(Food::class,'restaurant_id');
     }
 }
