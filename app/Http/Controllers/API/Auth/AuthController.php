@@ -20,7 +20,7 @@ class AuthController extends Controller
             'username' => 'required|min:4',
             'email' => 'required|email',
             'password' => 'required|min:8',
-            'phone_number' => 'required|numeric|min:11',
+            'phone' => 'required|numeric|min:11',
         ]);
 
         $user = User::where('email', '=', $request->email)->first();
@@ -31,22 +31,13 @@ class AuthController extends Controller
             $email = $request->email;
             $username = $request->username;
             error_log($email);
-//            $user = new User([
-//                'username' => $username,
-//                'email' => $email,
-//                'role_id' => 1,
-//                'password' => Hash::make($request->password),
-//                'phone_number' => $request->phone_number,
-//                'random_key' => $key,
-//                'key_time' => Carbon::now()->addHour(24)->format('Y-m-d H:i:s'),
-//                'active' => 0,
-//            ]);
+
             $user = User::create([
                 'username' => $username,
                 'email' => $email,
                 'role_id' => 1,
                 'password' => Hash::make($request->password),
-                'phone_number' => $request->phone_number,
+                'phone' => $request->phone,
                 'random_key' => $key,
                 'key_time' => Carbon::now()->addHour(24)->format('Y-m-d H:i:s'),
                 'active' => 0,
@@ -68,6 +59,7 @@ class AuthController extends Controller
                 $user->random_key = $key;
                 $user->key_time = Carbon::now()->addHour(24)->format('Y-m-d H:i:s');
                 $user->update();
+                Mail::to($user->email)->send(new ActiveAcount($user->email, $key, $user->username));
 
                 return response()->json(['mes' => 'Bạn đăng ký thành công vui lòng check Email để kích hoạt tài khoản'], 201);
             }
@@ -120,11 +112,16 @@ class AuthController extends Controller
                 auth()->user()->token = null;
                 auth()->user()->update();
             }
-            return response()->json(['data' => auth()->user()], 200);
+            return response()->json(['token' => $token], 200);
         } else {
             return response()->json(['error' => 'Unauthorised'], 401);
         }
     }
 
+    public function logout(Request $request)
+    {
+        $request->user()->token()->revoke();
+        return response()->json(['mes' => 'Successfulley logout'], 200);
+    }
 
 }

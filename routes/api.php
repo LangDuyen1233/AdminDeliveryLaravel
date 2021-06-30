@@ -26,5 +26,6 @@ Route::get('/confirmemail/{email}/{key}', [AuthController::class, 'confirmEmail'
 Route::group([
     'middleware' => 'auth:api'
 ], function () {
+    Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/user', [AuthController::class, 'getUser']);
 });
