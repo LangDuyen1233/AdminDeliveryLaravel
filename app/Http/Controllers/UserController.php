@@ -49,7 +49,7 @@ class UserController extends Controller
             'password' => Hash::make($password),
             'address' => $address,
             'dob' => date("Y-m-d", strtotime($dob)),
-            'phone_number' => $phone,
+            'phone' => $phone,
             'gender' => $gender,
             'bio' => $bio,
             'active' => $request->get('status'),
@@ -88,7 +88,7 @@ class UserController extends Controller
             $u->username = $request->get('username');
             $u->email = $request->get('email');
             $u->dob = $request->get('dob');
-            $u->phone_number = $request->get('phone');
+            $u->phone = $request->get('phone');
             $u->gender = $request->get('gender');
             $u->bio = $request->get('bio');
             $u->active = $request->get('status');

@@ -21,7 +21,7 @@ class  User extends Authenticatable
     protected $fillable = [
         'username',
         'email',
-        'phone_number',
+        'phone',
         'password',
         'gender',
         'dob',
@@ -57,5 +57,9 @@ class  User extends Authenticatable
     public function role()
     {
         return $this->belongsTo(Role::class,'role_id');
+    }
+    public function order()
+    {
+        return $this->belongsTo(Order::class,'user_id');
     }
 }

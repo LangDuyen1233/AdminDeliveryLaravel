@@ -7,7 +7,11 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Food;
 use App\Models\Image;
+use App\Models\Order;
+use App\Models\OrderStatus;
+use App\Models\Payment;
 use App\Models\Restaurant;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
@@ -15,83 +19,29 @@ class OrderController extends Controller
 {
     public function index()
     {
-//        $food = Food::all();
-//        $image = Image::all();
+        $order = Order::with('statusOrder')->with('payment')->with('user')->get();
         return view('order.index',
             [
-//                'food' => $food,
-//                'image' => $image,
+                'order' => $order,
             ]
         );
     }
 
-    public function create()
-    {
-        $category = Category::all();
-        $restaurant = Restaurant::all();
-        return View('food.create',
+    public function show($id){
+        $order = Order::where('id', $id)->first();
+        return view('order.show',
             [
-                'category' => $category,
-                'restaurant' => $restaurant,
-            ]);
-    }
-
-    public function store(Request $request)
-    {
-        $request->validate([
-            'name' => 'required|max:100',
-            'price' => 'required|max:100',
-            'image' => 'required|max:100',
-            'ingredients' => 'required|max:100',
-            'restaurant_id' => 'required|max:100',
-            'category_id' => 'required|max:100',
-        ], $this->messages());
-        $name = $request->get('name');
-        $price = $request->get('price');
-        $weight = $request->get('weight');
-        $ingredients = $request->get('ingredients');
-        $note = $request->get('note');
-        $image = $request->get('image');
-        $category_id = $request->get('category_id');
-        $restaurant_id = $request->get('restaurant_id');
-
-
-        $food = new Food([
-            'name' => $name,
-            'price' => $price,
-            'weight' => $weight,
-            'ingredients' => $ingredients,
-            'note' => $note,
-//            'image' => $image,
-            'category_id' => $category_id,
-            'restaurant_id' => $restaurant_id,
-            'status' => $request->get('status'),
-        ]);
-        $food->save();
-//        dd($food);
-
-        $images = new Image([
-                'url' => $image,
+                'order' => $order,
             ]
         );
-//        $image->url = $image;
-        $food->image()->save($images);
-
-//        dd($images);
-
-        return redirect('admin-food')->withErrors(['mes' => "Thêm món ăn thành công"]);
     }
 
     public function edit($id)
     {
-        $category = Category::all();
-        $restaurant = Restaurant::all();
-        $food = Food::where('id', $id)->first();
-        return View('food.edit',
+        $order = Order::where('id', $id)->first();
+        return View('order.edit',
             [
-                'category' => $category,
-                'restaurant' => $restaurant,
-                'food' => $food,
+                'order' => $order,
             ]);
     }
 

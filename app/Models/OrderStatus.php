@@ -6,18 +6,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Payment extends Model
+class OrderStatus extends Model
 {
-    protected $table = 'payments';
+    protected $table = 'order_statuses';
     protected $fillable = [
         'id',
-        'price',
-        'description',
-        'method',
         'status',
     ];
     public function order()
     {
-        return $this->belongsTo(Order::class,'payment_id');
+        return $this->belongsTo(Order::class, 'order_status_id');
     }
 }

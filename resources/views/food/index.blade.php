@@ -42,7 +42,7 @@
                                 $i = 1;
                             @endphp
                             @foreach($food as $f)
-                                {{ $i}}
+{{--                                {{ $i}}--}}
                                 <tr role="row" class="odd">
                                     <td class="sorting_1" style="text-align: center">{{$i++}}</td>
                                     <td>

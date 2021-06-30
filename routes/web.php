@@ -46,7 +46,7 @@ Route::middleware([CheckLogin::class])->group(function () {
 
     Route::resource('admin-food', FoodController::class)->only(['index', 'create', 'store', 'update', 'edit', 'destroy']);
 
-    Route::resource('admin-order', OrderController::class)->only(['index', 'create', 'store', 'update', 'edit', 'destroy']);
+    Route::resource('admin-order', OrderController::class)->only(['index', 'show', 'update', 'edit', 'destroy']);
 
 });
 //Route::get('addUser', function () {
