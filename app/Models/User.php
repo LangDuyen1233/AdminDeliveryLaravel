@@ -57,4 +57,8 @@ class  User extends Authenticatable
     {
         return $this->belongsTo(Role::class, 'role_id');
     }
+    public function order()
+    {
+        return $this->belongsTo(Order::class,'user_id');
+    }
 }

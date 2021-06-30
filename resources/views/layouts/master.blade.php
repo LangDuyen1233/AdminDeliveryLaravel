@@ -10,7 +10,7 @@
     <!-- Iconic Fonts -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     @yield('css')
-
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/jquery.dataTables.css')}}">
     <link href="{{asset('vendors/iconic-fonts/font-awesome/css/all.min.css')}}" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('vendors/iconic-fonts/flat-icons/flaticon.css')}}">
     <link rel="stylesheet" href="{{asset('vendors/iconic-fonts/cryptocoins/cryptocoins.css')}}">
@@ -29,9 +29,13 @@
     <link href="{{asset('assets/css/style.css')}}" rel="stylesheet">
 
     <link href="{{asset('assets/css/rating.css')}}" rel="stylesheet">
+
+{{--    <link rel="stylesheet" href="{{asset('assets/css/datatb-select.css')}}">--}}
+    <link rel="stylesheet" href="{{asset('assets/css//datatables.min.css')}}">
     <!-- Favicon -->
     {{--    <link rel="icon" type="image/png" sizes="32x32" href="{{asset('favicon.ico')}}">--}}
     {{--    <link href="{{asset('assets/css/select2.min.css')}}" rel="stylesheet">--}}
+
 </head>
 
 <body class="ms-body ms-aside-left-open ms-primary-theme ms-has-quickbar">
@@ -222,6 +226,8 @@
 
 {{--<script src="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>--}}
 {{----}}
+
+
 <script src="{{asset('assets/js/jquery-3.3.1.min.js')}}"></script>
 <script src="{{asset('assets/js/popper.min.js')}}"></script>
 <script src="{{asset('assets/js/bootstrap.min.js')}}"></script>
@@ -229,7 +235,8 @@
 <script src="{{asset('assets/js/jquery-ui.min.js')}}"></script>
 <!-- Global Required Scripts End -->
 <!-- Page Specific Scripts Start -->
-{{--<script src="{{asset('assets/js/Chart.bundle.min.js')}}"></script>--}}
+{{--<script src="{{asset('assets/js/Chart.bundle.min.js')}}">--}}
+</script>
 {{--<script src="{{asset('assets/js/widgets.js')}}"></script>--}}
 {{--<script src="{{asset('assets/js/clients.js')}}"></script>--}}
 {{--<script src="{{asset('assets/js/Chart.Financial.js')}}"></script>--}}

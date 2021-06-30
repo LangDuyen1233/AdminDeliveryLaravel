@@ -52,7 +52,7 @@
                                                     <div class="form-group">
                                                         <label>Số điện thoại<span
                                                                 class="text-danger">*</span> </label>
-                                                        <input class="form-control" type="text" name="phone" value="{{$users->phone_number}}">
+                                                        <input class="form-control" type="text" name="phone" value="{{$users->phone}}">
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">

@@ -20,4 +20,9 @@ class Restaurant extends Model
         'description',
     ];
 
+//một nhà hàng có nhiều món ăn
+    public function foods()
+    {
+        return $this->hasMany(Food::class,'restaurant_id');
+    }
 }

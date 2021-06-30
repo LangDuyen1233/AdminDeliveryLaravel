@@ -13,16 +13,7 @@ class UserController extends Controller
 {
     public function index()
     {
-//        $users = User::all();
-//        $roles = Role::all();
         $users = User::with('role')->get();
-//        dd($users);
-//        return view('user.users',
-//            [
-//                'users' => $users,
-//                'roles' => $roles,
-//            ]
-//        );
         return view('user.users',
             [
                 'users' => $users,
@@ -33,10 +24,6 @@ class UserController extends Controller
     public function create()
     {
         return View('user.addUser');
-    }
-    public function popup()
-    {
-        return View('user.popup');
     }
 
     public function store(Request $request)
@@ -62,7 +49,7 @@ class UserController extends Controller
             'password' => Hash::make($password),
             'address' => $address,
             'dob' => date("Y-m-d", strtotime($dob)),
-            'phone_number' => $phone,
+            'phone' => $phone,
             'gender' => $gender,
             'bio' => $bio,
             'active' => $request->get('status'),
@@ -101,7 +88,7 @@ class UserController extends Controller
             $u->username = $request->get('username');
             $u->email = $request->get('email');
             $u->dob = $request->get('dob');
-            $u->phone_number = $request->get('phone');
+            $u->phone = $request->get('phone');
             $u->gender = $request->get('gender');
             $u->bio = $request->get('bio');
             $u->active = $request->get('status');
@@ -117,22 +104,23 @@ class UserController extends Controller
         }
     }
 
-    public function destroy($id){
+    public function destroy($id)
+    {
         error_log('ưertyjuol');
-        if ( ! isset( $id ) ) {
-            return response( '', 400 );
+        if (!isset($id)) {
+            return response('', 400);
         }
-        $u = User::find( $id );
-        if ( ! isset( $u ) ) {
-            return response( '', 404 );
+        $u = User::find($id);
+        if (!isset($u)) {
+            return response('', 404);
         }
 
 
         try {
             $u->delete();
             return redirect()->back()->withErrors(['mes' => "Xóa người dùng thành công"]);
-        } catch ( \Exception $e ) {
-            return response( '', 500 );
+        } catch (\Exception $e) {
+            return response('', 500);
         }
     }
 
