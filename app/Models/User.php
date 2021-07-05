@@ -32,6 +32,8 @@ class  User extends Authenticatable
         'role_id',
         'key_time',
         'random_key',
+        'expires_at',
+        'avatar',
     ];
 
     /**
@@ -57,8 +59,9 @@ class  User extends Authenticatable
     {
         return $this->belongsTo(Role::class, 'role_id');
     }
+
     public function order()
     {
-        return $this->belongsTo(Order::class,'user_id');
+        return $this->belongsTo(Order::class, 'user_id');
     }
 }

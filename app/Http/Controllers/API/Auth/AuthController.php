@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\API\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Middleware\Authenticate;
 use App\Mails\ActiveAcount;
 use App\Models\User;
+use Illuminate\Auth\Events\Authenticated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
@@ -14,6 +16,42 @@ use Laravel\Passport\Passport;
 
 class AuthController extends Controller
 {
+    public function registerSocial(Request $request)
+    {
+        $this->validate($request, [
+            'username' => 'required',
+            'email' => 'required|email',
+            'phone' => 'required',
+            'avatar' => 'required',
+        ]);
+
+        error_log($request->email);
+        error_log($request->phone);
+        error_log($request->username);
+        error_log($request->avatar);
+        $user = User::where('email', '=', $request->email)->first();
+
+        if ($user == null) {
+            error_log('vaof daay nef');
+            $user = User::create([
+                'username' => $request->username,
+                'email' => $request->email,
+                'phone' => $request->phone,
+                'avatar' => $request->avatar,
+                'role_id' => 1,
+                'active' => 1,
+
+            ]);
+            error_log($user);
+
+            $user->save();
+
+            return response()->json(['mes' => 'Register successful'], 200);
+        } else {
+            return response()->json(['mes' => 'Registered'], 204);
+        }
+    }
+
     public function register(Request $request)
     {
         $this->validate($request, [
@@ -98,6 +136,7 @@ class AuthController extends Controller
             'email' => $request->email,
             'password' => $request->password,
         ];
+        error_log($request->emai);
         if (auth()->attempt($dataLogin)) {
             $token = auth()->user()->token;
             $checkExpire = Carbon::parse(auth()->user()->expires_at);
@@ -112,7 +151,7 @@ class AuthController extends Controller
                 auth()->user()->token = null;
                 auth()->user()->update();
             }
-            return response()->json(['token' => $token], 200);
+            return response()->json(['token' => $token, 'users' => auth()->user()], 200);
         } else {
             return response()->json(['error' => 'Unauthorised'], 401);
         }
@@ -120,8 +159,17 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
-        $request->user()->token()->revoke();
-        return response()->json(['mes' => 'Successfulley logout'], 200);
+
+        $token = $request->bearerToken();
+//        error_log($token);
+        if ($token != null) {
+            $request->user()->token()->revoke();
+            auth()->user()->token = null;
+            auth()->user()->expires_at = null;
+            return response()->json(['mes' => 'Successfulley logout'], 200);
+        } else {
+            return response()->json(['mes' => 'Logout failed'], 401);
+        }
     }
 
 }
