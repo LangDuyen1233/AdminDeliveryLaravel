@@ -14,11 +14,15 @@ class Order extends Model
         'tax',
         'price',
         'price_delivery',
+        'address_delivery',
         'date',
         'user_id',
         'cart_id',
         'order_status_id',
-        'payment_id',
+        'payment_method_id',
+        'payment_status_id',
+        'discount_id',
+        'status'
     ];
 
     public function statusOrder()
@@ -26,13 +30,28 @@ class Order extends Model
         return $this->belongsTo(OrderStatus::class, 'order_status_id');
     }
 
-    public function payment()
+    public function paymentMethod()
     {
-        return $this->belongsTo(Payment::class, 'payment_id');
+        return $this->belongsTo(PaymentMethod::class, 'payment_method_id');
+    }
+
+    public function paymentStatus()
+    {
+        return $this->belongsTo(PaymentStatus::class, 'payment_status_id');
     }
 
     public function user()
     {
-        return $this->belongsTo(User::class,'user_id');
+        return $this->belongsToMany(User::class, 'user_order');
+    }
+
+    public function cart()
+    {
+        return $this->belongsTo(Cart::class, 'cart_id');
+    }
+
+    public function discount()
+    {
+        return $this->belongsTo(Discount::class, 'discount_id');
     }
 }

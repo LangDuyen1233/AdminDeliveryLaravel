@@ -36,6 +36,13 @@
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
+                                                        <label>Size <span class="text-danger">*</span></label>
+                                                        <input class="form-control" type="text" name="size"
+                                                               value="{{$food->size}}">
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
                                                         <label>Giá <span class="text-danger">*</span></label>
                                                         <input class="form-control" type="text" name="price"
                                                                value="{{$food->price}}">
@@ -44,8 +51,13 @@
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
                                                         <label>Khối lượng</label>
-                                                        <input class="form-control" type="text" name="weight"
-                                                               value="{{$food->weight}}">
+                                                        <div class="input-group mb-3">
+                                                            <input class="form-control" type="text" name="weight"
+                                                                   value="{{$food->weight}}">
+                                                            <div class="input-group-append">
+                                                                <span class="input-group-text">g</span>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
@@ -110,7 +122,9 @@
                                                                 <input aria-describedby="basic-addon2"
                                                                        class="form-control"
                                                                        type="text" size="48" name="image"
-                                                                       id="image" value="{{$food->image[0]->url}}"/>
+                                                                       id="image"
+                                                                       value="{{$food->image[0]->url}}"
+                                                                />
                                                                 <div class="input-group-append">
                                                                     <button class="btn btn-outline-secondary"
                                                                             type="button"

@@ -11,7 +11,7 @@
                     <div class="ms-panel-header">
                         <div class="d-flex justify-content-between">
                             <div class="ms-header-text">
-                                <h6>Danh sách người dùng</h6>
+                                <h6>Danh sách danh mục</h6>
                             </div>
 
                             <button type="submit" class="btn btn-outline-primary ms-graph-metrics" name="button"><a
@@ -32,6 +32,7 @@
                                 <th>Tên danh mục</th>
                                 <th>Hình ảnh</th>
                                 <th>Mô tả</th>
+                                <th>Quán ăn</th>
                                 <th>Thao tác</th>
                             </tr>
                             </thead>
@@ -40,7 +41,6 @@
                                 $i = 1;
                             @endphp
                             @foreach($category as $ca)
-                                {{ $i}}
                                 <tr role="row" class="odd" style="height: 50px">
                                     <td class="sorting_1" style="text-align: center">{{$i++}}</td>
                                     <td>
@@ -52,6 +52,7 @@
                                     </td>
 
                                     <td>{{$ca->description}}</td>
+                                    <td>{{$ca->restaurant->name}}</td>
                                     <td style="display: flex; justify-content: space-evenly;">
                                         <a class="edit hvicon" style="color: green"
                                            href="{{route('admin-category.edit',$ca->id)}}"

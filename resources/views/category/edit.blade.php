@@ -63,7 +63,24 @@
                                                         <input class="form-control" type="text" name="name" value="{{$category->name}}">
                                                     </div>
                                                 </div>
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label>Quán ăn<span class="text-danger">*</span></label>
+                                                        <select class="custom-select select select2-hidden-accessible"
+                                                                tabindex="-1" aria-hidden="true" name="restaurant_id">
+                                                            <option value="">
+                                                                Chọn quán ăn
+                                                            </option>
+                                                            @foreach($restaurant as $r)
+                                                                <option
+                                                                    {{($category->restaurant->id) == $r->id ? 'selected' : '' }} value="{{$r->id}}">
+                                                                    {{$r->name}}
+                                                                </option>
+                                                            @endforeach
 
+                                                        </select>
+                                                    </div>
+                                                </div>
 
                                             </div>
                                             <div class="m-t-20 text-center">

@@ -57,8 +57,19 @@ class  User extends Authenticatable
     {
         return $this->belongsTo(Role::class, 'role_id');
     }
+
     public function order()
     {
-        return $this->belongsTo(Order::class,'user_id');
+        return $this->belongsToMany(Order::class, 'user_order');
     }
+
+    public function address()
+    {
+        return $this->hasMany(Address::class, 'user_id');
+    }
+
+     public function review()
+         {
+            return $this->hasMany(Review::class,'restaurant_id');
+         }
 }

@@ -12,11 +12,27 @@ class Discount extends Model
     protected $fillable = [
         'id',
         'name',
+        'code',
         'percent',
         'status',
         'start_date',
         'end_date',
-        'food_id',
-        'order_id',
+        'type_discount_id',
+        'restaurant_id',
     ];
+
+    public function typeDiscount()
+    {
+        return $this->belongsTo(TypeDiscount::class, 'type_discount_id');
+    }
+
+    public function order()
+    {
+        return $this->belongsToMany(Order::class, 'discount_id');
+    }
+
+    public function restaurant()
+    {
+        return $this->belongsTo(Restaurant::class);
+    }
 }

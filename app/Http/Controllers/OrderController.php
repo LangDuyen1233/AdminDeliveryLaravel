@@ -4,31 +4,33 @@
 namespace App\Http\Controllers;
 
 
-use App\Models\Category;
-use App\Models\Food;
-use App\Models\Image;
 use App\Models\Order;
 use App\Models\OrderStatus;
-use App\Models\Payment;
-use App\Models\Restaurant;
+use App\Models\PaymentMethod;
+use App\Models\PaymentStatus;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
     public function index()
     {
-        $order = Order::with('statusOrder')->with('payment')->with('user')->get();
+        $user = User::all();
+        $order = Order::with('statusOrder')->with('paymentStatus')->with('paymentMethod')->get();
+//        dd($order);
         return view('order.index',
             [
+                'user' => $user,
                 'order' => $order,
             ]
         );
     }
 
-    public function show($id){
-        $order = Order::where('id', $id)->first();
+    public function show($id)
+    {
+
+        $order = Order::with('cart.food.restaurant')->with('cart.food.toppings')->with('cart.food.sizes')->find($id);
+//        dd($order->cart->food);
         return view('order.show',
             [
                 'order' => $order,
@@ -38,55 +40,51 @@ class OrderController extends Controller
 
     public function edit($id)
     {
+        $statusOrder = OrderStatus::all();
+        $paymentMethod = PaymentMethod::all();
+        $paymentStatus = PaymentStatus::all();
         $order = Order::where('id', $id)->first();
         return View('order.edit',
             [
+                'statusOrder' => $statusOrder,
+                'paymentMethod' => $paymentMethod,
+                'paymentStatus' => $paymentStatus,
                 'order' => $order,
             ]);
     }
 
     public function update(Request $request, $id)
     {
-        if (!isset($id)) {
-            return response('', 400);
-        }
-        $f = Food::find($id);
+//        if (!isset($id)) {
+//            return response('', 400);
+//        }
+        $o = Order::find($id);
 //        dd($f->image[0]->id);
 //        $image = Image::find($f->image[0]->id);
-        if (!isset($f)) {
-            return response('', 404);
-        }
+//        if (!isset($f)) {
+//            return response('', 404);
+//        }
         $request->validate([
-            'name' => 'required|max:100',
-            'price' => 'required|max:100',
-            'image' => 'required|max:100',
-            'ingredients' => 'required|max:100',
-            'restaurant_id' => 'required|max:100',
-            'category_id' => 'required|max:100',
+            'order_status_id' => 'required|max:100',
+            'price_delivery' => 'required|max:100',
+            'address_delivery' => 'required|max:100',
+            'date' => 'required|max:100',
+            'payment_status_id' => 'required|max:100',
+            'payment_method_id' => 'required|max:100',
         ], $this->messages());
         try {
-            error_log($f);
-            $f->name = $request->get('name');
-            $f->price = $request->get('price');
-            $f->weight = $request->get('weight');
-            $f->ingredients = $request->get('ingredients');
-            $f->note = $request->get('note');
-            $f->category_id = $request->get('category_id');
-            $f->restaurant_id = $request->get('restaurant_id');
-            $f->status = $request->get('status');
-            $f->save();
-            $image = $request->get('image');
-//            $image->url = $request->get('image');
-//            $image->save();
-//
-            $images = new Image([
-                    'url' => $image,
-                ]
-            );
-//        $image->url = $image;
-            $f->image()->update($images->toArray());
+            $o->address_delivery = $request->get('address_delivery');
+            $o->order_status_id = $request->get('order_status_id');
+            $o->tax = $request->get('tax');
+            $o->price_delivery = $request->get('price_delivery');
+            $o->payment_status_id= $request->get('payment_status_id');
+            $o->payment_method_id = $request->get('payment_method_id');
+            $o->date = $request->get('date');
+            $o->status = $request->get('status');
+//            dd($o);
+            $o->save();
 
-            return redirect('admin-food')->withErrors(['mes' => "Cập nhật món ăn thành công"]);
+            return redirect('admin-order')->withErrors(['mes' => "Cập nhật đơn hàng thành công"]);
 
         } catch (\Exception $e) {
             error_log($e->getMessage());
@@ -97,19 +95,13 @@ class OrderController extends Controller
 
     public function destroy($id)
     {
-        if (!isset($id)) {
-            return response('', 400);
-        }
-        $f = Food::find($id);
-        if (!isset($f)) {
-            return response('', 404);
-        }
 
+        $o = Order::find($id);
 
         try {
-            $f->image()->detach();
-            $f->delete();
-            return redirect()->back()->withErrors(['mes' => "Xóa món ăn thành công"]);
+            $o->user()->detach();
+            $o->delete();
+            return redirect()->back()->withErrors(['mes' => "Xóa thành công"]);
         } catch (\Exception $e) {
             return response('', 500);
         }
@@ -118,17 +110,12 @@ class OrderController extends Controller
     private function messages()
     {
         return [
-            'username.required' => 'Bạn cần nhập họ tên',
-            'email.required' => 'Bạn cần phải nhập Email.',
-            'email.email' => 'Định dạng Email bị sai.',
-            'email.unique' => 'Email đã tồn tại',
-            'password.required' => 'Bạn cần phải nhập mật khẩu.',
-            'password.min' => 'Mật khẩu phải nhiều hơn 8 ký tự.',
-            're_password.same' => 'Nhắc lại mật khẩu không trùng với mật khẩu',
-            're_password.required' => 'Bạn cần nhập nhắc lại mật khẩu',
-            'phone.required' => 'Bạn cần phải nhập số điện thoại.',
-            'phone.min' => 'Số điện thoại phải lớn hơn 10 số.',
-            'phone.regex' => 'Số điện thoại không đúng định dạng.',
+            'order_status_id.required' => 'Trạng thái đơn hàng là bắt buộc',
+            'price_delivery.required' => 'Phí giao hàng là bắt buộc',
+            'date.required' => 'Ngày giao hàng là bắt buộc',
+            'payment_status_id.required' => 'Trạng thái thanh toán là bắt buộc',
+            'payment_method_id.required' => 'Phương thức thanh toán là bắt buộc',
+            'address_delivery.required' => 'Địa chỉ giao hàng là bắt buộc',
         ];
     }
 }

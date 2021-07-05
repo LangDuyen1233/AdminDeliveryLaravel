@@ -7,7 +7,7 @@
                     <div class="ms-panel-header">
                         <div class="d-flex justify-content-between">
                             <div class="ms-header-text">
-                                <h6>Thêm món ăn mới</h6>
+                                <h6>Sửa thông tin đánh giá</h6>
                             </div>
                         </div>
                     </div>
@@ -23,137 +23,119 @@
                                                 @endforeach
                                             </div>
                                         @endif
-                                        <form method="post" action="{{route('admin-food.store')}}">
+                                        <form method="post" action="{{route('admin-review.update',$review->id)}}">
+                                            {{ method_field('PUT') }}
                                             @csrf
                                             <div class="row">
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
-                                                        <label>Tên món ăn <span class="text-danger">*</span></label>
-                                                        <input class="form-control" type="text" name="name">
+                                                        <label>Tên người dùng <span class="text-danger">*</span></label>
+                                                        <input class="form-control" type="text" name="user_id"
+                                                               disabled="disabled"
+                                                               value="{{$review->user->username}}">
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
-                                                        <label>Size <span class="text-danger">*</span></label>
-                                                        <input class="form-control" type="text" name="size">
+                                                        <label>Đánh giá</label>
+                                                        <input class="form-control" type="text" name="review"
+                                                               value="{{$review->review}}">
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
-                                                        <label>Giá <span class="text-danger">*</span></label>
+                                                        <label>Xếp hạng</label>
+
                                                         <div class="input-group mb-3">
-                                                            <input class="form-control" type="number" step="10.000" min="0" name="price">
+                                                            <input class="form-control" type="number" step=0.5 min="0"
+                                                                   max="5" name="rate" value="{{$review->rate}}">
                                                             <div class="input-group-append">
-                                                                <span class="input-group-text">VND</span>
+                                                                <span class="input-group-text"><i class="fas fa-star"
+                                                                                                  style="color: orange"></i></span>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <div class="form-group">
-                                                        <label>Khối lượng</label>
-                                                        <div class="input-group mb-3">
-                                                            <input class="form-control" type="number" name="weight">
-                                                            <div class="input-group-append">
-                                                                <span class="input-group-text">g</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <div class="form-group">
-                                                        <label>Thành phần<span class="text-danger">*</span></label>
-                                                        <input class="form-control" type="text" name="ingredients">
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <div class="form-group">
-                                                        <label>Ghi chú</label>
-                                                        <input class="form-control" type="text" name="note">
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <div class="form-group">
-                                                        <label>Thể loại<span class="text-danger">*</span></label>
-                                                        <select class="custom-select select select2-hidden-accessible"
-                                                                tabindex="-1" aria-hidden="true" name="category_id">
-                                                            <option>
-                                                                Chọn thể loại
-                                                            </option>
-                                                            @foreach($category as $c)
-                                                                <option
-                                                                    {{old('category_id')=="1"? 'selected':''}} value="{{$c->id}}">
-                                                                    {{$c->name}}
-                                                                </option>
-                                                            @endforeach
-                                                        </select>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
                                                         <label>Quán ăn<span class="text-danger">*</span></label>
-                                                        <select class="custom-select select select2-hidden-accessible"
-                                                                tabindex="-1" aria-hidden="true" name="restaurant_id">
-                                                            <option>
-                                                                Chọn quán ăn
-                                                            </option>
-                                                            @foreach($restaurant as $r)
-                                                                <option
-                                                                    {{old('category_id')=="1"? 'selected':''}} value="{{$r->id}}">
-                                                                    {{$r->name}}
-                                                                </option>
-                                                            @endforeach
+                                                        <input class="form-control" type="text" name="restaurant_id"
+                                                               disabled="disabled"
+                                                               value="{{$review->restaurant->name}}">
+                                                        {{--                                                        <select class="custom-select select select2-hidden-accessible"--}}
+                                                        {{--                                                                tabindex="-1" aria-hidden="true" name="restaurant_id">--}}
+                                                        {{--                                                            @foreach($restaurant as $r)--}}
+                                                        {{--                                                                <option--}}
+                                                        {{--                                                                    {{($review->restaurant->id) == $r->id ? 'selected' : '' }} value="{{$r->id}}">--}}
+                                                        {{--                                                                    {{$r->name}}--}}
+                                                        {{--                                                                </option>--}}
+                                                        {{--                                                            @endforeach--}}
 
-                                                        </select>
+                                                        {{--                                                        </select>--}}
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <div class="mx-auto avt-wrapper ">
                                                         <img id='avt_img' name="image" style="width:70px"
-                                                             {{--                                                             src="https://thaoduoc3mien.com/wp-content/uploads/2017/07/food-2-1.jpg"--}}
+                                                             @if(count($review->image) <= 0)
+                                                             {{$review->image}}
+                                                             src=""
+                                                             @elseif(count($review->image) > 0)
+                                                             src="{{$review->image[0]->url}}"
+                                                             @endif
                                                              alt="User Photo" class=" z-depth-1 mb-3 mx-auto"/>
                                                     </div>
                                                     <div>
-                                                        <label>Hình ảnh <span class="text-danger">*</span></label>
+                                                        <label>Hình ảnh </label>
                                                         <div class="input-group mb-3">
 
-                                                            <input aria-describedby="basic-addon2" class="form-control"
+                                                            <input aria-describedby="basic-addon2"
+                                                                   class="form-control"
                                                                    type="text" size="48" name="image"
-                                                                   id="image"/>
+                                                                   id="image"
+                                                                   @if(count($review->image) <= 0)
+                                                                   {{$review->image}}
+                                                                   value=""
+                                                                   @elseif(count($review->image) > 0)
+                                                                   value="{{$review->image[0]->url}}"
+                                                                @endif
+                                                            />
                                                             <div class="input-group-append">
-                                                                <button class="btn btn-outline-secondary" type="button"
+                                                                <button class="btn btn-outline-secondary"
+                                                                        type="button"
                                                                         onclick="avatar('image','avt_img')">Select
                                                                     file
                                                                 </button>
                                                             </div>
                                                         </div>
                                                     </div>
-
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label class="display-block">Trạng thái</label>
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="radio" name="status"
-                                                           id="employee_inactive"
-                                                           value="0" {{ (old('status' )==0?'checked="checked"':'') }}>
-                                                    <label class="form-check-label" for="employee_inactive">
+                                                           id="{{$review->id}}employee_inactive"
+                                                           value="0" {{ ($review->active==0?'checked="checked"':'') }}>
+                                                    <label class="form-check-label"
+                                                           for="{{$review->id}}employee_inactive">
                                                         Không kích hoạt
                                                     </label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="radio" name="status"
-                                                           id="employee_active"
+                                                           id="{{$review->id}}employee_active"
                                                            value="1" checked=""
-                                                        {{ (old('status' )==1?'checked="checked"':'') }}>
-                                                    <label class="form-check-label" for="employee_active">
+                                                        {{ ($review->active==1?'checked="checked"':'') }}>
+                                                    <label class="form-check-label"
+                                                           for="{{$review->id}}employee_active">
                                                         Kích hoạt
                                                     </label>
                                                 </div>
                                             </div>
                                             <div class="m-t-20 text-center">
                                                 <button type="submit" class="btn btn-outline-primary ms-graph-metrics"
-                                                        name="button">Tạo món ăn
+                                                        name="button">Sửa món ăn
                                                 </button>
                                             </div>
                                         </form>
