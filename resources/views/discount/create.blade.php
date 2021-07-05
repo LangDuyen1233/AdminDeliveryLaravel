@@ -7,7 +7,7 @@
                     <div class="ms-panel-header">
                         <div class="d-flex justify-content-between">
                             <div class="ms-header-text">
-                                <h6>Thêm món ăn mới</h6>
+                                <h6>Thêm khuyến mãi mới</h6>
                             </div>
                         </div>
                     </div>
@@ -23,67 +23,67 @@
                                                 @endforeach
                                             </div>
                                         @endif
-                                        <form method="post" action="{{route('admin-food.store')}}">
+                                        <form method="post" action="{{route('admin-discount.store')}}">
                                             @csrf
                                             <div class="row">
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
-                                                        <label>Tên món ăn <span class="text-danger">*</span></label>
+                                                        <label>Tên khuyến mãi <span class="text-danger">*</span></label>
                                                         <input class="form-control" type="text" name="name">
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
-                                                        <label>Size <span class="text-danger">*</span></label>
-                                                        <input class="form-control" type="text" name="size">
+                                                        <label>Mã khuyến mãi <span class="text-danger">*</span></label>
+                                                        <input class="form-control" type="text" name="code">
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
-                                                        <label>Giá <span class="text-danger">*</span></label>
+                                                        <label>Giảm giá <span class="text-danger">*</span></label>
                                                         <div class="input-group mb-3">
-                                                            <input class="form-control" type="number" step="10.000" min="0" name="price">
+                                                            <input class="form-control" type="number" step="0.1" min="0"
+                                                                   max="100" name="percent">
                                                             <div class="input-group-append">
-                                                                <span class="input-group-text">VND</span>
+                                                                <span class="input-group-text">%</span>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
-                                                        <label>Khối lượng</label>
-                                                        <div class="input-group mb-3">
-                                                            <input class="form-control" type="number" name="weight">
-                                                            <div class="input-group-append">
-                                                                <span class="input-group-text">g</span>
-                                                            </div>
+                                                        <label>Ngày bắt đầu<span class="text-danger">*</span></label>
+                                                        <div class="cal-icon input-group date"
+                                                             data-date-format="yyyy-mm-dd">
+                                                            <input id="startdate" class="form-control datepicker"
+                                                                   placeholder="yyyy-mm-dd" type="text"
+                                                                   name="start_date">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
-                                                        <label>Thành phần<span class="text-danger">*</span></label>
-                                                        <input class="form-control" type="text" name="ingredients">
+                                                        <label>Ngày kết thúc<span class="text-danger">*</span></label>
+                                                        <div class="cal-icon input-group date"
+                                                             data-date-format="yyyy-mm-dd">
+                                                            <input id="datePicker" class="form-control datepicker"
+                                                                   placeholder="yyyy-mm-dd" type="text" name="end_date">
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
-                                                        <label>Ghi chú</label>
-                                                        <input class="form-control" type="text" name="note">
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <div class="form-group">
-                                                        <label>Thể loại<span class="text-danger">*</span></label>
+                                                        <label>Loại khuyến mãi<span class="text-danger">*</span></label>
                                                         <select class="custom-select select select2-hidden-accessible"
-                                                                tabindex="-1" aria-hidden="true" name="category_id">
-                                                            <option>
-                                                                Chọn thể loại
+                                                                tabindex="-1" aria-hidden="true"
+                                                                name="type_discount_id">
+                                                            <option value="">
+                                                                Chọn khuyến mãi
                                                             </option>
-                                                            @foreach($category as $c)
+                                                            @foreach($type_discount as $td)
                                                                 <option
-                                                                    {{old('category_id')=="1"? 'selected':''}} value="{{$c->id}}">
-                                                                    {{$c->name}}
+                                                                    {{old('type_discount_id')=="1"? 'selected':''}} value="{{$td->id}}">
+                                                                    {{$td->type}}
                                                                 </option>
                                                             @endforeach
                                                         </select>
@@ -94,41 +94,18 @@
                                                         <label>Quán ăn<span class="text-danger">*</span></label>
                                                         <select class="custom-select select select2-hidden-accessible"
                                                                 tabindex="-1" aria-hidden="true" name="restaurant_id">
-                                                            <option>
+                                                            <option value="">
                                                                 Chọn quán ăn
                                                             </option>
                                                             @foreach($restaurant as $r)
                                                                 <option
-                                                                    {{old('category_id')=="1"? 'selected':''}} value="{{$r->id}}">
+                                                                    {{old('restaurant_id')=="1"? 'selected':''}} value="{{$r->id}}">
                                                                     {{$r->name}}
                                                                 </option>
                                                             @endforeach
 
                                                         </select>
                                                     </div>
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <div class="mx-auto avt-wrapper ">
-                                                        <img id='avt_img' name="image" style="width:70px"
-                                                             {{--                                                             src="https://thaoduoc3mien.com/wp-content/uploads/2017/07/food-2-1.jpg"--}}
-                                                             alt="User Photo" class=" z-depth-1 mb-3 mx-auto"/>
-                                                    </div>
-                                                    <div>
-                                                        <label>Hình ảnh <span class="text-danger">*</span></label>
-                                                        <div class="input-group mb-3">
-
-                                                            <input aria-describedby="basic-addon2" class="form-control"
-                                                                   type="text" size="48" name="image"
-                                                                   id="image"/>
-                                                            <div class="input-group-append">
-                                                                <button class="btn btn-outline-secondary" type="button"
-                                                                        onclick="avatar('image','avt_img')">Select
-                                                                    file
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -153,7 +130,7 @@
                                             </div>
                                             <div class="m-t-20 text-center">
                                                 <button type="submit" class="btn btn-outline-primary ms-graph-metrics"
-                                                        name="button">Tạo món ăn
+                                                        name="button">Tạo khuyến mãi
                                                 </button>
                                             </div>
                                         </form>
@@ -168,31 +145,10 @@
     </div>
 @endsection
 @section('script')
-    <script>
-        function avatar(elementId, ava) {
-            CKFinder.popup({
-                chooseFiles: true,
-                // type: "Avatar",
-                width: 800,
-                height: 600,
-                onInit: function (finder) {
-                    finder.on("files:choose", function (evt) {
-                        var file = evt.data.files.first();
-                        var output = document.getElementById(elementId);
-                        var out = document.getElementById(ava);
-                        output.value = file.getUrl();
-                        out.src = file.getUrl();
-                    });
-
-                    finder.on("file:choose:res ", function (
-                        evt
-                    ) {
-                        var output = document.getElementById(elementId);
-                        output.value = evt.data.resizedUrl;
-                    });
-                },
-            });
-        }
+    <script type="text/javascript">
+        $('#startdate').datepicker({
+            format: 'mm-dd-yyyy'
+        });
     </script>
-    <script src="{{asset('plugin/ckfinder/ckfinder.js')}}"></script>
 @endsection
+

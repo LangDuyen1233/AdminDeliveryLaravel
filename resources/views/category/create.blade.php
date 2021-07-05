@@ -39,7 +39,7 @@
                                                     <div class="mx-auto avt-wrapper ">
                                                         <img id='avt_img' name="image"
 {{--                                                             src="https://thaoduoc3mien.com/wp-content/uploads/2017/07/food-2-1.jpg"--}}
-                                                             alt="User Photo" class="z-depth-1 mb-3 mx-auto"/>
+                                                             alt="Photo" class="z-depth-1 mb-3 mx-auto"/>
                                                     </div>
                                                     <div>
                                                         <label>Hình ảnh <span class="text-danger">*</span></label>
@@ -71,8 +71,24 @@
                                                         <input class="form-control" type="text" name="name">
                                                     </div>
                                                 </div>
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label>Quán ăn<span class="text-danger">*</span></label>
+                                                        <select class="custom-select select select2-hidden-accessible"
+                                                                tabindex="-1" aria-hidden="true" name="restaurant_id">
+                                                            <option value="">
+                                                                Chọn quán ăn
+                                                            </option>
+                                                            @foreach($restaurant as $r)
+                                                                <option
+                                                                    {{old('restaurant_id')=="1"? 'selected':''}} value="{{$r->id}}">
+                                                                    {{$r->name}}
+                                                                </option>
+                                                            @endforeach
 
-
+                                                        </select>
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="m-t-20 text-center">
                                                 <button type="submit" class="btn btn-outline-primary ms-graph-metrics"

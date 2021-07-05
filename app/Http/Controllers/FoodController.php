@@ -50,6 +50,7 @@ class FoodController extends Controller
             'category_id' => 'required|max:100',
         ], $this->messages());
         $name = $request->get('name');
+        $size = $request->get('size');
         $price = $request->get('price');
         $weight = $request->get('weight');
         $ingredients = $request->get('ingredients');
@@ -61,6 +62,7 @@ class FoodController extends Controller
 
         $food = new Food([
             'name' => $name,
+            'size' => $size,
             'price' => $price,
             'weight' => $weight,
             'ingredients' => $ingredients,
@@ -89,7 +91,8 @@ class FoodController extends Controller
     {
         $category = Category::all();
         $restaurant = Restaurant::all();
-        $food = Food::where('id', $id)->first();
+        $food = Food::where('id', $id)->with('image')->first();
+//        dd($food);
         return View('food.edit',
             [
                 'category' => $category,
@@ -120,6 +123,7 @@ class FoodController extends Controller
         try {
             error_log($f);
             $f->name = $request->get('name');
+            $f->size = $request->get('size');
             $f->price = $request->get('price');
             $f->weight = $request->get('weight');
             $f->ingredients = $request->get('ingredients');

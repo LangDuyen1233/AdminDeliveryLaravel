@@ -48,6 +48,12 @@ Route::middleware([CheckLogin::class])->group(function () {
 
     Route::resource('admin-order', OrderController::class)->only(['index', 'show', 'update', 'edit', 'destroy']);
 
+    Route::resource('admin-discount', DiscountController::class)->only(['index', 'create', 'store', 'update', 'edit', 'destroy']);
+
+    Route::resource('admin-review', ReviewController::class)->only(['index', 'update', 'edit', 'destroy']);
+
+    Route::resource('admin-topping', ToppingController::class)->only(['index', 'create', 'store', 'update', 'edit', 'destroy']);
+
 });
 //Route::get('addUser', function () {
 //    return view('user.addUser');

@@ -14,10 +14,21 @@ class Category extends Model
         'name',
         'image',
         'description',
+        'restaurant_id'
     ];
 
     public function foods()
     {
         return $this->hasMany(Food::class,'category_id');
+    }
+
+    public function restaurant()
+    {
+        return $this->belongsTo(Restaurant::class,'restaurant_id');
+    }
+
+    public function topping()
+    {
+        return $this->hasMany(Topping::class,'restaurant_id');
     }
 }

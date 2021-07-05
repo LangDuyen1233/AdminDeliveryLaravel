@@ -41,7 +41,6 @@
                                 $i = 1;
                             @endphp
                             @foreach($restaurant as $res)
-                                {{ $i}}
                                 <tr role="row" class="odd">
                                     <td class="sorting_1" style="text-align: center">{{$i++}}</td>
                                     <td>

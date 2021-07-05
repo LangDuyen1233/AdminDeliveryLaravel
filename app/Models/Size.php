@@ -17,6 +17,6 @@ class Size extends Model
     ];
     public function foods()
     {
-        return $this->belongsTo('App\Food');
+        return $this->belongsTo(Food::class);
     }
 }

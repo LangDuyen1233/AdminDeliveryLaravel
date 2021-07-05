@@ -23,6 +23,21 @@ class Restaurant extends Model
 //một nhà hàng có nhiều món ăn
     public function foods()
     {
-        return $this->hasMany(Food::class,'restaurant_id');
+        return $this->hasMany(Food::class, 'restaurant_id');
+    }
+
+    public function discount()
+    {
+        return $this->hasMany(Discount::class, 'restaurant_id');
+    }
+
+    public function review()
+    {
+        return $this->hasMany(Review::class, 'user_id');
+    }
+
+    public function category()
+    {
+        return $this->hasMany(Category::class, 'restaurant_id');
     }
 }

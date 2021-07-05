@@ -26,6 +26,7 @@
                             <tr style="text-align: center">
                                 <th>ID</th>
                                 <th>Tên món ăn</th>
+                                <th>Size</th>
                                 <th>Hình ảnh</th>
                                 <th>Đơn giá</th>
                                 <th>Khối lượng</th>
@@ -42,11 +43,13 @@
                                 $i = 1;
                             @endphp
                             @foreach($food as $f)
-{{--                                {{ $i}}--}}
                                 <tr role="row" class="odd">
                                     <td class="sorting_1" style="text-align: center">{{$i++}}</td>
                                     <td>
                                         {{$f->name}}
+                                    </td>
+                                    <td>
+                                        {{$f->size}}
                                     </td>
                                     <td style="text-align: center">
                                         @if (count($f->image) != 0)
