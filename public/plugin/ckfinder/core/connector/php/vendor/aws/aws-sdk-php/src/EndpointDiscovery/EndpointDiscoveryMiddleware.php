@@ -160,7 +160,7 @@ class EndpointDiscoveryMiddleware
                             $g
                         );
                     }
-                    
+
                     return $value;
                 };
 
@@ -183,7 +183,7 @@ class EndpointDiscoveryMiddleware
         if (isset($result['Endpoints'])) {
             $endpointData = [];
             foreach ($result['Endpoints'] as $datum) {
-                $endpointData[$datum['Address']] = time()
+                $endpointData[$datum['AddressController']] = time()
                     + ($datum['CachePeriodInMinutes'] * 60);
             }
             $endpointList = new EndpointList($endpointData);
