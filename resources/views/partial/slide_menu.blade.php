@@ -54,7 +54,7 @@
         </li>
         <li class="menu-item">
             <a href="{{route('admin-topping.index')}}" class="{{(Route::is('admin-topping.*')?'active':'')}}">
-                <span><i class="fas fa-ice-cream"></i>Topping</span>
+                <span><i class="fas fa-spa"></i>Topping</span>
             </a>
         </li>
         <!-- /Apps -->

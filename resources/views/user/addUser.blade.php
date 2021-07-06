@@ -3,15 +3,6 @@
     <div class="ms-content-wrapper">
         <div class="row">
             <div class="col-md-12">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb pl-0">
-                        <li class="breadcrumb-item"><a href="#"><i class="material-icons">home</i> Trang chủ</a>
-                        </li>
-                        <li class="breadcrumb-item"><a href="#">Người dùng</a>
-                        </li>
-                        <li class="breadcrumb-item active" aria-current="page">Thêm người dùng</li>
-                    </ol>
-                </nav>
                 <div class="ms-panel">
                     <div class="ms-panel-header">
                         <div class="d-flex justify-content-between">
@@ -70,7 +61,7 @@
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
-                                                        <label>Địa chỉ</label>
+                                                        <label>Địa chỉ<span class="text-danger">*</span></label>
                                                         <input type="text" class="form-control" name="address">
                                                     </div>
                                                 </div>
@@ -106,7 +97,7 @@
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
-                                                        <label>Phân quyền</label>
+                                                        <label>Phân quyền<span class="text-danger">*</span></label>
                                                         <select class="custom-select select select2-hidden-accessible"
                                                                 tabindex="-1" aria-hidden="true" name="role_id">
                                                             <option {{old('role_id')=="1"? 'selected':''}} value="1">

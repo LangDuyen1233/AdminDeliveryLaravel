@@ -21,7 +21,7 @@ class CheckLogin
         if ( ! $request->session()->exists( 'auth' ) ) {
             // user value cannot be found in session
             Session::put('url',$request->fullUrl());
-            return redirect( 'login' )->withErrors( [ 'mes' => "Bạn chưa đăng nhập." ] );
+            return redirect( '/' )->withErrors( [ 'mes' => "Bạn chưa đăng nhập." ] );
         }
 
         return $next( $request );

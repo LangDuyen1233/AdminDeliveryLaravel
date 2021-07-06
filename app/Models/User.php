@@ -34,6 +34,7 @@ class  User extends Authenticatable
         'random_key',
         'expires_at',
         'avatar',
+        'is_delete'
     ];
 
     /**

@@ -12,10 +12,16 @@
                             <div class="ms-header-text">
                                 <h6>Danh sách người dùng</h6>
                             </div>
-
-                            <button type="button" class="btn btn-outline-primary ms-graph-metrics" name="button"><a
-                                    href="{{route('admin-user.create')}}">Thêm người dùng</a>
-                            </button>
+                            <div class="right" style="display: flex">
+                                <p id="import" style="display: inline;cursor: pointer;padding: 0 10px;margin-top: 8px;"
+                                   data-toggle="modal"
+                                   data-target="#modal_import" class="float-right item-tool"><i
+                                        class="fas fa-file-import" style="font-size: 18px;"></i>
+                                </p>
+                                <button type="button" class="btn btn-outline-primary ms-graph-metrics" name="button"><a
+                                        href="{{route('admin-user.create')}}">Thêm người dùng</a>
+                                </button>
+                            </div>
                         </div>
                     </div>
                     @error('mes')
@@ -42,7 +48,6 @@
                                 $i = 1;
                             @endphp
                             @foreach($users as $user)
-                                {{ $i}}
                                 <tr role="row" class="odd">
                                     <td class="sorting_1" style="text-align: center">{{$i++}}</td>
                                     <td>
@@ -53,7 +58,13 @@
                                     <td>{{$user->email}}</td>
                                     <td>{{$user->phone}}</td>
                                     {{--                                                    klsedrftgyhjkl--}}
-                                    <td>Dia chi</td>
+                                    <td>
+                                        @foreach($user->address as $ua)
+                                            @if($ua->status ==1)
+                                                {{$ua->address}}
+                                            @endif
+                                        @endforeach
+                                    </td>
                                     <td>{{$user->gender}}</td>
                                     <td>{{$user->dob}}</td>
                                     <td style="text-align: center">
@@ -118,6 +129,38 @@
                             @endforeach
                             </tbody>
                         </table>
+                        <div id="modal_import" class="modal fade" role="dialog">
+                            <div class="modal-dialog">
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <form
+                                        {{--                                        action="{{route('manager-user.import')}}"--}}
+                                        class="form-horizontal" role="form"
+                                        method="POST" enctype="multipart/form-data">
+                                        {{--                                        {{ csrf_field() }}--}}
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">NHẬP DANH SÁCH NGƯỜI DÙNG</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <table width="100%" align="center">
+                                                <tr>
+                                                    <td width="20%">Chọn file</td>
+                                                    <td width="80%" class="vclasses view align-left-10 ">
+                                                        <input type="file" class="form-control" value="" name="data"
+                                                               required>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <input type="submit" class="btn btn-danger" value="Thêm và Đóng">
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal">Đóng
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

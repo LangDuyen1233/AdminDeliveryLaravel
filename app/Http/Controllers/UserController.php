@@ -3,8 +3,10 @@
 
 namespace App\Http\Controllers;
 //
+use App\Models\Address;
 use App\Models\User;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
@@ -13,7 +15,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::with('role')->get();
+        $users = User::with('role')->with('address')->where('is_delete', 1)->get();
         return view('user.users',
             [
                 'users' => $users,
@@ -30,6 +32,7 @@ class UserController extends Controller
     {
         $request->validate([
             'username' => 'required|max:100',
+            'address' => 'required|max:100',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:8',
             're_password' => 'required|same:password',
@@ -47,22 +50,26 @@ class UserController extends Controller
             'username' => $username,
             'email' => $email,
             'password' => Hash::make($password),
-            'address' => $address,
+//            'address' => $address,
             'dob' => date("Y-m-d", strtotime($dob)),
             'phone' => $phone,
             'gender' => $gender,
             'bio' => $bio,
             'active' => $request->get('status'),
             'role_id' => $request->get('role_id'),
+            'is_delete' => 1,
         ]);
 //        dd($user);
         $user->save();
+        $addresses = [new Address(['address' => $address, 'user_id' => $user->id, 'status' => 1])];
+        $user->address()->saveMany($addresses);
         return redirect('admin-user')->withErrors(['mes' => "Thêm người dùng thành công"]);
     }
 
     public function edit($id)
     {
-        $users = User::where('id', $id)->first();
+        $users = User::where('id', $id)->with('address')->first();
+//        dd($users);
         return View('user.editUser',
             [
                 'users' => $users,
@@ -80,6 +87,7 @@ class UserController extends Controller
         }
         $request->validate([
             'username' => 'required|max:100',
+            'address' => 'required|max:100',
             'email' => 'required|email',
             'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10'
         ], $this->messages());
@@ -94,7 +102,18 @@ class UserController extends Controller
             $u->active = $request->get('status');
             $u->role_id = $request->get('role_id');
 
+            $count = 0;
+
+            foreach ($u->address as $add) {
+
+                if ($add->status == 1) {
+                    error_log($add->address);
+                    $u->address[$count]->update(['address' => $request->get('address')]);
+                }
+                $count++;
+            }
             $u->save();
+//            $u->address()
             return redirect('admin-user')->withErrors(['mes' => "Cập nhật người dùng thành công"]);
 
         } catch (\Exception $e) {
@@ -106,7 +125,6 @@ class UserController extends Controller
 
     public function destroy($id)
     {
-        error_log('ưertyjuol');
         if (!isset($id)) {
             return response('', 400);
         }
@@ -117,7 +135,10 @@ class UserController extends Controller
 
 
         try {
-            $u->delete();
+//            $u->address()->delete();
+//            $u->delete();
+            $u->is_delete = 0;
+            $u->update();
             return redirect()->back()->withErrors(['mes' => "Xóa người dùng thành công"]);
         } catch (\Exception $e) {
             return response('', 500);
@@ -131,6 +152,7 @@ class UserController extends Controller
             'email.required' => 'Bạn cần phải nhập Email.',
             'email.email' => 'Định dạng Email bị sai.',
             'email.unique' => 'Email đã tồn tại',
+            'address.required' => 'Bạn cần phải nhập địa chỉ.',
             'password.required' => 'Bạn cần phải nhập mật khẩu.',
             'password.min' => 'Mật khẩu phải nhiều hơn 8 ký tự.',
             're_password.same' => 'Nhắc lại mật khẩu không trùng với mật khẩu',
