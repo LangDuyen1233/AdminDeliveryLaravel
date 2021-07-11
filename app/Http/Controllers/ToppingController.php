@@ -13,7 +13,7 @@ class ToppingController extends Controller
 {
     public function index()
     {
-        $topping = Topping::with('category')->get();
+        $topping = Topping::with('food')->get();
 //        dd($topping);
         return view('topping.index',
             [
@@ -24,12 +24,7 @@ class ToppingController extends Controller
 
     public function create()
     {
-        $category = Category::all();
-        return View('topping.create',
-            [
-                'category' => $category
-            ]
-        );
+        return View('topping.create');
     }
 
     public function store(Request $request)
@@ -37,15 +32,12 @@ class ToppingController extends Controller
         $request->validate([
             'name' => 'required|max:100',
             'price' => 'required|max:100',
-            'category_id' => 'required|max:100',
         ], $this->messages());
         $name = $request->get('name');
         $price = $request->get('price');
-        $category_id = $request->get('category_id');
         $topping = new Topping([
             'name' => $name,
             'price' => $price,
-            'category_id' => $category_id,
             'status' => $request->get('status'),
         ]);
 //        dd($category);
@@ -55,11 +47,9 @@ class ToppingController extends Controller
 
     public function edit($id)
     {
-        $category = Category::all();
-        $topping = Topping::where('id', $id)->with('category')->first();
+        $topping = Topping::where('id', $id)->first();
         return View('topping.edit',
             [
-                'category' => $category,
                 'topping' => $topping
             ]);
     }
@@ -70,13 +60,11 @@ class ToppingController extends Controller
         $request->validate([
             'name' => 'required|max:100',
             'price' => 'required|max:100',
-            'category_id' => 'required|max:100',
         ], $this->messages());
         try {
             $topping->name = $request->get('name');
             $topping->price = $request->get('price');
-            $topping->category_id = $request->get('category_id');
-            $topping->status= $request->get('status');
+            $topping->status = $request->get('status');
 
             $topping->save();
             return redirect('admin-topping')->withErrors(['mes' => "Cập nhật topping thành công"]);
@@ -89,10 +77,11 @@ class ToppingController extends Controller
 
     public function destroy($id)
     {
-        $category = Category::find($id);
+        $tp = Topping::find($id);
 
         try {
-            $category->delete();
+            $tp->food()->detach();
+            $tp->delete();
             return redirect()->back()->withErrors(['mes' => "Xóa danh mục thành công"]);
         } catch (\Exception $e) {
             return response('', 500);
@@ -104,7 +93,6 @@ class ToppingController extends Controller
         return [
             'name.required' => 'Bạn cần nhập tên danh mục',
             'price.required' => 'Bạn cần nhập giá',
-            'category_id.required' => 'Bạn cần chọn danh mục',
         ];
     }
 }

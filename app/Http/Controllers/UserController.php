@@ -3,19 +3,20 @@
 
 namespace App\Http\Controllers;
 //
+use App\Import\UserImport;
 use App\Models\Address;
 use App\Models\User;
-
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Exceptions\NoTypeDetectedException;
+use Maatwebsite\Excel\Facades\Excel;
 
 class UserController extends Controller
 {
     public function index()
     {
-        $users = User::with('role')->with('address')->where('is_delete', 1)->get();
+        $users = User::with('role')->with('address')->get();
+//        dd($users->role->name);
         return view('user.users',
             [
                 'users' => $users,
@@ -125,23 +126,39 @@ class UserController extends Controller
 
     public function destroy($id)
     {
-        if (!isset($id)) {
-            return response('', 400);
-        }
-        $u = User::find($id);
-        if (!isset($u)) {
-            return response('', 404);
-        }
 
+        $u = User::find($id);
 
         try {
-//            $u->address()->delete();
-//            $u->delete();
-            $u->is_delete = 0;
-            $u->update();
+            if ($u->active == 0) {
+                $u->active = 1;
+                $u->update();
+            } else {
+                $u->active = 0;
+                $u->update();
+            }
             return redirect()->back()->withErrors(['mes' => "Xóa người dùng thành công"]);
         } catch (\Exception $e) {
             return response('', 500);
+        }
+    }
+
+    public function import(Request $r)
+    {
+        if ($r->data == '' || $r->data == null) {
+            return redirect(route('admin-user.index'))->witherrors([
+                'mes' => ' Không có dữ liệu! ',
+            ]);
+        }
+        $ui = new UserImport();
+//        dd($ui->count);
+        try {
+            Excel::import($ui, $r->file('data'));
+            error_log($ui->count);
+//
+            return redirect('admin-user')->withErrors(['mes' => 'Nhập thành công ' . $ui->count . ' người dùng.']);
+        } catch (NoTypeDetectedException $e) {
+            return redirect('admin-user')->withErrors(['mes' => 'Nhập người dùng Lỗi, Vui lòng kiểm tra lại File Excel']);
         }
     }
 

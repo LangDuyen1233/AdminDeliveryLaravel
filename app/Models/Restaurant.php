@@ -13,11 +13,14 @@ class Restaurant extends Model
         'id',
         'name',
         'address',
+        'image',
         'lattitude',
         'longtitude',
         'phone',
         'rating',
         'description',
+        'active',
+        'user_id'
     ];
 
 //một nhà hàng có nhiều món ăn
@@ -38,6 +41,11 @@ class Restaurant extends Model
 
     public function category()
     {
-        return $this->hasMany(Category::class, 'restaurant_id');
+        return $this->belongsToMany(Category::class, 'category_restaurant');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

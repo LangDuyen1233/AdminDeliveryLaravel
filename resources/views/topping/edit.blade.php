@@ -46,23 +46,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-6">
-                                                    <div class="form-group">
-                                                        <label>Danh mục<span class="text-danger">*</span></label>
-                                                        <select class="custom-select select select2-hidden-accessible"
-                                                                tabindex="-1" aria-hidden="true" name="category_id">
-                                                            <option>
-                                                                Chọn danh mục
-                                                            </option>
-                                                            @foreach($category as $c)
-                                                                <option
-                                                                    {{($topping->category->id) == $c->id ? 'selected' : '' }} value="{{$c->id}}">
-                                                                    {{$c->name}}
-                                                                </option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                </div>
+
                                             </div>
                                             <div class="form-group">
                                                 <label class="display-block">Trạng thái</label>

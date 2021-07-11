@@ -4,36 +4,35 @@
 namespace App\import;
 
 use App\Models\User;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
 
-class UserImport implements ToModel
+class UserImport implements ToModel, WithHeadingRow
 {
+    var $count = 0;
+
     public function model(array $row)
     {
-        $u = User::where('code', $row[0])->first();
-
-        if ($u == null || $row[11] == 1) {
-            if ($u == null) {
-                $u = new User();
-            }
-            $u->code = $row[0];
-            $u->password = $row[1] == "" ? Hash::make('@Bc12345') : Hash::make($row[1]);
-            $u->first_name = $row[2];
-            $u->last_name = $row[3];
-            $u->email = $row[4];
-            $u->phone = $row[5];
-            $u->class_name = $row[6];
-            $u->job = $row[7];
-            $u->dob = $row[8];
-            $u->gender = $row[9];
-            $u->active = 1;
-            $u->save();
-            if ($row[11] != 1) {
-                $u->groups()->attach(4);
-            }
+        $u = User::where('email', $row['email'])->first();
+        if ($u == null) {
+            $user = new User([
+                'username' => $row['name'],
+                'email' => $row['email'],
+                'phone' => $row['phone'],
+                'password' => $row['password'] == "" ? Hash::make('12345678') : Hash::make($row['password']),
+                'gender' => $row['gender'],
+                'dob' => date("Y-m-d", strtotime($row['dob'])),
+                'bio' => $row['bio'],
+                'active' => 1,
+                'role_id' => 1,
+                'is_delete' => 1,
+            ]);
+            $user->save();
             $this->count++;
         }
+
     }
 }

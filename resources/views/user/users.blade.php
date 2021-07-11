@@ -13,11 +13,11 @@
                                 <h6>Danh sách người dùng</h6>
                             </div>
                             <div class="right" style="display: flex">
-                                <p id="import" style="display: inline;cursor: pointer;padding: 0 10px;margin-top: 8px;"
+                                <a id="import" style="display: inline;cursor: pointer;padding: 0 10px;margin-top: 8px;"
                                    data-toggle="modal"
                                    data-target="#modal_import" class="float-right item-tool"><i
                                         class="fas fa-file-import" style="font-size: 18px;"></i>
-                                </p>
+                                </a>
                                 <button type="button" class="btn btn-outline-primary ms-graph-metrics" name="button"><a
                                         href="{{route('admin-user.create')}}">Thêm người dùng</a>
                                 </button>
@@ -40,6 +40,7 @@
                                 <th>Giới tính</th>
                                 <th>Ngày sinh</th>
                                 <th>Nhóm</th>
+                                <th>Trạng thái</th>
                                 <th>Thao tác</th>
                             </tr>
                             </thead>
@@ -68,28 +69,33 @@
                                     <td>{{$user->gender}}</td>
                                     <td>{{$user->dob}}</td>
                                     <td style="text-align: center">
-                                        {{--                                                        @if (count($user) != 0)--}}
                                         {{$user->role->name}}
-                                        {{--                                                        @else--}}
-                                        {{--                                                            Không--}}
-                                        {{--                                                        @endif--}}
-                                        {{--                                                        @foreach($roles as $role)--}}
-                                        {{--                                                            @if($user->role_id==$role->id)--}}
-                                        {{--                                                                {{$role->name}}--}}
-                                        {{--                                                            @endif--}}
-                                        {{--                                                        @endforeach--}}
-
+                                    </td>
+                                    <td style="text-align: center">
+                                        @if($user->active==1)
+                                            <span class="badge badge-success">Hoạt động</span>
+                                        @elseif($user->active==0)
+                                            <span class="badge badge-danger">Khóa</span>
+                                        @endif
                                     </td>
                                     <td style="display: flex; justify-content: space-around;border-bottom: none;">
                                         <a class="edit hvicon" style="color: green"
                                            href="{{route('admin-user.edit',$user->id)}}"
                                         ><i
                                                 class="material-icons">&#xE254;</i>Edit</a>
-                                        <a class="delete hvicon" data-toggle="modal"
-                                           href="{{route('admin-user.destroy',$user->id)}}"
-                                           data-target="#modal-delete{{$user->id}}"
-                                           style="color: red"><i
-                                                class=" material-icons">&#xE872;</i>Delete</a>
+                                        @if($user->active==1)
+                                            <a class="delete hvicon" data-toggle="modal"
+                                               href="{{route('admin-user.destroy',$user->id)}}"
+                                               data-target="#modal-delete{{$user->id}}"
+                                               style="color: red"><i
+                                                    class=" material-icons">&#xe897;</i></a>
+                                        @else
+                                            <a class="delete hvicon" data-toggle="modal"
+                                               href="{{route('admin-user.destroy',$user->id)}}"
+                                               data-target="#modal-delete{{$user->id}}"
+                                               style="color: red"><i
+                                                    class=" material-icons">&#xe898;</i></a>
+                                        @endif
                                     </td>
                                 </tr>
 
@@ -109,18 +115,33 @@
                                                             aria-label="Close"><span
                                                             aria-hidden="true">×</span>
                                                     </button>
-                                                    <i class="flaticon-secure-shield d-block"></i>
-                                                    <h1>Delete User</h1>
-                                                    <p>Are you sure want delete user?</p>
-                                                    <button type="submit"
-                                                            class="btn btn-secondary btn-lg mr-2 rounded-lg"
-                                                            data-dismiss="modal">
-                                                        Cancel
-                                                    </button>
-                                                    <button type="submit"
-                                                            class="btn btn-danger btn-lg rounded-lg">
-                                                        Delete
-                                                    </button>
+                                                    @if($user->active == 1)
+                                                        <i class="flaticon-secure-shield d-block"></i>
+                                                        <h1>Khóa người dùng.</h1>
+                                                        <p>Bạn có chắc chắn muốn khóa không?</p>
+                                                        <button type="submit"
+                                                                class="btn btn-secondary btn-lg mr-2 rounded-lg"
+                                                                data-dismiss="modal">
+                                                            Hủy
+                                                        </button>
+                                                        <button type="submit"
+                                                                class="btn btn-danger btn-lg rounded-lg">
+                                                            Khóa
+                                                        </button>
+                                                    @else
+                                                        <i class="flaticon-secure-shield d-block"></i>
+                                                        <h1>Mở khóa người dùng.</h1>
+                                                        <p>Bạn có chắc chắn muốn mở khóa không?</p>
+                                                        <button type="submit"
+                                                                class="btn btn-secondary btn-lg mr-2 rounded-lg"
+                                                                data-dismiss="modal">
+                                                            Hủy
+                                                        </button>
+                                                        <button type="submit"
+                                                                class="btn btn-danger btn-lg rounded-lg">
+                                                            Mở khóa
+                                                        </button>
+                                                    @endif
                                                 </form>
                                             </div>
                                         </div>
@@ -134,10 +155,10 @@
                                 <!-- Modal content-->
                                 <div class="modal-content">
                                     <form
-                                        {{--                                        action="{{route('manager-user.import')}}"--}}
+                                        action="{{route('admin-user.import')}}"
                                         class="form-horizontal" role="form"
                                         method="POST" enctype="multipart/form-data">
-                                        {{--                                        {{ csrf_field() }}--}}
+                                        {{ csrf_field() }}
                                         <div class="modal-header">
                                             <h4 class="modal-title">NHẬP DANH SÁCH NGƯỜI DÙNG</h4>
                                         </div>

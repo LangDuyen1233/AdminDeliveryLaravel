@@ -3,15 +3,6 @@
     <div class="ms-content-wrapper">
         <div class="row">
             <div class="col-md-12">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb pl-0">
-                        <li class="breadcrumb-item"><a href="#"><i class="material-icons">home</i> Trang chủ</a>
-                        </li>
-                        <li class="breadcrumb-item"><a href="#">Người dùng</a>
-                        </li>
-                        <li class="breadcrumb-item active" aria-current="page">Thêm danh mục</li>
-                    </ol>
-                </nav>
                 <div class="ms-panel">
                     <div class="ms-panel-header">
                         <div class="d-flex justify-content-between">
@@ -38,14 +29,15 @@
                                                 <div class="col-sm-6">
                                                     <div class="mx-auto avt-wrapper ">
                                                         <img id='avt_img' name="image"
-{{--                                                             src="https://thaoduoc3mien.com/wp-content/uploads/2017/07/food-2-1.jpg"--}}
+                                                             {{--                                                             src="https://thaoduoc3mien.com/wp-content/uploads/2017/07/food-2-1.jpg"--}}
                                                              alt="Photo" class="z-depth-1 mb-3 mx-auto"/>
                                                     </div>
                                                     <div>
                                                         <label>Hình ảnh <span class="text-danger">*</span></label>
                                                         <div class="input-group mb-3">
 
-                                                            <input aria-describedby="basic-addon2" class="form-control" type="text" size="48" name="image"
+                                                            <input aria-describedby="basic-addon2" class="form-control"
+                                                                   type="text" size="48" name="image"
                                                                    id="image"/>
                                                             <div class="input-group-append">
                                                                 <button class="btn btn-outline-secondary" type="button"
@@ -62,31 +54,15 @@
                                                     <div class="form-group">
                                                         <label>Mô tả </label>
                                                         <textarea class="form-control" type="text" name="description"
-                                                                  rows="4" cols="20">Nhập văn bản...</textarea>
+                                                                  value="{{ old('description') }}"
+                                                                  rows="4" cols="20" placeholder="Nhập văn bản..."></textarea>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
                                                         <label>Tên danh mục <span class="text-danger">*</span></label>
-                                                        <input class="form-control" type="text" name="name">
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <div class="form-group">
-                                                        <label>Quán ăn<span class="text-danger">*</span></label>
-                                                        <select class="custom-select select select2-hidden-accessible"
-                                                                tabindex="-1" aria-hidden="true" name="restaurant_id">
-                                                            <option value="">
-                                                                Chọn quán ăn
-                                                            </option>
-                                                            @foreach($restaurant as $r)
-                                                                <option
-                                                                    {{old('restaurant_id')=="1"? 'selected':''}} value="{{$r->id}}">
-                                                                    {{$r->name}}
-                                                                </option>
-                                                            @endforeach
-
-                                                        </select>
+                                                        <input class="form-control" type="text" name="name"
+                                                               value="{{ old('name') }}">
                                                     </div>
                                                 </div>
                                             </div>

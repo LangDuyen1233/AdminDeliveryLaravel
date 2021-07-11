@@ -34,7 +34,7 @@ class  User extends Authenticatable
         'random_key',
         'expires_at',
         'avatar',
-        'is_delete'
+        'is_lock'
     ];
 
     /**
@@ -71,8 +71,13 @@ class  User extends Authenticatable
         return $this->hasMany(Address::class, 'user_id');
     }
 
-     public function review()
-         {
-            return $this->hasMany(Review::class,'restaurant_id');
-         }
+    public function review()
+    {
+        return $this->hasMany(Review::class, 'restaurant_id');
+    }
+
+    public function restaurant()
+    {
+        return $this->belongsTo(Restaurant::class, 'user_id');
+    }
 }

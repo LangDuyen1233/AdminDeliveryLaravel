@@ -41,6 +41,7 @@ Route::middleware([CheckLogin::class])->group(function () {
 //admin user
     Route::resource('admin-user', UserController::class)->only(['index', 'create', 'store', 'update', 'edit', 'destroy']);
 
+    Route::post('/admin-user/import', [UserController::class, 'import'])->name('admin-user.import');
 //admin restaurant
     Route::resource('admin-restaurant', RestaurantController::class)->only(['index', 'create', 'store', 'update', 'edit', 'destroy']);
 //admin category

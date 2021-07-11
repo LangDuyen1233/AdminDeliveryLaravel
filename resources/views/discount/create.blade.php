@@ -29,13 +29,13 @@
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
                                                         <label>Tên khuyến mãi <span class="text-danger">*</span></label>
-                                                        <input class="form-control" type="text" name="name">
+                                                        <input class="form-control" type="text" name="name" value="{{ old('name') }}">
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
                                                         <label>Mã khuyến mãi <span class="text-danger">*</span></label>
-                                                        <input class="form-control" type="text" name="code">
+                                                        <input class="form-control" type="text" name="code" value="{{ old('code') }}">
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
@@ -57,7 +57,7 @@
                                                              data-date-format="yyyy-mm-dd">
                                                             <input id="startdate" class="form-control datepicker"
                                                                    placeholder="yyyy-mm-dd" type="text"
-                                                                   name="start_date">
+                                                                   name="start_date" value="{{ old('start_date') }}">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -67,7 +67,8 @@
                                                         <div class="cal-icon input-group date"
                                                              data-date-format="yyyy-mm-dd">
                                                             <input id="datePicker" class="form-control datepicker"
-                                                                   placeholder="yyyy-mm-dd" type="text" name="end_date">
+                                                                   placeholder="yyyy-mm-dd" type="text" name="end_date"
+                                                                   value="{{ old('end_date') }}">
                                                         </div>
                                                     </div>
                                                 </div>

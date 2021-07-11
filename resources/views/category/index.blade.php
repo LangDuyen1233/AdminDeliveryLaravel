@@ -32,7 +32,6 @@
                                 <th>Tên danh mục</th>
                                 <th>Hình ảnh</th>
                                 <th>Mô tả</th>
-                                <th>Quán ăn</th>
                                 <th>Thao tác</th>
                             </tr>
                             </thead>
@@ -52,7 +51,6 @@
                                     </td>
 
                                     <td>{{$ca->description}}</td>
-                                    <td>{{$ca->restaurant->name}}</td>
                                     <td style="display: flex; justify-content: space-evenly;">
                                         <a class="edit hvicon" style="color: green"
                                            href="{{route('admin-category.edit',$ca->id)}}"
@@ -83,8 +81,8 @@
                                                             aria-hidden="true">×</span>
                                                     </button>
                                                     <i class="flaticon-secure-shield d-block"></i>
-                                                    <h1>Delete User</h1>
-                                                    <p>Are you sure want delete restaurant?</p>
+                                                    <h1>Xóa danh mục</h1>
+                                                    <p>Bạn có chắc chắn muốn xóa không?</p>
                                                     <button type="submit"
                                                             class="btn btn-secondary btn-lg mr-2 rounded-lg"
                                                             data-dismiss="modal">
