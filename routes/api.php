@@ -3,9 +3,10 @@
 use App\Http\Controllers\API\Auth\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\API\Home\SliderController;
-use App\Http\Controllers\API\Home\HomeComtroller;
-use App\Http\Controllers\API\Home\AddressController;
+use App\Http\Controllers\API\AppDelivery\SliderController;
+use App\Http\Controllers\API\AppDelivery\HomeComtroller;
+use App\Http\Controllers\API\AppDelivery\AddressController;
+use App\Http\Controllers\API\AppDelivery\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +31,7 @@ Route::get('/confirmemail/{email}/{key}', [AuthController::class, 'confirmEmail'
 Route::middleware('auth:api')->group(function () {
     Route::get('/sliders', [SliderController::class, 'getSliders']);
     Route::get('/listfood', [HomeComtroller::class, 'getFood']);
+    Route::get('/getuser', [ProfileController::class, 'getUsers']);
     Route::get('/listrestaurant', [HomeComtroller::class, 'getRestaurant']);
     Route::get('/listaddress', [AddressController::class, 'getAddress']);
     Route::post('/logout', [AuthController::class, 'logout']);

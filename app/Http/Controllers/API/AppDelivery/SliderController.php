@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Http\Controllers\API\Home;
+namespace App\Http\Controllers\API\AppDelivery;
 
 use App\Http\Controllers\Controller;
 use App\Models\Slider;

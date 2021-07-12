@@ -19,6 +19,7 @@ class  User extends Authenticatable
      */
     protected $table = 'users';
     protected $fillable = [
+        'id',
         'username',
         'email',
         'phone',
@@ -70,8 +71,8 @@ class  User extends Authenticatable
         return $this->hasMany(Address::class, 'user_id');
     }
 
-     public function review()
-         {
-            return $this->hasMany(Review::class,'restaurant_id');
-         }
+    public function review()
+    {
+        return $this->hasMany(Review::class, 'restaurant_id');
+    }
 }

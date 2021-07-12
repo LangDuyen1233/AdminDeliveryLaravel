@@ -139,6 +139,7 @@ class AuthController extends Controller
         error_log($request->emai);
         if (auth()->attempt($dataLogin)) {
             $token = auth()->user()->token;
+            error_log($token);
             $checkExpire = Carbon::parse(auth()->user()->expires_at);
             $now = Carbon::now();
             if ($token == null) {
@@ -151,7 +152,7 @@ class AuthController extends Controller
                 auth()->user()->token = null;
                 auth()->user()->update();
             }
-            return response()->json(['token' => $token, 'users' => auth()->user()], 200);
+            return response()->json(['token' => $token], 200);
         } else {
             return response()->json(['error' => 'Unauthorised'], 401);
         }
@@ -159,14 +160,20 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
-
         $token = $request->bearerToken();
-//        error_log($token);
+        error_log($token);
         if ($token != null) {
-            $request->user()->token()->revoke();
-            auth()->user()->token = null;
-            auth()->user()->expires_at = null;
-            return response()->json(['mes' => 'Successfulley logout'], 200);
+            error_log(auth()->user()->id);
+            $user = User::where('id', '=', auth()->user()->id)->first();
+            if ($user != null) {
+                $request->user()->token()->revoke();
+                $user->token = null;
+                $user->expires_at = null;
+                $user->update();
+                return response()->json(['mes' => 'Successfulley logout'], 200);
+            } else {
+                return response()->json(['mes' => 'Logout failed'], 401);
+            }
         } else {
             return response()->json(['mes' => 'Logout failed'], 401);
         }

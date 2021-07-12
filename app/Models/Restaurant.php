@@ -18,6 +18,7 @@ class Restaurant extends Model
         'phone',
         'rating',
         'description',
+        'image',
     ];
 
 //một nhà hàng có nhiều món ăn
