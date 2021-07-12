@@ -45,4 +45,9 @@ class Food extends Model
     {
         return $this->belongsTo(Cart::class, 'cart_order');
     }
+
+    public function order()
+    {
+        return $this->belongsToMany(Order::class, 'food_orders');
+    }
 }

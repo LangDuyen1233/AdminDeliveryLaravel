@@ -85,9 +85,9 @@
                                                             <option>
                                                                 Chọn trạng thái
                                                             </option>
-                                                            @foreach($paymentStatus as $ps)
+                                                            @foreach($payment as $ps)
                                                                 <option
-                                                                    {{($order->paymentStatus->id) == $ps->id ? 'selected' : '' }} value="{{$ps->id}}">
+                                                                    {{($order->payment->id) == $ps->id ? 'selected' : '' }} value="{{$ps->id}}">
                                                                     {{$ps->status}}
                                                                 </option>
                                                             @endforeach
@@ -114,9 +114,9 @@
                                                             <option>
                                                                 Chọn trạng thái
                                                             </option>
-                                                            @foreach($paymentMethod as $pm)
+                                                            @foreach($payment as $pm)
                                                                 <option
-                                                                    {{($order->paymentMethod->id) == $pm->id ? 'selected' : '' }} value="{{$pm->id}}">
+                                                                    {{($order->payment->id) == $pm->id ? 'selected' : '' }} value="{{$pm->id}}">
                                                                     {{$pm->method}}
                                                                 </option>
                                                             @endforeach
@@ -133,7 +133,7 @@
                                                            value="0" {{ ($order->active==0?'checked="checked"':'') }}>
                                                     <label class="form-check-label"
                                                            for="{{$order->id}}employee_inactive">
-                                                        Không kích hoạt
+                                                        Hủy
                                                     </label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
@@ -142,7 +142,7 @@
                                                            value="1" checked=""
                                                         {{ ($order->active==1?'checked="checked"':'') }}>
                                                     <label class="form-check-label" for="{{$order->id}}employee_active">
-                                                        Kích hoạt
+                                                        Hoạt động
                                                     </label>
                                                 </div>
                                             </div>

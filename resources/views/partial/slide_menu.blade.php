@@ -62,7 +62,8 @@
                        style="padding-left: 5px">
                         <span><i class="nav-icon fa fa-shopping-basket"></i>Đơn hàng</span></a>
                 </li>
-                <li><a href="pages/customer/customersreview.html" style="padding-left: 5px"><span><i class="nav-icon fa fa-server" >
+                <li><a href="{{route('admin-statusOrder.index')}}" class="{{(Route::is('admin-statusOrder.*')?'active':'')}}"
+                       style="padding-left: 5px"><span><i class="nav-icon fa fa-server">
                             </i>Trạng thái đơn hàng</span></a>
                 </li>
                 </li>

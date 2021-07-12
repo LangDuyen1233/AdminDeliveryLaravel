@@ -6,8 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\OrderStatus;
-use App\Models\PaymentMethod;
-use App\Models\PaymentStatus;
+use App\Models\Payment;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -16,8 +15,8 @@ class OrderController extends Controller
     public function index()
     {
         $user = User::all();
-        $order = Order::with('statusOrder')->with('paymentStatus')->with('paymentMethod')->get();
-//        dd($order);
+        $order = Order::with('statusOrder')->with('payment')->with('discount')->get();
+
         return view('order.index',
             [
                 'user' => $user,
@@ -28,9 +27,8 @@ class OrderController extends Controller
 
     public function show($id)
     {
-
-        $order = Order::with('cart.food.restaurant')->with('cart.food.toppings')->with('cart.food.sizes')->find($id);
-//        dd($order->cart->food);
+        $order = Order::with('food.restaurant')->with('food.toppings')->with('user.address')->find($id);
+//        dd($order->user->address);
         return view('order.show',
             [
                 'order' => $order,
@@ -41,14 +39,12 @@ class OrderController extends Controller
     public function edit($id)
     {
         $statusOrder = OrderStatus::all();
-        $paymentMethod = PaymentMethod::all();
-        $paymentStatus = PaymentStatus::all();
+        $payment = Payment::all();
         $order = Order::where('id', $id)->first();
         return View('order.edit',
             [
                 'statusOrder' => $statusOrder,
-                'paymentMethod' => $paymentMethod,
-                'paymentStatus' => $paymentStatus,
+                'payment' => $payment,
                 'order' => $order,
             ]);
     }
@@ -77,7 +73,7 @@ class OrderController extends Controller
             $o->order_status_id = $request->get('order_status_id');
             $o->tax = $request->get('tax');
             $o->price_delivery = $request->get('price_delivery');
-            $o->payment_status_id= $request->get('payment_status_id');
+            $o->payment_status_id = $request->get('payment_status_id');
             $o->payment_method_id = $request->get('payment_method_id');
             $o->date = $request->get('date');
             $o->status = $request->get('status');
@@ -99,9 +95,14 @@ class OrderController extends Controller
         $o = Order::find($id);
 
         try {
-            $o->user()->detach();
-            $o->delete();
-            return redirect()->back()->withErrors(['mes' => "Xóa thành công"]);
+            if ($o->status == 0) {
+                $o->status = 1;
+                $o->update();
+            } else {
+                $o->status = 0;
+                $o->update();
+            }
+            return redirect()->back()->withErrors(['mes' => "Cập nhật đơn hàng thành công"]);
         } catch (\Exception $e) {
             return response('', 500);
         }

@@ -12,11 +12,6 @@
                             <div class="ms-header-text">
                                 <h6>Danh sách đơn hàng</h6>
                             </div>
-
-                            {{--                            <button type="submit" class="btn btn-outline-primary ms-graph-metrics" name="button"><a--}}
-                            {{--                                    href="{{route('admin-food.create')}}"--}}
-                            {{--                                >Thêm món ăn</a>--}}
-                            {{--                            </button>--}}
                         </div>
                     </div>
                     <div class="ms-panel-body">
@@ -29,6 +24,7 @@
                                 <th>Trạng thái đơn hàng</th>
                                 <th>Thuế</th>
                                 <th>Phí giao hàng</th>
+                                <th>Giảm giá</th>
                                 <th>Trạng thái thanh toán</th>
                                 <th>Phương thức thanh toán</th>
                                 <th>Ngày</th>
@@ -57,20 +53,27 @@
                                     <td>
                                         {{$o->price_delivery}}
                                     </td>
-                                    <td>
-                                        {{$o->paymentStatus->status}}
+                                    <td style="text-align: center">
+                                        @if($o->discount_id != null)
+                                            {{$o->discount->percent}} %
+                                        @else
+
+                                        @endif
                                     </td>
                                     <td>
-                                        {{$o->paymentMethod->method}}
+                                        {{$o->payment->status}}
+                                    </td>
+                                    <td>
+                                        {{$o->payment->method}}
                                     </td>
                                     <td>
                                         {{$o->date}}
                                     </td>
                                     <td style="text-align: center">
                                         @if($o->status==1)
-                                            <span class="badge badge-success">Yes</span>
+                                            <span class="badge badge-success">Hoạt động</span>
                                         @elseif($o->status==0)
-                                            <span class="badge badge-danger">No</span>
+                                            <span class="badge badge-danger">Hủy</span>
                                         @endif
                                     </td>
                                     <td style="display: flex;justify-content: space-around;border-bottom: none;">
@@ -82,11 +85,24 @@
                                            href="{{route('admin-order.edit',$o->id)}}"
                                         ><i
                                                 class="material-icons">&#xE254;</i></a>
-                                        <a class="delete hvicon" data-toggle="modal"
-                                           {{--                                           href="{{route('admin-food.destroy',$f->id)}}"--}}
-                                           data-target="#modal-delete{{$o->id}}"
-                                           style="color: red"><i
-                                                class=" material-icons">&#xE872;</i></a>
+{{--                                        <a class="delete hvicon" data-toggle="modal"--}}
+{{--                                           href="{{route('admin-order.destroy',$o->id)}}"--}}
+{{--                                           data-target="#modal-delete{{$o->id}}"--}}
+{{--                                           style="color: red"><i--}}
+{{--                                                class=" material-icons">&#xE872;</i></a>--}}
+                                        @if($o->status==1)
+                                            <a class="delete hvicon" data-toggle="modal"
+                                               href="{{route('admin-order.destroy',$o->id)}}"
+                                               data-target="#modal-delete{{$o->id}}"
+                                               style="color: red"><i
+                                                    class=" material-icons">&#xe897;</i></a>
+                                        @else
+                                            <a class="delete hvicon" data-toggle="modal"
+                                               href="{{route('admin-order.destroy',$o->id)}}"
+                                               data-target="#modal-delete{{$o->id}}"
+                                               style="color: red"><i
+                                                    class=" material-icons">&#xe898;</i></a>
+                                        @endif
                                     </td>
                                 </tr>
 
@@ -106,18 +122,33 @@
                                                             aria-label="Close"><span
                                                             aria-hidden="true">×</span>
                                                     </button>
-                                                    <i class="flaticon-secure-shield d-block"></i>
-                                                    <h1>Xóa đơn hàng</h1>
-                                                    <p>Bạn chắc chắn muốn xóa không?</p>
-                                                    <button type="submit"
-                                                            class="btn btn-secondary btn-lg mr-2 rounded-lg"
-                                                            data-dismiss="modal">
-                                                        Hủy
-                                                    </button>
-                                                    <button type="submit"
-                                                            class="btn btn-danger btn-lg rounded-lg">
-                                                        Xóa
-                                                    </button>
+                                                    @if($o->status == 1)
+                                                        <i class="flaticon-secure-shield d-block"></i>
+                                                        <h1>Hủy đơn hàng.</h1>
+                                                        <p>Bạn có chắc chắn muốn hủy không?</p>
+                                                        <button type="submit"
+                                                                class="btn btn-secondary btn-lg mr-2 rounded-lg"
+                                                                data-dismiss="modal">
+                                                            Hủy
+                                                        </button>
+                                                        <button type="submit"
+                                                                class="btn btn-danger btn-lg rounded-lg">
+                                                            Khóa
+                                                        </button>
+                                                    @else
+                                                        <i class="flaticon-secure-shield d-block"></i>
+                                                        <h1>Mở khóa đơn hàng.</h1>
+                                                        <p>Bạn có chắc chắn muốn mở khóa không?</p>
+                                                        <button type="submit"
+                                                                class="btn btn-secondary btn-lg mr-2 rounded-lg"
+                                                                data-dismiss="modal">
+                                                            Hủy
+                                                        </button>
+                                                        <button type="submit"
+                                                                class="btn btn-danger btn-lg rounded-lg">
+                                                            Mở khóa
+                                                        </button>
+                                                    @endif
                                                 </form>
                                             </div>
                                         </div>

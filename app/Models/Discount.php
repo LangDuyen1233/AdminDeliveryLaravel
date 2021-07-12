@@ -28,7 +28,7 @@ class Discount extends Model
 
     public function order()
     {
-        return $this->belongsToMany(Order::class, 'discount_id');
+        return $this->belongsTo(Order::class, 'discount_id');
     }
 
     public function restaurant()

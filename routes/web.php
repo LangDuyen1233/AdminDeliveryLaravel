@@ -57,6 +57,8 @@ Route::middleware([CheckLogin::class])->group(function () {
 
     Route::resource('admin-topping', ToppingController::class)->only(['index', 'create', 'store', 'update', 'edit', 'destroy']);
 
+    Route::resource('admin-statusOrder', OrderStatusController::class)->only(['index']);
+
 });
 //Route::get('addUser', function () {
 //    return view('user.addUser');

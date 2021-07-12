@@ -19,8 +19,7 @@ class Order extends Model
         'user_id',
         'cart_id',
         'order_status_id',
-        'payment_method_id',
-        'payment_status_id',
+        'payment_id',
         'discount_id',
         'status'
     ];
@@ -30,28 +29,28 @@ class Order extends Model
         return $this->belongsTo(OrderStatus::class, 'order_status_id');
     }
 
-    public function paymentMethod()
+    public function payment()
     {
-        return $this->belongsTo(PaymentMethod::class, 'payment_method_id');
-    }
-
-    public function paymentStatus()
-    {
-        return $this->belongsTo(PaymentStatus::class, 'payment_status_id');
+        return $this->belongsTo(Payment::class, 'payment_id');
     }
 
     public function user()
     {
-        return $this->belongsToMany(User::class, 'user_order');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function cart()
-    {
-        return $this->belongsTo(Cart::class, 'cart_id');
-    }
+//    public function cart()
+//    {
+//        return $this->belongsTo(Cart::class, 'cart_id');
+//    }
 
     public function discount()
     {
         return $this->belongsTo(Discount::class, 'discount_id');
+    }
+
+    public function food()
+    {
+        return $this->belongsToMany(Food::class, 'food_orders');
     }
 }
