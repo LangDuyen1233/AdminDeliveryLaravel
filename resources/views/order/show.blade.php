@@ -23,19 +23,23 @@
                                         </div>
                                         <label for="order_client" class="col-5 control-label">Họ và tên</label>
                                         <div class="col-7">
-                                            <p>{{$order->user[0]->username}}</p>
+                                            <p>{{$order->user->username}}</p>
                                         </div>
 
                                         <label for="order_client_phone" class="col-5 control-label">Số điện
                                             thoại</label>
                                         <div class="col-7">
-                                            <p>+{{$order->user[0]->phone}}}</p>
+                                            <p>+{{$order->user->phone}}</p>
                                         </div>
 
                                         <label for="delivery_address" class="col-5 control-label">Địa chỉ giao
                                             hàng</label>
                                         <div class="col-7">
-                                            <p>chuwa lafm</p>
+                                            @foreach($order->user->address as $au)
+                                                @if($au->status == 1)
+                                                    <p>{{$au->address}}</p>
+                                                @endif
+                                            @endforeach
                                         </div>
 
                                         <label for="order_date" class="col-5 control-label">Ngày giao</label>
@@ -60,13 +64,13 @@
                                         <label for="payment_method" class="col-5 control-label">Phương thức thanh
                                             toán</label>
                                         <div class="col-7">
-                                            <p>{{$order->paymentMethod->method}}</p>
+                                            <p>{{$order->payment->method}}</p>
                                         </div>
 
                                         <label for="payment_status" class="col-5 control-label">Trạng thái thanh
                                             toán</label>
                                         <div class="col-7">
-                                            <p>{{$order->paymentStatus->status}}</p>
+                                            <p>{{$order->payment->status}}</p>
                                         </div>
                                         <label for="order_updated_date" class="col-5 control-label">Ngày giao</label>
                                         <div class="col-7">
@@ -79,17 +83,17 @@
                                     <div class="row " style="border-top: solid 1px #cecece;padding-top: 10px;">
                                         <label for="restaurant" class="col-5 control-label">Quán ăn</label>
                                         <div class="col-7">
-                                            <p>{{$order->cart->food[0]->restaurant->name}}</p>
+                                            <p>{{$order->food[0]->restaurant->name}}</p>
                                         </div>
 
                                         <label for="restaurant_address" class="col-5 control-label">Địa chỉ</label>
                                         <div class="col-7">
-                                            <p>Damak Jhapa</p>
+                                            <p>{{$order->food[0]->restaurant->address}}</p>
                                         </div>
 
                                         <label for="restaurant_phone" class="col-5 control-label">Số điện thoại</label>
                                         <div class="col-7">
-                                            <p>+{{$order->cart->food[0]->restaurant->phone}}</p>
+                                            <p>+{{$order->food[0]->restaurant->phone}}</p>
                                         </div>
 
                                         <label for="driver" class="col-5 control-label">Driver</label>
@@ -121,7 +125,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($order->cart->food as $f)
+                                @foreach($order->food as $f)
                                     <tr role="row" class="odd">
                                         <td>
                                             #{{$f->id}}
@@ -129,15 +133,9 @@
                                         <td>
                                             {{$f->name}}
                                         </td>
-                                        @if(count($f->sizes)!=0)
-                                            <td>
-                                                @foreach($f->sizes as $s)
-                                                    {{$s->name}}
-                                                @endforeach
-                                            </td>
-                                        @elseif(count($f->sizes)==0)
-                                            <td>Không</td>
-                                        @endif
+                                        <td style="text-align: center">
+                                            {{$f->size}}
+                                        </td>
                                         @if(count($f->toppings)!=0)
                                             <td>
                                                 @foreach($f->toppings as $t)
@@ -162,10 +160,10 @@
                             </table>
                             <table
                                 class="display table w-30 thead-primary table table-striped table-bordered dataTable no-footer"
-                                style="width: 32%;margin-right: 0">
+                                style="width: 28%;margin-right: 0">
                                 <tr>
                                     <th class="text-right">Tạm tính</th>
-                                    <td><span>đ</span> {{$order->cart->sum_price}}</td>
+                                    {{--                                                                        <td><span>đ</span> {{$order->cart->sum_price}}</td>--}}
                                 </tr>
                                 <tr>
                                     <th class="text-right">Phí vận chuyển</th>
@@ -173,8 +171,11 @@
                                 </tr>
                                 <tr>
                                     <th class="text-right">Giảm giá</th>
-                                    <td><span>đ</span> chuwa lafm</td>
-                                </tr>
+                                    <td><span>đ</span> @if($order->discount_id != null)
+                                            {{$order->discount->percent}} %
+                                        @else
+                                        @endif
+                                    </td>
                                 <tr>
                                     <th class="text-right">Tổng</th>
                                     <td><span>đ</span> {{$order->price}}</td>

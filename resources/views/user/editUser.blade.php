@@ -3,15 +3,6 @@
     <div class="ms-content-wrapper">
         <div class="row">
             <div class="col-md-12">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb pl-0">
-                        <li class="breadcrumb-item"><a href="#"><i class="material-icons">home</i> Trang chủ</a>
-                        </li>
-                        <li class="breadcrumb-item"><a href="#">Người dùng</a>
-                        </li>
-                        <li class="breadcrumb-item active" aria-current="page">Thêm người dùng</li>
-                    </ol>
-                </nav>
                 <div class="ms-panel">
                     <div class="ms-panel-header">
                         <div class="d-flex justify-content-between">
@@ -33,32 +24,36 @@
                                             </div>
                                         @endif{{ method_field('PUT') }}
                                         <form method="post" action="{{route('admin-user.update',$users->id)}}">
-
+                                            {{ method_field('PUT') }}
                                             {{ csrf_field() }}
                                             <div class="row">
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
                                                         <label>Họ tên <span class="text-danger">*</span></label>
-                                                        <input class="form-control" type="text" name="username" value="{{$users->username}}">
+                                                        <input class="form-control" type="text" name="username"
+                                                               value="{{$users->username}}">
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
                                                         <label>Email <span class="text-danger">*</span></label>
-                                                        <input class="form-control" type="email" name="email" value="{{$users->email}}">
+                                                        <input class="form-control" type="email" name="email"
+                                                               value="{{$users->email}}">
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
                                                         <label>Số điện thoại<span
                                                                 class="text-danger">*</span> </label>
-                                                        <input class="form-control" type="text" name="phone" value="{{$users->phone}}">
+                                                        <input class="form-control" type="text" name="phone"
+                                                               value="{{$users->phone}}">
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
-                                                        <label>Địa chỉ</label>
-                                                        <input type="text" class="form-control" name="address" value="'{{$users->address}}'">
+                                                        <label>Địa chỉ<span class="text-danger">*</span></label>
+                                                        <input type="text" class="form-control" name="address"
+                                                               value="@foreach($users->address as $ua)@if($ua->status ==1){{$ua->address}}@endif @endforeach">
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
@@ -67,7 +62,8 @@
                                                         <div class="cal-icon input-group date"
                                                              data-date-format="dd/mm/yyyy">
                                                             <input id="datePicker" class="form-control datepicker"
-                                                                   placeholder="dd/mm/yyyy" type="text" name="dob" value="{{$users->dob}}">
+                                                                   placeholder="dd/mm/yyyy" type="text" name="dob"
+                                                                   value="{{$users->dob}}">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -76,11 +72,15 @@
                                                     <div class="form-group">
                                                         <label>Giới tính</label>
                                                         <select class="custom-select select select2-hidden-accessible"
-                                                                tabindex="-1" aria-hidden="true" name="gender" id="gender">
-                                                            <option value="1"{{($users->gender) == 'Nam' ? 'selected' : '' }} >
+                                                                tabindex="-1" aria-hidden="true" name="gender"
+                                                                id="gender">
+                                                            <option
+                                                                value="1"{{($users->gender) == 'Nam' ? 'selected' : '' }} >
                                                                 Nam
                                                             </option>
-                                                            <option value="2"{{($users->gender) == 'Nữ' ? 'selected' : '' }} >Nữ
+                                                            <option
+                                                                value="2"{{($users->gender) == 'Nữ' ? 'selected' : '' }} >
+                                                                Nữ
                                                             </option>
                                                         </select>
                                                     </div>
@@ -88,23 +88,27 @@
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
                                                         <label>Tiểu sử </label>
-                                                        <input class="form-control" type="text" name="bio" value="{{$users->bio}}">
+                                                        <input class="form-control" type="text" name="bio"
+                                                               value="{{$users->bio}}">
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
-                                                        <label>Phân quyền</label>
+                                                        <label>Phân quyền<span class="text-danger">*</span></label>
                                                         <label for="role">
                                                         </label>
                                                         <select class="custom-select select select2-hidden-accessible"
-                                                                                          tabindex="-1" aria-hidden="true" name="role_id">
-                                                            <option value="1" {{($users->role->id) == '1' ? 'selected' : '' }} >
+                                                                tabindex="-1" aria-hidden="true" name="role_id">
+                                                            <option
+                                                                value="1" {{($users->role->id) == '1' ? 'selected' : '' }} >
                                                                 User
                                                             </option>
-                                                            <option value="2" {{($users->role->id) == '2' ? 'selected' : '' }} >
+                                                            <option
+                                                                value="2" {{($users->role->id) == '2' ? 'selected' : '' }} >
                                                                 Admin
                                                             </option>
-                                                            <option  value="3" {{($users->role->id) == '3' ? 'selected' : '' }}>
+                                                            <option
+                                                                value="3" {{($users->role->id) == '3' ? 'selected' : '' }}>
                                                                 Shipper
                                                             </option>
 

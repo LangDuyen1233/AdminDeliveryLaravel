@@ -1642,7 +1642,7 @@ pre code {
 
 .table td, .table th {
     padding: .75rem;
-    vertical-align: top;
+    vertical-align: middle;
     border-top: 1px solid #dee2e6
 }
 
@@ -1669,6 +1669,7 @@ pre code {
 
 .table-bordered td, .table-bordered th {
     border: 1px solid #dee2e6
+
 }
 
 .table-bordered thead td, .table-bordered thead th {
@@ -2579,15 +2580,15 @@ a.btn.disabled, fieldset:disabled a.btn {
 }
 
 .btn-light {
-    color: #212529;
-    background-color: #f8f9fa;
-    border-color: #f8f9fa
+    /*color: #212529;*/
+    /*background-color: #f8f9fa;*/
+    /*border-color: #f8f9fa*/
 }
 
 .btn-light:hover {
-    color: #212529;
-    background-color: #e2e6ea;
-    border-color: #dae0e5
+    /*color: #212529;*/
+    /*background-color: #e2e6ea;*/
+    /*border-color: #dae0e5*/
 }
 
 .btn-light.focus, .btn-light:focus {

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Middleware\CheckLogin;
 use Illuminate\Support\Facades\Route;
 
@@ -17,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('login', [LoginController::class, 'getLogin']
+Route::get('/', [LoginController::class, 'getLogin']
 )->name('login');
 Route::post('login', [LoginController::class, 'doLogin'])->name('login');
 
@@ -27,18 +28,20 @@ Route::get('confirmforgotpass/{email}/{key}', [ForgotPasswordController::class, 
 Route::post('resetpass/{email}/{key}', [ForgotPasswordController::class, 'resetPass'])->name('resetpass');
 
 Route::get('register', "AuthController@getRegister")->name('register');
-Route::get('profile', "AuthController@getProfile")->name('profile');
+Route::get('profile', [AuthController::class, 'getProfile'])->name('profile');
+
+Route::get('logout', [LogoutController::class, 'doLogout'])->name('logout');
 
 //auth
 Route::middleware([CheckLogin::class])->group(function () {
     Route::get('home', function () {
         return view('pages.home');
     })->name('home');
-//end auth
 
 //admin user
     Route::resource('admin-user', UserController::class)->only(['index', 'create', 'store', 'update', 'edit', 'destroy']);
 
+    Route::post('/admin-user/import', [UserController::class, 'import'])->name('admin-user.import');
 //admin restaurant
     Route::resource('admin-restaurant', RestaurantController::class)->only(['index', 'create', 'store', 'update', 'edit', 'destroy']);
 //admin category
@@ -53,6 +56,8 @@ Route::middleware([CheckLogin::class])->group(function () {
     Route::resource('admin-review', ReviewController::class)->only(['index', 'update', 'edit', 'destroy']);
 
     Route::resource('admin-topping', ToppingController::class)->only(['index', 'create', 'store', 'update', 'edit', 'destroy']);
+
+    Route::resource('admin-statusOrder', OrderStatusController::class)->only(['index']);
 
 });
 //Route::get('addUser', function () {

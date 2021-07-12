@@ -12,7 +12,7 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $category = Category::with('restaurant')->get();
+        $category = Category::all();
 //        dd($category[0]->restaurant->name);
         return view('category.index',
             [
@@ -36,17 +36,14 @@ class CategoryController extends Controller
         $request->validate([
             'name' => 'required|max:100',
             'image' => 'required|max:100',
-            'restaurant_id' => 'required|max:100',
         ], $this->messages());
         $name = $request->get('name');
         $image = $request->get('image');
         $description = $request->get('description');
-        $restaurant_id = $request->get('restaurant_id');
         $category = new Category([
             'name' => $name,
             'image' => $image,
             'description' => $description,
-            'restaurant_id' => $restaurant_id,
         ]);
 //        dd($category);
         $category->save();
@@ -55,12 +52,10 @@ class CategoryController extends Controller
 
     public function edit($id)
     {
-        $restaurant = Restaurant::all();
-        $category = Category::where('id', $id)->with('restaurant')->first();
+        $category = Category::where('id', $id)->first();
         return View('category.edit',
             [
                 'category' => $category,
-                'restaurant' => $restaurant
             ]);
     }
 
@@ -70,14 +65,12 @@ class CategoryController extends Controller
         $request->validate([
             'name' => 'required|max:100',
             'image' => 'required|max:100',
-            'restaurant_id' => 'required|max:100',
         ], $this->messages());
         try {
             error_log($category);
             $category->name = $request->get('name');
             $category->image = $request->get('image');
             $category->description = $request->get('description');
-            $category->restaurant_id = $request->get('restaurant_id');
 
             $category->save();
             return redirect('admin-category')->withErrors(['mes' => "Cập nhật danh mục thành công"]);

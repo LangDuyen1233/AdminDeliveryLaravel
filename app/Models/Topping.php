@@ -18,8 +18,8 @@ class Topping extends Model
         'status'
     ];
 
-    public function category()
+    public function food()
     {
-        return $this->belongsTo(Category::class,'category_id');
+        return $this->belongsToMany(Food::class,'food_topping');
     }
 }

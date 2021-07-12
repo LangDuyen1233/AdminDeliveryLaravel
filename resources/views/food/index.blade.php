@@ -31,9 +31,9 @@
                                 <th>Đơn giá</th>
                                 <th>Khối lượng</th>
                                 <th>Thành phần</th>
-                                <th>Ghi chú</th>
                                 <th>Thể loại</th>
                                 <th>Quán ăn</th>
+                                <th>Topping</th>
                                 <th>Trạng thái</th>
                                 <th>Thao tác</th>
                             </tr>
@@ -60,29 +60,41 @@
                                                  alt="food1">
                                         @endif
                                     </td>
-                                    <td>{{$f->price}}</td>
-                                    <td>{{$f->weight}}</td>
+                                    <td>{{$f->price}} VND</td>
+                                    <td>{{$f->weight}} g</td>
                                     <td>{{$f->ingredients}}</td>
-                                    <td>{{$f->note}}</td>
                                     <td>{{$f->category->name}}</td>
                                     <td>{{$f->restaurant->name}}</td>
+                                    <td>
+                                        @foreach($f->toppings as $r)
+                                            <li style="list-style-type: none">{{$r->name}}</li>
+                                        @endforeach
+                                    </td>
                                     <td style="text-align: center">
                                         @if($f->status==1)
-                                            <span class="badge badge-success">Yes</span>
+                                            <span class="badge badge-success">Họat động</span>
                                         @elseif($f->status==0)
-                                            <span class="badge badge-danger">No</span>
+                                            <span class="badge badge-danger">Khóa</span>
                                         @endif
                                     </td>
-                                    <td style="display: flex;justify-content: space-around;border-bottom: none;">
-                                        <a class="edit hvicon" style="color: green"
+                                    <td style="text-align: center">
+                                        <a class="edit hvicon" style="color: green;padding: 10px"
                                            href="{{route('admin-food.edit',$f->id)}}"
                                         ><i
-                                                class="material-icons">&#xE254;</i>Edit</a>
-                                        <a class="delete hvicon" data-toggle="modal"
-                                           href="{{route('admin-food.destroy',$f->id)}}"
-                                           data-target="#modal-delete{{$f->id}}"
-                                           style="color: red"><i
-                                                class=" material-icons">&#xE872;</i>Delete</a>
+                                                class="material-icons">&#xE254;</i></a>
+                                        @if($f->status==1)
+                                            <a class="delete hvicon" data-toggle="modal"
+                                               href="{{route('admin-food.destroy',$f->id)}}"
+                                               data-target="#modal-delete{{$f->id}}"
+                                               style="color: red"><i
+                                                    class=" material-icons">&#xe897;</i></a>
+                                        @else
+                                            <a class="delete hvicon" data-toggle="modal"
+                                               href="{{route('admin-food.destroy',$f->id)}}"
+                                               data-target="#modal-delete{{$f->id}}"
+                                               style="color: red"><i
+                                                    class=" material-icons">&#xe898;</i></a>
+                                        @endif
                                     </td>
                                 </tr>
 
@@ -102,18 +114,33 @@
                                                             aria-label="Close"><span
                                                             aria-hidden="true">×</span>
                                                     </button>
-                                                    <i class="flaticon-secure-shield d-block"></i>
-                                                    <h1>Xóa món ăn</h1>
-                                                    <p>Bạn chắc chắn muốn xóa món ăn?</p>
-                                                    <button type="submit"
-                                                            class="btn btn-secondary btn-lg mr-2 rounded-lg"
-                                                            data-dismiss="modal">
-                                                        Hủy
-                                                    </button>
-                                                    <button type="submit"
-                                                            class="btn btn-danger btn-lg rounded-lg">
-                                                        Xóa
-                                                    </button>
+                                                    @if($f->status == 1)
+                                                        <i class="flaticon-secure-shield d-block"></i>
+                                                        <h1>Khóa món ăn.</h1>
+                                                        <p>Bạn có chắc chắn muốn khóa không?</p>
+                                                        <button type="submit"
+                                                                class="btn btn-secondary btn-lg mr-2 rounded-lg"
+                                                                data-dismiss="modal">
+                                                            Hủy
+                                                        </button>
+                                                        <button type="submit"
+                                                                class="btn btn-danger btn-lg rounded-lg">
+                                                            Khóa
+                                                        </button>
+                                                    @else
+                                                        <i class="flaticon-secure-shield d-block"></i>
+                                                        <h1>Mở khóa món ăn.</h1>
+                                                        <p>Bạn có chắc chắn muốn mở khóa không?</p>
+                                                        <button type="submit"
+                                                                class="btn btn-secondary btn-lg mr-2 rounded-lg"
+                                                                data-dismiss="modal">
+                                                            Hủy
+                                                        </button>
+                                                        <button type="submit"
+                                                                class="btn btn-danger btn-lg rounded-lg">
+                                                            Mở khóa
+                                                        </button>
+                                                    @endif
                                                 </form>
                                             </div>
                                         </div>

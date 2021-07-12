@@ -17,7 +17,6 @@ class Food extends Model
         'weight',
         'ingredients',
         'status',
-        'note',
         'restaurant_id',
         'category_id',
     ];
@@ -32,15 +31,10 @@ class Food extends Model
         return $this->belongsTo(Category::class);
     }
 
-//    public function toppings()
-//    {
-//        return $this->hasMany(Topping::class,'food_id');
-//    }
-//
-//    public function sizes()
-//    {
-//        return $this->hasMany(Size::class);
-//    }
+    public function toppings()
+    {
+        return $this->belongsToMany(Topping::class,'food_topping');
+    }
 
     public function image()
     {
@@ -50,5 +44,10 @@ class Food extends Model
     public function carts()
     {
         return $this->belongsTo(Cart::class, 'cart_order');
+    }
+
+    public function order()
+    {
+        return $this->belongsToMany(Order::class, 'food_orders');
     }
 }

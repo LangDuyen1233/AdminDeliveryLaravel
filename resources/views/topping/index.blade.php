@@ -30,7 +30,6 @@
                                 <th>ID</th>
                                 <th>Tên topping</th>
                                 <th>Giá</th>
-                                <th>Danh mục</th>
                                 <th>Trạng thái</th>
                                 <th>Thao tác</th>
                             </tr>
@@ -46,12 +45,11 @@
                                         {{$tp-> name}}
                                     </td>
                                     <td>{{$tp->price}}</td>
-                                    <td>{{$tp->category->name}}</td>
                                     <td style="text-align: center">
                                         @if($tp->status==1)
-                                            <span class="badge badge-success">Yes</span>
+                                            <span class="badge badge-success">Hoạt động</span>
                                         @elseif($tp->status==0)
-                                            <span class="badge badge-danger">No</span>
+                                            <span class="badge badge-danger">Khóa</span>
                                         @endif
                                     </td>
                                     <td style="display: flex;justify-content: space-around;border-bottom: none;">
@@ -85,7 +83,7 @@
                                                             aria-hidden="true">×</span>
                                                     </button>
                                                     <i class="flaticon-secure-shield d-block"></i>
-                                                    <h1>Xóa đánh giá</h1>
+                                                    <h1>Xóa topping</h1>
                                                     <p>Bạn có chắc chắn muốn xóa không?</p>
                                                     <button type="submit"
                                                             class="btn btn-secondary btn-lg mr-2 rounded-lg"

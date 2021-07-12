@@ -2,16 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Restaurant;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use phpDocumentor\Reflection\Types\Array_;
+use function Complex\add;
 
 class RestaurantController extends Controller
 {
     public function index()
     {
-        $restaurant = Restaurant::all();
-//        dd($res);
+        $restaurant = Restaurant::with('category')->with('user')->get();
+//        dd($restaurant);
         return view('restaurant.index',
             [
                 'restaurant' => $restaurant,
@@ -21,42 +24,56 @@ class RestaurantController extends Controller
 
     public function create()
     {
-        return View('restaurant.create');
+        $category = Category::all();
+        return View('restaurant.create',
+            [
+                'category' => $category,
+            ]
+        );
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|max:100',
-            'phone' => 'required|numeric|min:11',
+            'name' => 'required|unique:restaurants,name|max:100',
+            'phone' => 'required|numeric|min:10|regex:/^0[0-9]/',
             'address' => 'required|max:100',
+            'image' => 'required|max:100',
+            'category_id' => 'required|max:100',
         ], $this->messages());
         $name = $request->get('name');
         $phone = $request->get('phone');
         $address = $request->get('address');
+        $image = $request->get('image');
         $rating = $request->get('rating');
-        $longtitude = $request->get('longtitude');
-        $lattitude = $request->get('lattitude');
         $description = $request->get('description');
+        $category_id = $request->get('category_id');
         $restaurant = new Restaurant([
             'name' => $name,
             'address' => $address,
+            'image' => $image,
             'phone' => $phone,
             'rating' => $rating,
-            'longtitude' => $longtitude,
-            'lattitude' => $lattitude,
             'description' => $description,
+            'active' => $request->get('active'),
         ]);
 //        dd($restaurant);
         $restaurant->save();
+        foreach ($category_id as $c) {
+            error_log($c);
+            $restaurant->category()->attach($restaurant->id, ['restaurant_id' => $restaurant->id, 'category_id' => $c]);
+        }
+
         return redirect('admin-restaurant')->withErrors(['mes' => "Thêm quán ăn thành công"]);
     }
 
     public function edit($id)
     {
-        $restaurant = Restaurant::where('id', $id)->first();
+        $category = Category::all();
+        $restaurant = Restaurant::where('id', $id)->with('category')->first();
         return View('restaurant.edit',
             [
+                'category' => $category,
                 'restaurant' => $restaurant,
             ]);
     }
@@ -73,19 +90,23 @@ class RestaurantController extends Controller
         $request->validate([
             'name' => 'required|max:100',
             'address' => 'required|max:100',
-            'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10'
+            'phone' => 'required|numeric|min:10|regex:/^0[0-9]/',
+            'image' => 'required|max:100',
+            'category_id' => 'required|max:100',
         ], $this->messages());
         try {
-            error_log($r);
             $r->name = $request->get('name');
             $r->phone = $request->get('phone');
             $r->address = $request->get('address');
+            $r->image = $request->get('image');
             $r->rating = $request->get('rating');
-            $r->longtitude = $request->get('longtitude');
-            $r->lattitude = $request->get('lattitude');
             $r->description = $request->get('description');
+            $r->active = $request->get('active');
+            $category_id = $request->get('category_id');
 
             $r->save();
+            $r->category()->sync($category_id);
+
             return redirect('admin-restaurant')->withErrors(['mes' => "Cập nhật quán ăn thành công"]);
 
         } catch (\Exception $e) {
@@ -98,15 +119,18 @@ class RestaurantController extends Controller
     public function destroy($id)
     {
 
-        $u = Restaurant::find($id);
-        if (!isset($u)) {
-            return response('', 404);
-        }
-
+        $r = Restaurant::find($id);
 
         try {
-            $u->delete();
-            return redirect()->back()->withErrors(['mes' => "Xóa quán ăn thành công"]);
+//            dd($r->category);
+            if ($r->active == 0) {
+                $r->active = 1;
+                $r->update();
+            } else {
+                $r->active = 0;
+                $r->update();
+            }
+            return redirect()->back()->withErrors(['mes' => "Cập nhật quán ăn thành công"]);
         } catch (\Exception $e) {
             return response('', 500);
         }
@@ -116,10 +140,13 @@ class RestaurantController extends Controller
     {
         return [
             'name.required' => 'Bạn cần nhập họ tên',
+            'name.unique' => 'Tên đã được sử dụng, bạn cần chọn tên khác',
             'address.required' => 'Bạn cần nhập địa chỉ',
             'phone.required' => 'Bạn cần phải nhập số điện thoại.',
             'phone.min' => 'Số điện thoại phải lớn hơn 10 số.',
             'phone.regex' => 'Số điện thoại không đúng định dạng.',
+            'image.required' => 'Bạn cần chọn hình ảnh',
+            'category_id.required' => 'Bạn cần chọn danh mục',
         ];
     }
 

@@ -29,35 +29,20 @@
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
                                                         <label>Tên topping <span class="text-danger">*</span></label>
-                                                        <input class="form-control" type="text" name="name">
+                                                        <input class="form-control" type="text" name="name"
+                                                               value="{{ old('name') }}">
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
                                                         <label>Giá <span class="text-danger">*</span></label>
                                                         <div class="input-group mb-3">
-                                                            <input class="form-control" type="number" step="10.000" min="0" name="price">
+                                                            <input class="form-control" type="number" step="10.000"
+                                                                   min="0" name="price" value="{{ old('price') }}">
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text">VND</span>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <div class="form-group">
-                                                        <label>Danh mục<span class="text-danger">*</span></label>
-                                                        <select class="custom-select select select2-hidden-accessible"
-                                                                tabindex="-1" aria-hidden="true" name="category_id">
-                                                            <option>
-                                                                Chọn danh mục
-                                                            </option>
-                                                            @foreach($category as $c)
-                                                                <option
-                                                                    {{old('category_id')=="1"? 'selected':''}} value="{{$c->id}}">
-                                                                    {{$c->name}}
-                                                                </option>
-                                                            @endforeach
-                                                        </select>
                                                     </div>
                                                 </div>
                                             </div>

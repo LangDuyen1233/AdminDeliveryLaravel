@@ -3,15 +3,6 @@
     <div class="ms-content-wrapper">
         <div class="row">
             <div class="col-md-12">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb pl-0">
-                        <li class="breadcrumb-item"><a href="#"><i class="material-icons">home</i> Trang chủ</a>
-                        </li>
-                        <li class="breadcrumb-item"><a href="#">Người dùng</a>
-                        </li>
-                        <li class="breadcrumb-item active" aria-current="page">Thêm người dùng</li>
-                    </ol>
-                </nav>
                 <div class="ms-panel">
                     <div class="ms-panel-header">
                         <div class="d-flex justify-content-between">
@@ -38,20 +29,20 @@
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
                                                         <label>Họ tên <span class="text-danger">*</span></label>
-                                                        <input class="form-control" type="text" name="username">
+                                                        <input class="form-control" type="text" name="username" value="{{ old('username') }}">
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
                                                         <label>Email <span class="text-danger">*</span></label>
-                                                        <input class="form-control" type="email" name="email">
+                                                        <input class="form-control" type="email" name="email" value="{{ old('email') }}">
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
                                                         <label>Mật khẩu<span
                                                                 class="text-danger">*</span></label>
-                                                        <input class="form-control" type="password" name="password">
+                                                        <input class="form-control" type="password" name="password" >
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
@@ -65,13 +56,13 @@
                                                     <div class="form-group">
                                                         <label>Số điện thoại<span
                                                                 class="text-danger">*</span> </label>
-                                                        <input class="form-control" type="text" name="phone">
+                                                        <input class="form-control" type="text" name="phone" value="{{ old('phone') }}">
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
-                                                        <label>Địa chỉ</label>
-                                                        <input type="text" class="form-control" name="address">
+                                                        <label>Địa chỉ<span class="text-danger">*</span></label>
+                                                        <input type="text" class="form-control" name="address" value="{{ old('address') }}">
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
@@ -80,7 +71,7 @@
                                                         <div class="cal-icon input-group date"
                                                              data-date-format="dd/mm/yyyy">
                                                             <input id="datePicker" class="form-control datepicker"
-                                                                   placeholder="dd/mm/yyyy" type="text" name="dob">
+                                                                   placeholder="dd/mm/yyyy" type="text" name="dob" value="{{ old('dob') }}">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -101,12 +92,12 @@
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
                                                         <label>Tiểu sử </label>
-                                                        <input class="form-control" type="text" name="bio">
+                                                        <input class="form-control" type="text" name="bio"value="{{ old('bio') }}">
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
-                                                        <label>Phân quyền</label>
+                                                        <label>Phân quyền<span class="text-danger">*</span></label>
                                                         <select class="custom-select select select2-hidden-accessible"
                                                                 tabindex="-1" aria-hidden="true" name="role_id">
                                                             <option {{old('role_id')=="1"? 'selected':''}} value="1">

@@ -1,4 +1,17 @@
 @extends('layouts.master')
+@section('css')
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/css/bootstrap-select.min.css">
+    <style>
+        .dropdown {
+            margin-top: -15px;
+        }
+
+        .bootstrap-select .dropdown-toggle:focus, .bootstrap-select > select.mobile-device:focus  .dropdown-toggle {
+            outline: none !important;
+        }
+    </style>
+@endsection
 @section('content')
     <div class="ms-content-wrapper">
         <div class="row">
@@ -29,20 +42,24 @@
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
                                                         <label>Tên món ăn <span class="text-danger">*</span></label>
-                                                        <input class="form-control" type="text" name="name">
+                                                        <input class="form-control" type="text" name="name"
+                                                               value="{{ old('name') }}">
                                                     </div>
                                                 </div>
+
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
-                                                        <label>Size <span class="text-danger">*</span></label>
-                                                        <input class="form-control" type="text" name="size">
+                                                        <label>Size </label>
+                                                        <input class="form-control" type="text" name="size"
+                                                               value="{{ old('size') }}">
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
                                                         <label>Giá <span class="text-danger">*</span></label>
                                                         <div class="input-group mb-3">
-                                                            <input class="form-control" type="number" step="10.000" min="0" name="price">
+                                                            <input class="form-control" type="number" step="10.000"
+                                                                   min="0" name="price" value="{{ old('price') }}">
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text">VND</span>
                                                             </div>
@@ -53,7 +70,8 @@
                                                     <div class="form-group">
                                                         <label>Khối lượng</label>
                                                         <div class="input-group mb-3">
-                                                            <input class="form-control" type="number" name="weight">
+                                                            <input class="form-control" type="number" name="weight"
+                                                                   value="{{ old('weight') }}">
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text">g</span>
                                                             </div>
@@ -63,13 +81,15 @@
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
                                                         <label>Thành phần<span class="text-danger">*</span></label>
-                                                        <input class="form-control" type="text" name="ingredients">
+                                                        <input class="form-control" type="text" name="ingredients"
+                                                               value="{{ old('ingredients') }}">
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
                                                         <label>Ghi chú</label>
-                                                        <input class="form-control" type="text" name="note">
+                                                        <input class="form-control" type="text" name="note"
+                                                               value="{{ old('note') }}">
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
@@ -107,11 +127,12 @@
                                                         </select>
                                                     </div>
                                                 </div>
+
                                                 <div class="col-sm-6">
                                                     <div class="mx-auto avt-wrapper ">
                                                         <img id='avt_img' name="image" style="width:70px"
                                                              {{--                                                             src="https://thaoduoc3mien.com/wp-content/uploads/2017/07/food-2-1.jpg"--}}
-                                                             alt="User Photo" class=" z-depth-1 mb-3 mx-auto"/>
+                                                             alt="Thêm hình ảnh" class=" z-depth-1 mb-3 mx-auto"/>
                                                     </div>
                                                     <div>
                                                         <label>Hình ảnh <span class="text-danger">*</span></label>
@@ -122,14 +143,28 @@
                                                                    id="image"/>
                                                             <div class="input-group-append">
                                                                 <button class="btn btn-outline-secondary" type="button"
-                                                                        onclick="avatar('image','avt_img')">Select
-                                                                    file
+                                                                        onclick="avatar('image','avt_img')"> Select file
                                                                 </button>
                                                             </div>
                                                         </div>
                                                     </div>
-
                                                 </div>
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label>Topping</label>
+                                                        <select class="selectpicker w-100"
+                                                            tabindex="-1" aria-hidden="true" name="topping_id[]"
+                                                            multiple="multiple" title="Chọn topping">
+                                                            @foreach($topping as $t)
+                                                                <option
+                                                                    {{old('topping_id')=="1"? 'selected':''}} value="{{$t->id}}">
+                                                                    {{$t->name}}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+
                                             </div>
                                             <div class="form-group">
                                                 <label class="display-block">Trạng thái</label>
@@ -138,7 +173,7 @@
                                                            id="employee_inactive"
                                                            value="0" {{ (old('status' )==0?'checked="checked"':'') }}>
                                                     <label class="form-check-label" for="employee_inactive">
-                                                        Không kích hoạt
+                                                        Khóa
                                                     </label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
@@ -147,7 +182,7 @@
                                                            value="1" checked=""
                                                         {{ (old('status' )==1?'checked="checked"':'') }}>
                                                     <label class="form-check-label" for="employee_active">
-                                                        Kích hoạt
+                                                        Hoạt động
                                                     </label>
                                                 </div>
                                             </div>
@@ -195,4 +230,6 @@
         }
     </script>
     <script src="{{asset('plugin/ckfinder/ckfinder.js')}}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/i18n/defaults-*.min.js"></script>
 @endsection

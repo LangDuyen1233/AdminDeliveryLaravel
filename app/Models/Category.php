@@ -14,7 +14,6 @@ class Category extends Model
         'name',
         'image',
         'description',
-        'restaurant_id'
     ];
 
     public function foods()
@@ -24,7 +23,7 @@ class Category extends Model
 
     public function restaurant()
     {
-        return $this->belongsTo(Restaurant::class,'restaurant_id');
+        return $this->belongsToMany(Restaurant::class,'category_restaurant');
     }
 
     public function topping()

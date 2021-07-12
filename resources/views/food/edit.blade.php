@@ -1,4 +1,17 @@
 @extends('layouts.master')
+@section('css')
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/css/bootstrap-select.min.css">
+    <style>
+        .dropdown {
+            margin-top: -15px;
+        }
+
+        .bootstrap-select .dropdown-toggle:focus, .bootstrap-select > select.mobile-device:focus .dropdown-toggle {
+            outline: none !important;
+        }
+    </style>
+@endsection
 @section('content')
     <div class="ms-content-wrapper">
         <div class="row">
@@ -110,30 +123,44 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
-                                                        <div class="mx-auto avt-wrapper ">
-                                                            <img id='avt_img' name="image" style="width:70px"
-                                                                 src="{{$food->image[0]->url}}"
-                                                                 alt="User Photo" class=" z-depth-1 mb-3 mx-auto"/>
-                                                        </div>
-                                                        <div>
-                                                            <label>Hình ảnh <span class="text-danger">*</span></label>
-                                                            <div class="input-group mb-3">
+                                                    <div class="mx-auto avt-wrapper ">
+                                                        <img id='avt_img' name="image" style="width:70px"
+                                                             src="{{$food->image[0]->url}}"
+                                                             alt="User Photo" class=" z-depth-1 mb-3 mx-auto"/>
+                                                    </div>
+                                                    <div>
+                                                        <label>Hình ảnh <span class="text-danger">*</span></label>
+                                                        <div class="input-group mb-3">
 
-                                                                <input aria-describedby="basic-addon2"
-                                                                       class="form-control"
-                                                                       type="text" size="48" name="image"
-                                                                       id="image"
-                                                                       value="{{$food->image[0]->url}}"
-                                                                />
-                                                                <div class="input-group-append">
-                                                                    <button class="btn btn-outline-secondary"
-                                                                            type="button"
-                                                                            onclick="avatar('image','avt_img')">Select
-                                                                        file
-                                                                    </button>
-                                                                </div>
+                                                            <input aria-describedby="basic-addon2"
+                                                                   class="form-control"
+                                                                   type="text" size="48" name="image"
+                                                                   id="image"
+                                                                   value="{{$food->image[0]->url}}"
+                                                            />
+                                                            <div class="input-group-append">
+                                                                <button class="btn btn-outline-secondary"
+                                                                        type="button"
+                                                                        onclick="avatar('image','avt_img')">Select
+                                                                    file
+                                                                </button>
                                                             </div>
                                                         </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label>Topping<span class="text-danger">*</span></label>
+                                                        <select class="selectpicker w-100"
+                                                                tabindex="-1" aria-hidden="true" name="topping_id[]"
+                                                                multiple="multiple" @if(count($food->toppings) <= 0)}} title="Chọn topping" @endif >
+                                                            @foreach($topping as $tp)
+                                                                <option
+                                                                    @if(in_array($tp->id, $food->toppings->pluck('id')->toArray())) selected
+                                                                    @endif value="{{ $tp->id }}">{{ $tp->name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -141,19 +168,19 @@
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="radio" name="status"
                                                            id="{{$food->id}}employee_inactive"
-                                                           value="0" {{ ($food->active==0?'checked="checked"':'') }}>
+                                                           value="0" {{ ($food->status==0?'checked="checked"':'') }}>
                                                     <label class="form-check-label"
                                                            for="{{$food->id}}employee_inactive">
-                                                        Không kích hoạt
+                                                        Khóa
                                                     </label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="radio" name="status"
                                                            id="{{$food->id}}employee_active"
                                                            value="1" checked=""
-                                                        {{ ($food->active==1?'checked="checked"':'') }}>
+                                                        {{ ($food->status==1?'checked="checked"':'') }}>
                                                     <label class="form-check-label" for="{{$food->id}}employee_active">
-                                                        Kích hoạt
+                                                        Hoạt động
                                                     </label>
                                                 </div>
                                             </div>
@@ -201,4 +228,6 @@
         }
     </script>
     <script src="{{asset('plugin/ckfinder/ckfinder.js')}}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/i18n/defaults-*.min.js"></script>
 @endsection

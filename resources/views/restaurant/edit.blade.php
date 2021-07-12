@@ -1,17 +1,21 @@
 @extends('layouts.master')
+@section('css')
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/css/bootstrap-select.min.css">
+    <style>
+        .dropdown {
+            margin-top: -15px;
+        }
+        .bootstrap-select .dropdown-toggle:focus, .bootstrap-select > select.mobile-device:focus  .dropdown-toggle {
+            outline: none !important;
+        }
+    </style>
+@endsection
 @section('content')
+    {{--    {{ $arr = $restaurant->category}}--}}
     <div class="ms-content-wrapper">
         <div class="row">
             <div class="col-md-12">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb pl-0">
-                        <li class="breadcrumb-item"><a href="#"><i class="material-icons">home</i> Trang chủ</a>
-                        </li>
-                        <li class="breadcrumb-item"><a href="#">Người dùng</a>
-                        </li>
-                        <li class="breadcrumb-item active" aria-current="page">Thêm quán ăn</li>
-                    </ol>
-                </nav>
                 <div class="ms-panel">
                     <div class="ms-panel-header">
                         <div class="d-flex justify-content-between">
@@ -69,30 +73,71 @@
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
-                                                        <label>Longtitude<span
-                                                                class="text-danger">*</span> </label>
-                                                        <input class="form-control" type="text" name="longtitude"
-                                                               value="{{$restaurant->longtitude}}">
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <div class="form-group">
-                                                        <label>Lattitude<span
-                                                                class="text-danger">*</span> </label>
-                                                        <input class="form-control" type="text" name="lattitude"
-                                                               value="{{$restaurant->lattitude}}">
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <div class="form-group">
                                                         <label>Mô tả </label>
                                                         <input class="form-control" type="text" name="description"
                                                                value="{{$restaurant->description}}">
                                                     </div>
                                                 </div>
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label>Thể loại<span class="text-danger">*</span></label>
+                                                        <select class="selectpicker w-100"
+                                                            tabindex="-1" aria-hidden="true" name="category_id[]"
+                                                            multiple="multiple" title="">
+                                                            @foreach($category as $c)
+                                                                <option
+                                                                    @if(in_array($c->id, $restaurant->category->pluck('id')->toArray())) selected
+                                                                    @endif value="{{ $c->id }}">{{ $c->name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="mx-auto avt-wrapper ">
+                                                        <img id='avt_img' name="image"
+                                                             src="{{$restaurant->image}}"
+                                                             alt="Photo" class="z-depth-1 mb-3 mx-auto"/>
+                                                    </div>
+                                                    <div>
+                                                        <label>Hình ảnh <span class="text-danger">*</span></label>
+                                                        <div class="input-group mb-3">
+
+                                                            <input aria-describedby="basic-addon2" class="form-control"
+                                                                   type="text" size="48" name="image"
+                                                                   id="image" value="{{$restaurant->image}}"/>
+                                                            <div class="input-group-append">
+                                                                <button class="btn btn-outline-secondary" type="button"
+                                                                        onclick="avatar('image','avt_img')">Select
+                                                                    file
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="display-block">Trạng thái</label>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="active"
+                                                           id="{{$restaurant->id}}employee_inactive"
+                                                           value="0" {{ ($restaurant->active==0?'checked="checked"':'') }}>
+                                                    <label class="form-check-label" for="{{$restaurant->id}}employee_inactive">
+                                                        Khóa
+                                                    </label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="active"
+                                                           id="{{$restaurant->id}}employee_active"
+                                                           value="1" {{ ($restaurant->active==1?'checked="checked"':'') }}>
+                                                    <label class="form-check-label" for="{{$restaurant->id}}employee_active">
+                                                        Kích hoạt
+                                                    </label>
+                                                </div>
                                             </div>
                                             <div class="m-t-20 text-center">
-                                                <button type="submit" class="btn btn-outline-primary ms-graph-metrics"
+                                                <button type="submit"
+                                                        class="btn btn-outline-primary ms-graph-metrics"
                                                         name="button">Tạo quán ăn
                                                 </button>
                                             </div>
@@ -106,4 +151,37 @@
             </div>
         </div>
     </div>
+@endsection
+@section('script')
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/i18n/defaults-*.min.js"></script>
+    <script src="{{asset('plugin/ckfinder/ckfinder.js')}}"></script>
+    <script>
+        function avatar(elementId, ava) {
+            CKFinder.popup({
+                chooseFiles: true,
+                // type: "Avatar",
+                width: 800,
+                height: 600,
+                onInit: function (finder) {
+                    finder.on("files:choose", function (evt) {
+                        var file = evt.data.files.first();
+                        var output = document.getElementById(elementId);
+                        var out = document.getElementById(ava);
+                        output.value = file.getUrl();
+                        out.src = file.getUrl();
+
+
+                    });
+
+                    finder.on("file:choose:res ", function (
+                        evt
+                    ) {
+                        var output = document.getElementById(elementId);
+                        output.value = evt.data.resizedUrl;
+                    });
+                },
+            });
+        }
+    </script>
 @endsection

@@ -18,28 +18,56 @@
         <li class="menu-item">
 
             <a href="{{route('admin-user.index')}}" class="{{(Route::is('admin-user.*')?'active':'')}}">
-                <span><i class="fas fa-user-friends fs-16"></i>Ql người dùng</span></a>
+                <span><i class="fas fa-user-friends fs-16"></i>Người dùng</span></a>
 
-        </li>
-        <li class="menu-item">
-
-            <a href="{{route('admin-restaurant.index')}}" class="{{(Route::is('admin-restaurant.*')?'active':'')}}">
-                <span><i class="fas fa-utensils"></i>QL quán ăn</span></a>
         </li>
         <li class="menu-item">
 
             <a href="{{route('admin-category.index')}}" class="{{(Route::is('admin-category.*')?'active':'')}}">
                 <span><i class="fas fa-list-alt  fs-16"></i>Danh mục</span></a>
         </li>
+
         <li class="menu-item">
 
-            <a href="{{route('admin-food.index')}}" class="{{(Route::is('admin-food.*')?'active':'')}}">
-                <span><i class="fa fa-archive fs-16"></i>Menu</span></a>
+            <a href="{{route('admin-restaurant.index')}}" class="{{(Route::is('admin-restaurant.*')?'active':'')}}">
+                <span><i class="fas fa-utensils"></i>Quán ăn</span></a>
         </li>
+
         <li class="menu-item">
 
-            <a href="{{route('admin-order.index')}}" class="{{(Route::is('admin-order.*')?'active':'')}}">
-                <span><i class="nav-icon fa fa-shopping-basket"></i>QL đơn hàng</span></a>
+            <a href="#" class="has-chevron" data-toggle="collapse" data-target="#restaurant" aria-expanded="false"
+               aria-controls="restaurant"> <span><i class="fa fa-archive fs-16"></i>Menu</span>
+            </a>
+            <ul id="restaurant" class="collapse" aria-labelledby="restaurant" data-parent="#side-nav-accordion"
+                style="">
+                {{--                <li></li>--}}
+                <li><a href="{{route('admin-food.index')}}" class="{{(Route::is('admin-food.*')?'active':'')}}"
+                       style="padding-left: 5px">
+                        <span><i class="fa fa-archive fs-16"></i>Menu</span></a>
+                </li>
+                <li><a href="{{route('admin-topping.index')}}" class="{{(Route::is('admin-topping.*')?'active':'')}}"
+                       style="padding-left: 5px">
+                        <span><i class="fas fa-spa"></i>Topping</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        <li class="menu-item">
+            <a href="#" class="has-chevron" data-toggle="collapse" data-target="#order" aria-expanded="false"
+               aria-controls="order"> <span><i class="nav-icon fa fa-shopping-basket"></i>Đơn hàng </span>
+            </a>
+            <ul id="order" class="collapse" aria-labelledby="order" data-parent="#side-nav-accordion">
+                <li><a href="{{route('admin-order.index')}}" class="{{(Route::is('admin-order.*')?'active':'')}}"
+                       style="padding-left: 5px">
+                        <span><i class="nav-icon fa fa-shopping-basket"></i>Đơn hàng</span></a>
+                </li>
+                <li><a href="{{route('admin-statusOrder.index')}}" class="{{(Route::is('admin-statusOrder.*')?'active':'')}}"
+                       style="padding-left: 5px"><span><i class="nav-icon fa fa-server">
+                            </i>Trạng thái đơn hàng</span></a>
+                </li>
+                </li>
+            </ul>
         </li>
 
         <li class="menu-item">
@@ -52,11 +80,7 @@
                 <span><i class="fa fa-comment fs-16"></i>Đánh giá</span>
             </a>
         </li>
-        <li class="menu-item">
-            <a href="{{route('admin-topping.index')}}" class="{{(Route::is('admin-topping.*')?'active':'')}}">
-                <span><i class="fas fa-ice-cream"></i>Topping</span>
-            </a>
-        </li>
+
         <!-- /Apps -->
     </ul>
 </aside>
