@@ -14,7 +14,6 @@ class Topping extends Model
         'id',
         'name',
         'price',
-        'category_id',
         'status'
     ];
 

@@ -3,18 +3,15 @@
 namespace App\Http\Controllers\API\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Middleware\Authenticate;
 use App\Mails\ActiveAcount;
 use App\Models\User;
-use Illuminate\Auth\Events\Authenticated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
-use Laravel\Passport\Passport;
 
-class AuthController extends Controller
+class   AuthController extends Controller
 {
     public function registerSocial(Request $request)
     {
@@ -179,4 +176,34 @@ class AuthController extends Controller
         }
     }
 
+    public function loginOwner(Request $request)
+    {
+        $dataLogin = [
+            'email' => $request->email,
+            'password' => $request->password,
+        ];
+        error_log($request->email);
+        error_log($request->password);
+//
+        if (auth()->attempt($dataLogin) && auth()->user()->role_id == 3) {
+            error_log($request->password);
+            $token = auth()->user()->token;
+            error_log($token);
+            $checkExpire = Carbon::parse(auth()->user()->expires_at);
+            $now = Carbon::now();
+            if ($token == null) {
+                $token = auth()->user()->createToken('authToken')->accessToken;
+                auth()->user()->expires_at = Carbon::now()->addMinute(5)->format('Y-m-d H:i:s');
+                auth()->user()->token = $token;
+                auth()->user()->update();
+            } else if ($now->lt($checkExpire) == false) {
+                auth()->user()->expires_at = null;
+                auth()->user()->token = null;
+                auth()->user()->update();
+            }
+            return response()->json(['token' => $token], 200);
+        } else {
+            return response()->json(['error' => 'Unauthorised'], 401);
+        }
+    }
 }

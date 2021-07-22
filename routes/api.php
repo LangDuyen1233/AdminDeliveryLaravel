@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\API\AdminDelivery\CategoryController;
+use App\Http\Controllers\API\AdminDelivery\FoodController;
 use App\Http\Controllers\API\Auth\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -26,6 +28,7 @@ use App\Http\Controllers\API\AppDelivery\ProfileController;
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/registerSocial', [AuthController::class, 'registerSocial']);
 Route::post('/login', [AuthController::class, 'login']);
+Route::post('/loginowner', [AuthController::class, 'loginOwner']);
 Route::get('/confirmemail/{email}/{key}', [AuthController::class, 'confirmEmail'])->name('confirmemail');
 
 Route::middleware('auth:api')->group(function () {
@@ -35,6 +38,19 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/listrestaurant', [HomeComtroller::class, 'getRestaurant']);
     Route::get('/listaddress', [AddressController::class, 'getAddress']);
     Route::post('/logout', [AuthController::class, 'logout']);
+
+    //admin
+    Route::get('/getCategory', [CategoryController::class, 'getCategory']);
+    Route::post('/addCategory', [CategoryController::class, 'addCategory']);
+
+    //admin food
+    Route::get('/getFood', [FoodController::class, 'getFood']);
+    Route::post('/addFood', [FoodController::class, 'addFood']);
+    Route::get('/editFood', [FoodController::class, 'editFood']);
+
+    //admin topping
+    Route::get('/getTopping', [FoodController::class, 'getTopping']);
+    Route::post('/addTopping', [FoodController::class, 'addTopping']);
 
 });
 
