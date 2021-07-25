@@ -37,8 +37,6 @@
                                 $i = 1;
                             @endphp
                             @foreach($order as $o)
-                                {{--                                {{error_log($order[1])}}--}}
-                                {{--                                {{ $i}}--}}
                                 <tr role="row" class="odd">
                                     <td class="sorting_1" style="text-align: center">{{$i++}}</td>
                                     <td>
@@ -83,8 +81,7 @@
                                                 class="material-icons">&#xe8f4;</i></a>
                                         <a class="edit hvicon" style="color: green"
                                            href="{{route('admin-order.edit',$o->id)}}"
-                                        ><i
-                                                class="material-icons">&#xE254;</i></a>
+                                        ><i class="material-icons">&#xE254;</i></a>
 {{--                                        <a class="delete hvicon" data-toggle="modal"--}}
 {{--                                           href="{{route('admin-order.destroy',$o->id)}}"--}}
 {{--                                           data-target="#modal-delete{{$o->id}}"--}}

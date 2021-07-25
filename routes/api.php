@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\API\AdminDelivery\CategoryController;
+use App\Http\Controllers\API\AdminDelivery\FoodController;
 use App\Http\Controllers\API\Auth\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -8,7 +10,7 @@ use App\Http\Controllers\API\AppDelivery\HomeComtroller;
 use App\Http\Controllers\API\AppDelivery\AddressController;
 use App\Http\Controllers\API\AppDelivery\ProfileController;
 use App\Http\Controllers\API\AppDelivery\RestaurantController;
-use App\Http\Controllers\API\AppDelivery\UploadImage;
+use App\Http\Controllers\API\AdminDelivery\UploadImage;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,6 +50,23 @@ Route::middleware('auth:api')->group(function () {
 
     Route::post('/logout', [AuthController::class, 'logout']);
 
+    //admin
+    Route::get('/getCategory', [CategoryController::class, 'getCategory']);
+    Route::post('/addCategory', [CategoryController::class, 'addCategory']);
+
+    //admin food
+    Route::get('/getFood', [FoodController::class, 'getFood']);
+    Route::post('/addFood', [FoodController::class, 'addFood']);
+    Route::get('/editFood', [FoodController::class, 'editFood']);
+    Route::post('/updateFood', [FoodController::class, 'updateFood']);
+    Route::post('/deleteFood', [FoodController::class, 'deleteFood']);
+
+    //admin topping
+    Route::get('/getTopping', [FoodController::class, 'getTopping']);
+    Route::post('/addTopping', [FoodController::class, 'addTopping']);
+    Route::get('/editTopping', [FoodController::class, 'editTopping']);
+    Route::post('/updateTopping', [FoodController::class, 'updateTopping']);
+    Route::post('/deleteTopping', [FoodController::class, 'deleteTopping']);
 });
 
-
+Route::post('/uploadImage  ', [UploadImage::class, 'uploadImage']);
