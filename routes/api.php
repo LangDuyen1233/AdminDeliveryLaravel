@@ -9,6 +9,7 @@ use App\Http\Controllers\API\AppDelivery\SliderController;
 use App\Http\Controllers\API\AppDelivery\HomeComtroller;
 use App\Http\Controllers\API\AppDelivery\AddressController;
 use App\Http\Controllers\API\AppDelivery\ProfileController;
+use App\Http\Controllers\API\AdminDelivery\UploadImage;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,11 +48,15 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/getFood', [FoodController::class, 'getFood']);
     Route::post('/addFood', [FoodController::class, 'addFood']);
     Route::get('/editFood', [FoodController::class, 'editFood']);
+    Route::post('/updateFood', [FoodController::class, 'updateFood']);
+    Route::post('/deleteFood', [FoodController::class, 'deleteFood']);
 
     //admin topping
     Route::get('/getTopping', [FoodController::class, 'getTopping']);
     Route::post('/addTopping', [FoodController::class, 'addTopping']);
-
+    Route::get('/editTopping', [FoodController::class, 'editTopping']);
+    Route::post('/updateTopping', [FoodController::class, 'updateTopping']);
+    Route::post('/deleteTopping', [FoodController::class, 'deleteTopping']);
 });
 
-
+Route::post('/uploadImage  ', [UploadImage::class, 'uploadImage']);
