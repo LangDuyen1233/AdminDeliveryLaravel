@@ -7,6 +7,8 @@ use App\Http\Controllers\API\AppDelivery\SliderController;
 use App\Http\Controllers\API\AppDelivery\HomeComtroller;
 use App\Http\Controllers\API\AppDelivery\AddressController;
 use App\Http\Controllers\API\AppDelivery\ProfileController;
+use App\Http\Controllers\API\AppDelivery\RestaurantController;
+use App\Http\Controllers\API\AppDelivery\UploadImage;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,8 +34,18 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/sliders', [SliderController::class, 'getSliders']);
     Route::get('/listfood', [HomeComtroller::class, 'getFood']);
     Route::get('/getuser', [ProfileController::class, 'getUsers']);
-    Route::get('/listrestaurant', [HomeComtroller::class, 'getRestaurant']);
+    Route::get('/listrestaurants', [HomeComtroller::class, 'getRestaurant']);
     Route::get('/listaddress', [AddressController::class, 'getAddress']);
+
+    //restaurant
+    Route::get('/listrestaurant', [RestaurantController::class, 'getRestaurant']);
+    Route::get('/listfood', [RestaurantController::class, 'getFood']);
+
+    Route::post('/addcardorder', [RestaurantController::class, 'addCardOrder']);
+    Route::get('/getcard', [RestaurantController::class, 'getCard']);
+
+    Route::post('/uploadImage', [UploadImage::class, 'upload']);
+
     Route::post('/logout', [AuthController::class, 'logout']);
 
 });

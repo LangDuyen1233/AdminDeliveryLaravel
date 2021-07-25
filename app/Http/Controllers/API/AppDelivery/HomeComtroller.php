@@ -22,14 +22,16 @@ class HomeComtroller extends Controller
         }
     }
 
-    public function getRestaurant()
+    public function getRestaurant(Request $request)
     {
-        $restaurant = Restaurant::all();
+        $limit = $request->limit;
+        error_log($limit);
+        $restaurant = Restaurant::with('foods')->with('foods.image')->with('foods.toppings')->limit($limit)->get();
 
-//        error_log(number_format($restaurant[0]->rating, 1));
         foreach ($restaurant as $r) {
-            $r->rating =number_format($r->rating, 1);
+            $r->rating = number_format($r->rating, 1);
         }
+        error_log($restaurant);
         if ($restaurant != null) {
             return response()->json(['restaurants' => $restaurant], 200);
         } else {

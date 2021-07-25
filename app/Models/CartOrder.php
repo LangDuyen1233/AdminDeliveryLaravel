@@ -11,7 +11,7 @@ class CartOrder extends Model
     protected $table = 'cart_order';
     protected $fillable = [
         'id',
-        'quality',
+        'quantity',
         'price',
         'food_id',
         'cart_id',
@@ -22,8 +22,8 @@ class CartOrder extends Model
         return $this->belongsTo(Cart::class, 'cart_id');
     }
 
-//    public function food()
-//    {
-//        return $this->belongsTo(Food::class, 'food_id');
-//    }
+    public function toppings(){
+        return $this->belongsToMany(Topping::class,'card_order_topping','card_order_id');
+    }
+
 }

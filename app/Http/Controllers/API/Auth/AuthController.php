@@ -136,10 +136,8 @@ class AuthController extends Controller
             'email' => $request->email,
             'password' => $request->password,
         ];
-        error_log($request->emai);
         if (auth()->attempt($dataLogin)) {
             $token = auth()->user()->token;
-            error_log($token);
             $checkExpire = Carbon::parse(auth()->user()->expires_at);
             $now = Carbon::now();
             if ($token == null) {
@@ -148,8 +146,9 @@ class AuthController extends Controller
                 auth()->user()->token = $token;
                 auth()->user()->update();
             } else if ($now->lt($checkExpire) == false) {
-                auth()->user()->expires_at = null;
-                auth()->user()->token = null;
+                $token = auth()->user()->createToken('authToken')->accessToken;
+                auth()->user()->expires_at = Carbon::now()->addMinute(5)->format('Y-m-d H:i:s');
+                auth()->user()->token = $token;
                 auth()->user()->update();
             }
             return response()->json(['token' => $token], 200);

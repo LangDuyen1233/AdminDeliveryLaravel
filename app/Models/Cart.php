@@ -11,7 +11,9 @@ class Cart extends Model
     protected $table = 'carts';
     protected $fillable = [
         'id',
+        'user_id',
         'sum_price',
+        'restaurant_id',
     ];
 
     public function food()
@@ -22,5 +24,13 @@ class Cart extends Model
     public function order()
     {
         return $this->belongsTo(Order::class, 'cart_id');
+    }
+
+    public function cardOrder(){
+        return $this->hasMany(CartOrder::class,'cart_id');
+    }
+
+    public function Restaurant(){
+        return $this->belongsTo(Restaurant::class, 'restaurant_id');
     }
 }

@@ -48,4 +48,9 @@ class Restaurant extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function card()
+    {
+        return $this->belongsTo(Cart::class, 'restaurant_id');
+    }
 }

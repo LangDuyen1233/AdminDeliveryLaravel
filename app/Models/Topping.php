@@ -22,4 +22,9 @@ class Topping extends Model
     {
         return $this->belongsToMany(Food::class,'food_topping');
     }
+
+    public function cardOrder()
+    {
+        return $this->belongsToMany(CartOrder::class,'card_order_topping','topping_id');
+    }
 }
