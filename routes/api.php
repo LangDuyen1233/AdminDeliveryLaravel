@@ -3,6 +3,7 @@
 use App\Http\Controllers\API\AdminDelivery\CategoryController;
 use App\Http\Controllers\API\AdminDelivery\FoodController;
 use App\Http\Controllers\API\Auth\AuthController;
+use App\Http\Controllers\API\UploadImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AppDelivery\SliderController;
@@ -10,7 +11,6 @@ use App\Http\Controllers\API\AppDelivery\HomeComtroller;
 use App\Http\Controllers\API\AppDelivery\AddressController;
 use App\Http\Controllers\API\AppDelivery\ProfileController;
 use App\Http\Controllers\API\AppDelivery\RestaurantController;
-use App\Http\Controllers\API\AdminDelivery\UploadImage;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,8 +45,6 @@ Route::middleware('auth:api')->group(function () {
 
     Route::post('/addcardorder', [RestaurantController::class, 'addCardOrder']);
     Route::get('/getcard', [RestaurantController::class, 'getCard']);
-
-    Route::post('/uploadImage', [UploadImage::class, 'upload']);
 
     Route::post('/logout', [AuthController::class, 'logout']);
 
