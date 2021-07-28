@@ -32,6 +32,7 @@ class FoodController extends Controller
             foreach ($food as $f) {
                 error_log($f->name);
                 $f->weight = number_format($f->weight, 1);
+                $f->restaurant->rating = number_format($f->restaurant->rating, 1);
             }
 
             return response()->json(['food' => $food], 200);
@@ -111,6 +112,8 @@ class FoodController extends Controller
                 ->where('id', $food_id)->first();
 
             $food->weight = number_format($food->weight, 1);
+
+            $food->restaurant->rating= number_format( $food->restaurant->rating,1);
 
             return response()->json(['food' => $food], 200);
         } else {

@@ -53,4 +53,9 @@ class Restaurant extends Model
     {
         return $this->belongsTo(Cart::class, 'restaurant_id');
     }
+
+    public function staff()
+    {
+        return $this->hasMany(Staff::class, 'restaurant_id');
+    }
 }

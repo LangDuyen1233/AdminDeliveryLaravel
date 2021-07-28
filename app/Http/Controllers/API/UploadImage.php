@@ -20,4 +20,14 @@ class UploadImage extends Controller
         $file->move($path, $file->getClientOriginalName());
         return response()->json(['namefile' => $file->getClientOriginalName()], 200);
     }
+
+    public function uploadAvatar(Request $request)
+    {
+        $file = $request->file('image');
+        error_log($file);
+        $path = public_path() . '/data/avatar/';
+        error_log($file->getClientOriginalName());
+        $file->move($path, $file->getClientOriginalName());
+        return response()->json(['namefile' => $file->getClientOriginalName()], 200);
+    }
 }
