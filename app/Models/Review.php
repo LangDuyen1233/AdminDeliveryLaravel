@@ -13,6 +13,7 @@ class Review extends Model
         'id',
         'review',
         'rate',
+        'date',
         'restaurant_id',
         'user_id',
         'status'

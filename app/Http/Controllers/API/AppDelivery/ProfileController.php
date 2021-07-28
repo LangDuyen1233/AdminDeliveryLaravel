@@ -28,4 +28,108 @@ class ProfileController extends Controller
             return response()->json(['error' => 'Unauthorised'], 401);
         }
     }
+
+    public function changeName(Request $request)
+    {
+        $token = $request->bearerToken();
+        error_log($token);
+        error_log('dsaas');
+        if ($token != null) {
+            $id = auth()->user()->id;
+            error_log($id);
+            $user = User::find($id);
+            error_log($user);
+            error_log($request->username);
+            $user->username = $request->username;
+            $user->update();
+            return response()->json(['success' => 'Tạo thành công', 'user' => $user], 200);
+        } else {
+            return response()->json(['error' => 'Unauthorised'], 401);
+        }
+    }
+
+    public function changeDob(Request $request)
+    {
+        $token = $request->bearerToken();
+        error_log($token);
+        error_log('dsaas');
+        if ($token != null) {
+            $id = auth()->user()->id;
+            error_log($id);
+            $user = User::find($id);
+            error_log($user);
+            error_log($request->dob);
+            $user->dob = $request->dob;
+            $user->update();
+            return response()->json(['success' => 'Tạo thành công', 'user' => $user], 200);
+        } else {
+            return response()->json(['error' => 'Unauthorised'], 401);
+        }
+    }
+
+    public function changeGender(Request $request)
+    {
+        $token = $request->bearerToken();
+        error_log($token);
+        error_log('dsaas');
+        if ($token != null) {
+            $id = auth()->user()->id;
+            error_log($id);
+            $user = User::find($id);
+            error_log($user);
+            error_log($request->dob);
+            $user->gender = $request->gender;
+            $user->update();
+            return response()->json(['success' => 'Tạo thành công', 'user' => $user], 200);
+        } else {
+            return response()->json(['error' => 'Unauthorised'], 401);
+        }
+    }
+
+    public function changePhone(Request $request)
+    {
+        $token = $request->bearerToken();
+        error_log($token);
+        error_log('dsaas');
+        if ($token != null) {
+            $id = auth()->user()->id;
+            error_log($id);
+            $user = User::find($id);
+            error_log($user);
+            error_log($request->dob);
+            $user->gender = $request->gender;
+            $user->update();
+            return response()->json(['success' => 'Tạo thành công', 'user' => $user], 200);
+        } else {
+            return response()->json(['error' => 'Unauthorised'], 401);
+        }
+    }
+
+    public function changeAvatar(Request $request)
+    {
+        $token = $request->bearerToken();
+        error_log($token);
+        error_log('dsaas');
+        if ($token != null) {
+            $id = auth()->user()->id;
+            error_log($id);
+            $user = User::find($id);
+            error_log($user);
+//            error_log($request->dob);
+
+            $avatar = $request->avatar;
+
+            if ($avatar != null) {
+                $urlImage = "/data/avatar/$avatar";
+            } else {
+                $urlImage = null;
+            }
+
+            $user->avatar = $urlImage;
+            $user->update();
+            return response()->json(['success' => 'Tạo thành công', 'user' => $user], 200);
+        } else {
+            return response()->json(['error' => 'Unauthorised'], 401);
+        }
+    }
 }
