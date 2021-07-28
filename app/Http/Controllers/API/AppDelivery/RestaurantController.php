@@ -56,7 +56,7 @@ class RestaurantController extends Controller
             $card = new Cart([
                 'user_id' => $user_id,
                 'sum_price' => $sum_price,
-                'restaurant_id' => $restaurant_id,
+                'restaurant_id' => (int)$restaurant_id,
             ]);
             error_log($card);
             $card->save();
@@ -70,6 +70,7 @@ class RestaurantController extends Controller
         $price = $request->price;
         $food_id = $request->food_id;
         error_log($card->id);
+
         $card_order = CartOrder::where('food_id', $food_id)->first();
         if ($card_order == null) {
             $card_order = new CartOrder([
@@ -94,6 +95,27 @@ class RestaurantController extends Controller
             $card_order->toppings()->sync($topping_id);
         }
 
+        $price_topping = 0;
+        foreach ($card_order->toppings as $f) {
+            error_log($f->price);
+            $price_topping += $f->price;
+        }
+        error_log($price_topping);
+
+        $price = $card_order->price + $price_topping;
+
+        $card_order->price = $price;
+        $card_order->update();
+
+        $sum_card = CartOrder::where('cart_id', $card->id)->get();
+
+        foreach ($sum_card as $c) {
+            error_log($c->price);
+            $sum_price += $c->price;
+        }
+
+        $card->sum_price = $sum_price;
+        $card->update();
 
         return response()->json(['card' => $card], 201);
 
@@ -101,13 +123,22 @@ class RestaurantController extends Controller
 
     public function getCard(Request $request)
     {
-        $card_id = $request->card_id;
-        error_log($request->card_id);
-        $card = Cart::with('cardOrder')->where('id', $card_id)->first();
+        $restaurant_id = $request->restaurant_id;
+        error_log('vào đây bè');
+        error_log($request->restaurant_id);
+        $card = Cart::with('cardOrder')->where('restaurant_id', $restaurant_id)->first();
+        error_log($card);
         if ($card != null) {
             return response()->json(['card' => $card], 200);
         } else {
             return response()->json(['error' => 'Card not found'], 401);
         }
+    }
+
+    public function getFoodCard(Request $request)
+    {
+        $card_id = $request->card_id;
+        $card = Cart::with('cardOrder')->with('cardOrder.food')->with('cardOrder.food.image')->with('cardOrder.toppings')->where('id', $card_id)->first();
+        return response()->json(['card' => $card], 200);
     }
 }

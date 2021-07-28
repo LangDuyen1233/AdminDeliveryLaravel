@@ -50,4 +50,8 @@ class Food extends Model
     {
         return $this->belongsToMany(Order::class, 'food_orders');
     }
+
+    public function cardOrder(){
+        return $this->hasMany(CartOrder::class, 'food_id');
+    }
 }

@@ -26,4 +26,7 @@ class CartOrder extends Model
         return $this->belongsToMany(Topping::class,'card_order_topping','card_order_id');
     }
 
+    public function food(){
+        return $this->belongsTo(Food::class, 'food_id');
+    }
 }

@@ -11,6 +11,8 @@ use App\Http\Controllers\API\AppDelivery\HomeComtroller;
 use App\Http\Controllers\API\AppDelivery\AddressController;
 use App\Http\Controllers\API\AppDelivery\ProfileController;
 use App\Http\Controllers\API\AppDelivery\RestaurantController;
+use App\Http\Controllers\API\AppDelivery\DiscountController;
+use App\Http\Controllers\API\AppDelivery\OrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,11 +35,14 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::get('/confirmemail/{email}/{key}', [AuthController::class, 'confirmEmail'])->name('confirmemail');
 
 Route::middleware('auth:api')->group(function () {
+    Route::post('/logout', [AuthController::class, 'logout']);
+
     Route::get('/sliders', [SliderController::class, 'getSliders']);
     Route::get('/listfood', [HomeComtroller::class, 'getFood']);
     Route::get('/getuser', [ProfileController::class, 'getUsers']);
     Route::get('/listrestaurants', [HomeComtroller::class, 'getRestaurant']);
     Route::get('/listaddress', [AddressController::class, 'getAddress']);
+    Route::get('/address', [AddressController::class, 'getAddressUser']);
 
     //restaurant
     Route::get('/listrestaurant', [RestaurantController::class, 'getRestaurant']);
@@ -46,7 +51,11 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/addcardorder', [RestaurantController::class, 'addCardOrder']);
     Route::get('/getcard', [RestaurantController::class, 'getCard']);
 
-    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::get('/getcardorder', [RestaurantController::class, 'getFoodCard']);
+
+    Route::get('/listdiscount', [DiscountController::class, 'getDiscount']);
+
+    Route::post('/addorder', [OrderController::class, 'addOrder']);
 
     //admin
     Route::get('/getCategory', [CategoryController::class, 'getCategory']);

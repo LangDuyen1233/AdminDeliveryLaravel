@@ -17,11 +17,12 @@ class Order extends Model
         'address_delivery',
         'date',
         'user_id',
-        'cart_id',
         'order_status_id',
         'payment_id',
         'discount_id',
-        'status'
+        'note',
+        'status',
+        'user_delivery_id',
     ];
 
     public function statusOrder()
