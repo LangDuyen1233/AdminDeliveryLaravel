@@ -3,6 +3,7 @@
 use App\Http\Controllers\API\AdminDelivery\AdminDiscountController;
 use App\Http\Controllers\API\AdminDelivery\AdminMaterialsController;
 use App\Http\Controllers\API\AdminDelivery\AdminOrderController;
+use App\Http\Controllers\API\AdminDelivery\AdminRestaurantController;
 use App\Http\Controllers\API\AdminDelivery\AdminStaffController;
 use App\Http\Controllers\API\AdminDelivery\CategoryController;
 use App\Http\Controllers\API\AdminDelivery\FoodController;
@@ -103,16 +104,21 @@ Route::middleware('auth:api')->group(function () {
 
     //admin discount
     Route::get('/getDiscount', [AdminDiscountController::class, 'getDiscount']);
-    Route::post('/addDiscount', [AdminDiscountController::class, 'addDiscount']);
-    Route::get('/editDiscount', [AdminDiscountController::class, 'editDiscount']);
-    Route::post('/updateDiscount', [AdminDiscountController::class, 'updateDiscount']);
-    Route::post('/deleteDiscount', [AdminDiscountController::class, 'deleteDiscount']);
+    Route::post('/addDiscountVoucher', [AdminDiscountController::class, 'addDiscountVoucher']);
+    Route::get('/editDiscountVoucher', [AdminDiscountController::class, 'editDiscountVoucher']);
+    Route::post('/updateDiscountVoucher', [AdminDiscountController::class, 'updateDiscountVoucher']);
+    Route::post('/deleteDiscountVoucher', [AdminDiscountController::class, 'deleteDiscountVoucher']);
 
     //admin profile
     Route::post('/changeName', [ProfileController::class, 'changeName']);
     Route::post('/changeDob', [ProfileController::class, 'changeDob']);
     Route::post('/changeGender', [ProfileController::class, 'changeGender']);
     Route::post('/changeAvatar', [ProfileController::class, 'changeAvatar']);
+
+    //admin restaurant
+    Route::get('/getRestaurant', [AdminRestaurantController::class, 'getRestaurant']);
+    Route::post('/changeImageRestaurant', [AdminRestaurantController::class, 'changeImageRestaurant']);
+
 });
 
 Route::post('/uploadImage  ', [UploadImage::class, 'uploadImage']);
