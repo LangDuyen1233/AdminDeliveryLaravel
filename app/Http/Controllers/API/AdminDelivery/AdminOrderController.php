@@ -16,9 +16,9 @@ class AdminOrderController extends Controller
         error_log($token);
         if ($token != null) {
 
-            $order = Order::with('user')->with('statusOrder')
-//                ->where('')
-                ->get();
+            $order = Order::with('user')->with('statusOrder')->with('payment')->with()
+                    ->where('order_status_id',1)
+                    ->get();
 
             return response()->json(['order' => $order], 200);
         } else {

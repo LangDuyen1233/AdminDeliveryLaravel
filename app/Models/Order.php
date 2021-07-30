@@ -5,9 +5,11 @@ namespace App\Models;
 
 
 use Illuminate\Database\Eloquent\Model;
+use ZeroDaHero\LaravelWorkflow\Traits\WorkflowTrait;
 
 class Order extends Model
 {
+    use WorkflowTrait;
     protected $table = 'orders';
     protected $fillable = [
         'id',
