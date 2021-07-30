@@ -37,6 +37,7 @@ use App\Http\Controllers\API\AppDelivery\OrderController;
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/registerSocial', [AuthController::class, 'registerSocial']);
 Route::post('/login', [AuthController::class, 'login']);
+Route::post('/loginAndRegisterPhone', [AuthController::class, 'loginAndRegisterPhone']);
 Route::post('/loginowner', [AuthController::class, 'loginOwner']);
 Route::get('/confirmemail/{email}/{key}', [AuthController::class, 'confirmEmail'])->name('confirmemail');
 
@@ -54,14 +55,15 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/listrestaurant', [RestaurantController::class, 'getRestaurant']);
     Route::get('/listfood', [RestaurantController::class, 'getFood']);
 
-    Route::post('/addcardorder', [RestaurantController::class, 'addCardOrder']);
-    Route::get('/getcard', [RestaurantController::class, 'getCard']);
-
-    Route::get('/getcardorder', [RestaurantController::class, 'getFoodCard']);
-
+    //discount
     Route::get('/listdiscount', [DiscountController::class, 'getDiscount']);
 
+    // card and order
     Route::post('/addorder', [OrderController::class, 'addOrder']);
+    Route::get('/getcardorder', [RestaurantController::class, 'getFoodCard']);
+    Route::post('/addcardorder', [RestaurantController::class, 'addCardOrder']);
+    Route::get('/getcard', [RestaurantController::class, 'getCard']);
+    Route::get('/getorder', [OrderController::class, 'getOrder']);
 
     //admin
     Route::get('/getCategory', [CategoryController::class, 'getCategory']);

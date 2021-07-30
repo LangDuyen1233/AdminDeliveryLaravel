@@ -7,6 +7,7 @@ namespace App\Http\Controllers\API\AppDelivery;
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\CartOrder;
+use App\Models\Food_Orders;
 use App\Models\Order;
 use App\Models\Payment;
 use Illuminate\Http\Request;
@@ -31,6 +32,7 @@ class OrderController extends Controller
         $payment = new Payment([
             'method' => $method,
             'status' => 'Chưa thanh toán',
+            'user_id' => $user_id,
         ]);
         $payment->save();
 
@@ -48,20 +50,51 @@ class OrderController extends Controller
             'user_id' => $user_id,
             'payment_id' => $payment->id,
             'discount_id' => $discount_id,
-            'note' => $now,
+            'note' => $note,
             'status' => 1,
             'order_status_id' => 3,
         ]);
         $order->save();
+
+        $order_id = $order->id;
         $card_order = CartOrder::where('cart_id', $card_id)->get();
-        error_log($card_order);
-//        $card_order->delete();
+
         foreach ($card_order as $co) {
+            error_log($co);
+            error_log($order_id);
+            $price = $co->price;
+            $quantity = $co->quantity;
+            $food_id = $co->food_id;
+            error_log($price);
+            error_log($quantity);
+            error_log($food_id);
+            $food_orders = new Food_Orders([
+                'price' => $price,
+                'quantity' => $quantity,
+                'food_id' => $food_id,
+                'order_id' => $order_id,
+            ]);
+            error_log($food_orders);
+            $food_orders->save();
+            error_log($co->toppings);
+            foreach ($co->toppings as $t){
+                error_log($t);
+                error_log($t->id);
+                $food_orders->toppings()->sync($t->id);
+            }
+
             $co->delete();
         }
         $card = Cart::where('id', $card_id)->first();
         $card->delete();
 
+        return response()->json(['order' => $order], 200);
+    }
+
+    public function getOrder()
+    {
+        $user_id = auth()->user()->id;
+        $order = Order::where('user_id', $user_id)->with('statusOrder')->get();
         return response()->json(['order' => $order], 200);
     }
 }
