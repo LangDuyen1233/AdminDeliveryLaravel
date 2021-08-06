@@ -77,7 +77,7 @@ class OrderController extends Controller
             error_log($food_orders);
             $food_orders->save();
             error_log($co->toppings);
-            foreach ($co->toppings as $t){
+            foreach ($co->toppings as $t) {
                 error_log($t);
                 error_log($t->id);
                 $food_orders->toppings()->sync($t->id);
@@ -88,13 +88,6 @@ class OrderController extends Controller
         $card = Cart::where('id', $card_id)->first();
         $card->delete();
 
-        return response()->json(['order' => $order], 200);
-    }
-
-    public function getOrder()
-    {
-        $user_id = auth()->user()->id;
-        $order = Order::where('user_id', $user_id)->with('statusOrder')->get();
         return response()->json(['order' => $order], 200);
     }
 }

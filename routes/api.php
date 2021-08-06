@@ -65,7 +65,9 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/getcardorder', [RestaurantController::class, 'getFoodCard']);
     Route::post('/addcardorder', [RestaurantController::class, 'addCardOrder']);
     Route::get('/getcard', [RestaurantController::class, 'getCard']);
-    Route::get('/getorder', [OrderController::class, 'getOrder']);
+
+
+    Route::get('/getOrder', [OrderController::class, 'getOrder']);
 
     //admin
     Route::get('/getCategory', [CategoryController::class, 'getCategory']);
