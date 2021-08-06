@@ -88,7 +88,6 @@ class FoodController extends Controller
                 'url' => $urlImage,
             ]
         );
-//        $images->url = $image;
         $food->image()->save($images);
 
         $food->weight = number_format($food->weight, 1);
@@ -128,15 +127,12 @@ class FoodController extends Controller
         if ($token != null) {
             $id = auth()->user()->id;
             $category_id = $request->category_id;
-            error_log($category_id);
             $food_id = $request->food_id;
-            error_log($food_id);
             $topping = $request->topping;
+            error_log($topping);
             $restaurant = Restaurant::where('user_id', $id)->first();
 
             $food = Food::find($food_id);
-            error_log($food);
-            error_log($request->name);
 
             try {
                 $food->name = $request->name;
@@ -153,11 +149,12 @@ class FoodController extends Controller
 
                 if ($topping != '') {
                     $arrTopping = explode(',', $request->topping);
-                    foreach ($arrTopping as $tp) {
-                        if (!empty($tp)) {
-                            $food->toppings()->sync($tp);
-                        }
-                    }
+//                    foreach ($arrTopping as $tp) {
+//                        if (!empty($tp)) {
+//                            $food->toppings()->sync($tp);
+//                        }
+//                    }
+                    $food->toppings()->sync($arrTopping);
                 }
 
                 $image = $request->image;

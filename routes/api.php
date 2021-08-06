@@ -7,6 +7,7 @@ use App\Http\Controllers\API\AdminDelivery\AdminRestaurantController;
 use App\Http\Controllers\API\AdminDelivery\AdminStaffController;
 use App\Http\Controllers\API\AdminDelivery\CategoryController;
 use App\Http\Controllers\API\AdminDelivery\FoodController;
+use App\Http\Controllers\API\AdminDelivery\PushNotificationController;
 use App\Http\Controllers\API\AdminDelivery\ReviewController;
 use App\Http\Controllers\API\Auth\AuthController;
 use App\Http\Controllers\API\UploadImage;
@@ -89,6 +90,19 @@ Route::middleware('auth:api')->group(function () {
 
     //admin order
     Route::get('/getNewCard', [AdminOrderController::class, 'getNewCard']);
+    Route::post('/cancelOrder', [AdminOrderController::class, 'cancelOrder']);
+    Route::post('/prepareOrder', [AdminOrderController::class, 'prepareOrder']);
+    //
+    Route::get('/getPrepareCard', [AdminOrderController::class, 'getPrepareCard']);
+    Route::post('/deliveryByRestaurant', [AdminOrderController::class, 'deliveryByRestaurant']);
+    Route::post('/deliveryByUser', [AdminOrderController::class, 'deliveryByUser']);
+
+    Route::get('/getDeliveringCard', [AdminOrderController::class, 'getDeliveringCard']);
+    Route::post('/delivered', [AdminOrderController::class, 'delivered']);
+
+    Route::get('/getDeliveredCard', [AdminOrderController::class, 'getDeliveredCard']);
+
+    Route::get('/getHistoryCard', [AdminOrderController::class, 'getHistoryCard']);
 
     //admin staff
     Route::get('/getStaff', [AdminStaffController::class, 'getStaff']);
@@ -120,6 +134,9 @@ Route::middleware('auth:api')->group(function () {
     //admin restaurant
     Route::get('/getRestaurant', [AdminRestaurantController::class, 'getRestaurant']);
     Route::post('/changeImageRestaurant', [AdminRestaurantController::class, 'changeImageRestaurant']);
+
+    //notify
+    Route::get('/getNotify',[PushNotificationController::class,'getNotify']);
 
 });
 

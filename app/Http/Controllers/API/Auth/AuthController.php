@@ -200,7 +200,7 @@ class   AuthController extends Controller
                 auth()->user()->token = null;
                 auth()->user()->update();
             }
-            return response()->json(['token' => $token], 200);
+            return response()->json(['token' => $token,'users'=>auth()->user()], 200);
         } else {
             return response()->json(['error' => 'Unauthorised'], 401);
         }

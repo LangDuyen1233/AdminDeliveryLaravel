@@ -28,4 +28,9 @@ class Staff extends Model
         return $this->belongsTo(Restaurant::class, 'restaurant_id');
     }
 
+    public function order()
+    {
+        return $this->hasMany(Order::class, 'staff_id');
+    }
+
 }

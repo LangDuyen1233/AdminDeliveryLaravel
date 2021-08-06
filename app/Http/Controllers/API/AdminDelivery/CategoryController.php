@@ -7,6 +7,7 @@ namespace App\Http\Controllers\API\AdminDelivery;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Restaurant;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -31,24 +32,24 @@ class CategoryController extends Controller
     public function addCategory(Request $request)
     {
         error_log($request->bearerToken());
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|unique:categories,name',
-            'image' => 'required'
-        ]);
         error_log($request->name);
         error_log($request->image);
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 404);
-        }
+
         $name = $request->name;
-        $image = $request->image;
         $description = $request->description;
+
+        $image = $request->image;
+        $urlImage = "/data/files/$image";
+
         $category = new Category([
             'name' => $name,
-            'image' => $image,
+            'image' => $urlImage,
             'description' => $description,
         ]);
         // finally store our user
+
+
+
         $category->save();
 
         $id = auth()->user()->id;

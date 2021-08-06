@@ -10,6 +10,7 @@ use ZeroDaHero\LaravelWorkflow\Traits\WorkflowTrait;
 class Order extends Model
 {
     use WorkflowTrait;
+
     protected $table = 'orders';
     protected $fillable = [
         'id',
@@ -25,6 +26,8 @@ class Order extends Model
         'note',
         'status',
         'user_delivery_id',
+        'reason',
+        'staff_id'
     ];
 
     public function statusOrder()
@@ -55,5 +58,15 @@ class Order extends Model
     public function food()
     {
         return $this->belongsToMany(Food::class, 'food_orders');
+    }
+
+    public function foodOrder()
+    {
+        return $this->hasMany(Food_Orders::class, 'order_id');
+    }
+
+    public function staff()
+    {
+        return $this->belongsTo(Staff::class, 'staff_id');
     }
 }
