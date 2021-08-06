@@ -33,7 +33,7 @@ class Food extends Model
 
     public function toppings()
     {
-        return $this->belongsToMany(Topping::class,'food_topping');
+        return $this->belongsToMany(Topping::class, 'food_topping');
     }
 
     public function image()
@@ -51,7 +51,13 @@ class Food extends Model
         return $this->belongsToMany(Order::class, 'food_orders');
     }
 
-    public function cardOrder(){
+    public function cardOrder()
+    {
         return $this->hasMany(CartOrder::class, 'food_id');
+    }
+
+    public function foodOrder()
+    {
+        return $this->hasMany(Food_Orders::class, 'food_id');
     }
 }

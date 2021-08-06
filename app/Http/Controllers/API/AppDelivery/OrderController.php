@@ -78,6 +78,7 @@ class OrderController extends Controller
                 'food_id' => $food_id,
                 'order_id' => $order_id,
             ]);
+            error_log($food_orders);
             $food_orders->save();
             foreach ($co->toppings as $t) {
                 $food_orders->toppings()->sync($t->id);
@@ -109,7 +110,4 @@ class OrderController extends Controller
 
         return response()->json(['order' => $order], 200);
     }
-
-//    public function get
 }
-
