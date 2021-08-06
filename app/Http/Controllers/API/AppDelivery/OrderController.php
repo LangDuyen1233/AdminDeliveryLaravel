@@ -42,9 +42,18 @@ class OrderController extends Controller
             $discount_id = null;
         }
 
+        $setStatus = Order::where('user_id',$user_id)->get();
+//        error_log($setStatus);
+        foreach ($setStatus as $ss){
+            error_log($ss);
+            $ss->status = 0;
+            $ss->update();
+        }
+//        $setStatus->update();
+
         $order = new Order([
             'price' => $sumprice,
-            'price_delivery' => $price_delivery,
+            'price_delivery' => (int)$price_delivery,
             'address_delivery' => $address,
             'date' => $now,
             'user_id' => $user_id,
@@ -60,26 +69,17 @@ class OrderController extends Controller
         $card_order = CartOrder::where('cart_id', $card_id)->get();
 
         foreach ($card_order as $co) {
-            error_log($co);
-            error_log($order_id);
             $price = $co->price;
             $quantity = $co->quantity;
             $food_id = $co->food_id;
-            error_log($price);
-            error_log($quantity);
-            error_log($food_id);
             $food_orders = new Food_Orders([
                 'price' => $price,
                 'quantity' => $quantity,
                 'food_id' => $food_id,
                 'order_id' => $order_id,
             ]);
-            error_log($food_orders);
             $food_orders->save();
-            error_log($co->toppings);
-            foreach ($co->toppings as $t){
-                error_log($t);
-                error_log($t->id);
+            foreach ($co->toppings as $t) {
                 $food_orders->toppings()->sync($t->id);
             }
 
@@ -94,7 +94,22 @@ class OrderController extends Controller
     public function getOrder()
     {
         $user_id = auth()->user()->id;
-        $order = Order::where('user_id', $user_id)->with('statusOrder')->get();
+        error_log($user_id);
+//        $ordetId = $request->order_id;
+//        error_log($ordetId);
+//        where('id', $ordetId)->
+        $order = Order::where('user_id', $user_id)->where('status', 1)->with('food')->with('food.toppings')
+            ->with('statusOrder')->with('food.restaurant')->with('payment')->first();
+        error_log($order);
+
+
+        foreach ($order->food as $f) {
+            $f->restaurant->rating = number_format($f->restaurant->rating, 1);
+        }
+
         return response()->json(['order' => $order], 200);
     }
+
+//    public function get
 }
+

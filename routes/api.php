@@ -41,6 +41,8 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/loginAndRegisterPhone', [AuthController::class, 'loginAndRegisterPhone']);
 Route::post('/loginowner', [AuthController::class, 'loginOwner']);
 Route::get('/confirmemail/{email}/{key}', [AuthController::class, 'confirmEmail'])->name('confirmemail');
+Route::post('/checkUser', [AuthController::class, 'checkUser']);
+Route::post('/loginPhone', [AuthController::class, 'loginPhone']);
 
 Route::middleware('auth:api')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
@@ -49,8 +51,15 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/listfood', [HomeComtroller::class, 'getFood']);
     Route::get('/getuser', [ProfileController::class, 'getUsers']);
     Route::get('/listrestaurants', [HomeComtroller::class, 'getRestaurant']);
+
+    //address
     Route::get('/listaddress', [AddressController::class, 'getAddress']);
     Route::get('/address', [AddressController::class, 'getAddressUser']);
+    Route::post('/addAddress', [AddressController::class, 'addAddress']);
+    Route::post('/updateAddress', [AddressController::class, 'updateAddress']);
+    Route::post('/deleteAddress', [AddressController::class, 'deleteAddress']);
+    Route::post('/updateLocation', [AddressController::class, 'updateLocation']);
+    Route::get('/getAddressFromId', [AddressController::class, 'getAddressFromId']);
 
     //restaurant
     Route::get('/listrestaurant', [RestaurantController::class, 'getRestaurant']);
@@ -64,7 +73,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/getcardorder', [RestaurantController::class, 'getFoodCard']);
     Route::post('/addcardorder', [RestaurantController::class, 'addCardOrder']);
     Route::get('/getcard', [RestaurantController::class, 'getCard']);
-    Route::get('/getorder', [OrderController::class, 'getOrder']);
+    Route::get('/getOrder', [OrderController::class, 'getOrder']);
 
     //admin
     Route::get('/getCategory', [CategoryController::class, 'getCategory']);
