@@ -153,3 +153,7 @@ Route::middleware('auth:api')->group(function () {
 
 Route::post('/uploadImage  ', [UploadImage::class, 'uploadImage']);
 Route::post('/uploadAvatar  ', [UploadImage::class, 'uploadAvatar']);
+
+
+Route::post('send-notification', [App\Http\Controllers\NotificationController::class, 'send']);
+

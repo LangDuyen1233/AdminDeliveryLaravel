@@ -42,9 +42,9 @@ class OrderController extends Controller
             $discount_id = null;
         }
 
-        $setStatus = Order::where('user_id',$user_id)->get();
+        $setStatus = Order::where('user_id', $user_id)->get();
 //        error_log($setStatus);
-        foreach ($setStatus as $ss){
+        foreach ($setStatus as $ss) {
             error_log($ss);
             $ss->status = 0;
             $ss->update();
@@ -103,11 +103,11 @@ class OrderController extends Controller
             ->with('statusOrder')->with('food.restaurant')->with('payment')->first();
         error_log($order);
 
-
-        foreach ($order->food as $f) {
-            $f->restaurant->rating = number_format($f->restaurant->rating, 1);
+        if ($order != null) {
+            foreach ($order->food as $f) {
+                $f->restaurant->rating = number_format($f->restaurant->rating, 1);
+            }
         }
-
         return response()->json(['order' => $order], 200);
     }
 }
