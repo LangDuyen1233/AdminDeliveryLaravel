@@ -30,7 +30,7 @@ class Cart extends Model
         return $this->hasMany(CartOrder::class,'cart_id');
     }
 
-    public function Restaurant(){
+    public function restaurant(){
         return $this->belongsTo(Restaurant::class, 'restaurant_id');
     }
 }

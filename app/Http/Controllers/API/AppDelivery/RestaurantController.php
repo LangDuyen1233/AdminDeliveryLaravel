@@ -15,8 +15,6 @@ class RestaurantController extends Controller
 {
     public function getRestaurant(Request $request)
     {
-//        ->with('foods.toppings')with('foods')->with('foods.image')
-
         $restaurant_id = $request->restaurant_id;
         error_log($restaurant_id);
         $restaurant = Restaurant::where('id', $restaurant_id)->first();
