@@ -200,7 +200,7 @@ class   AuthController extends Controller
                 auth()->user()->token = null;
                 auth()->user()->update();
             }
-            return response()->json(['token' => $token,'users'=>auth()->user()], 200);
+            return response()->json(['token' => $token, 'users' => auth()->user()], 200);
         } else {
             return response()->json(['error' => 'Unauthorised'], 401);
         }
@@ -209,44 +209,27 @@ class   AuthController extends Controller
     public function loginAndRegisterPhone(Request $request)
     {
         $phone = $request->phone;
+        $username = $request->username;
+        $email = $request->email;
         error_log($phone);
-        $user = User::where('phone', $phone)->first();
-        $token = null;
-        if ($user != null) {
-            $token = $user->token;
-            error_log($token);
-            $checkExpire = Carbon::parse($user->expires_at);
-            $now = Carbon::now();
-            if ($token == null) {
-                $token = auth()->user()->createToken('authToken')->accessToken;
-                auth()->user()->expires_at = Carbon::now()->addMinute(5)->format('Y-m-d H:i:s');
-                auth()->user()->token = $token;
-                auth()->user()->update();
-            } else if ($now->lt($checkExpire) == false) {
-                $token = $user->createToken('authToken')->accessToken;
-                $user->expires_at = Carbon::now()->addMinute(5)->format('Y-m-d H:i:s');
-                $user->token = $token;
-                $user->update();
-            }
-        } else {
-            $username = Str::random(8);
-            $expires_at = Carbon::now()->addMinute(5)->format('Y-m-d H:i:s');
-            $user = User::create([
-                'username' => $username,
-                'role_id' => 1,
-                'phone' => $request->phone,
-                'active' => 1,
-//               'token'=>$token,
-                'expires_at' => $expires_at,
-            ]);
-            $user->save();
-            $token = $user->createToken('authToken')->accessToken;
-            error_log($token);
-            $user->token = $token;
-            $user->update();
 
-        }
-        return response()->json(['token' => $token], 201);
+        $expires_at = Carbon::now()->addMinute(5)->format('Y-m-d H:i:s');
+        $user = User::create([
+            'username' => $username,
+            'email' => $email,
+            'role_id' => 1,
+            'phone' => $request->phone,
+            'active' => 1,
+            'expires_at' => $expires_at,
+        ]);
+        $user->save();
+
+        $token = $user->createToken('authToken')->accessToken;
+        error_log($token);
+        $user->token = $token;
+        $user->update();
+
+        return response()->json(['token' => $token, 'users' => $user], 201);
     }
 
     public function checkUser(Request $request)
@@ -277,6 +260,7 @@ class   AuthController extends Controller
             $user->token = $token;
             $user->update();
         }
-        return response()->json(['token' => $token, 'users' => $user], 201);
+        error_log($user);
+        return response()->json(['token' => $token, 'users' => $user], 200);
     }
 }
