@@ -79,6 +79,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/getOrder', [OrderController::class, 'getOrder']);
     Route::get('/getHistory', [OrderController::class, 'getHistory']);
     Route::get('/getdraftOrder', [OrderController::class, 'getdraftOrder']);
+    Route::post('/deleteDraftOrder', [OrderController::class, 'deleteDraftOrder']);
 
     //admin
     Route::get('/getCategory', [CategoryController::class, 'getCategory']);
