@@ -44,6 +44,7 @@ Route::post('/loginowner', [AuthController::class, 'loginOwner']);
 Route::get('/confirmemail/{email}/{key}', [AuthController::class, 'confirmEmail'])->name('confirmemail');
 Route::post('/checkUser', [AuthController::class, 'checkUser']);
 Route::post('/loginPhone', [AuthController::class, 'loginPhone']);
+Route::post('/updateUid', [AuthController::class, 'updateUid']);
 
 Route::middleware('auth:api')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
