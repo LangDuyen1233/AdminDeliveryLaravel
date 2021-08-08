@@ -137,4 +137,25 @@ class OrderController extends Controller
         }
         return response()->json(['card' => $card], 200);
     }
+
+    public function deleteDraftOrder(Request $request)
+    {
+        $token = $request->bearerToken();
+        error_log($token);
+        if ($token != null) {
+            $id = $request->card_id;
+            $card = Cart::where('id', $id)->with('cardOrder')->first();
+            error_log($card);
+
+            foreach ($card->cardOrder as $c) {
+                $c->delete();
+            }
+
+            $card->delete();
+
+            return response()->json(['card' => $card], 200);
+        } else {
+            return response()->json(['error' => 'Unauthorised'], 401);
+        }
+    }
 }
