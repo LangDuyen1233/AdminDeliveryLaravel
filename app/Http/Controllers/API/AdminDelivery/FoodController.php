@@ -9,10 +9,7 @@ use App\Models\Food;
 use App\Models\Image;
 use App\Models\Restaurant;
 use App\Models\Topping;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-use phpseclib3\Math\BinaryField\Integer;
 
 class FoodController extends Controller
 {
@@ -25,7 +22,8 @@ class FoodController extends Controller
             $id = auth()->user()->id;
             $restaurant = Restaurant::where('user_id', $id)->first();
 
-            $food = Food::with('category')->with('restaurant')->with('image')->with('toppings')
+            $food = Food::with('category')->with('restaurant')->with('image')
+                ->with('toppings')->with('discount')
                 ->where('restaurant_id', $restaurant->id)->where('category_id', $category_id)
                 ->where('status', 1)->get();
 
@@ -33,8 +31,11 @@ class FoodController extends Controller
                 error_log($f->name);
                 $f->weight = number_format($f->weight, 1);
                 $f->restaurant->rating = number_format($f->restaurant->rating, 1);
+                if ($f->discount != null) {
+                    $f->discount->percent = number_format($f->discount->percent, 1);
+                }
             }
-
+            error_log($food);
             return response()->json(['food' => $food], 200);
         } else {
             return response()->json(['error' => 'Unauthorised'], 401);
@@ -112,7 +113,7 @@ class FoodController extends Controller
 
             $food->weight = number_format($food->weight, 1);
 
-            $food->restaurant->rating= number_format( $food->restaurant->rating,1);
+            $food->restaurant->rating = number_format($food->restaurant->rating, 1);
 
             return response()->json(['food' => $food], 200);
         } else {
@@ -306,12 +307,7 @@ class FoodController extends Controller
                 if ($food != '') {
                     $ar = explode(',', $request->food);
                     error_log($ar[0]);
-//                    foreach ($ar as $f) {
-//                        error_log($f);
-//                        if (!empty($f)) {
                     $topping->food()->sync($ar);
-//                        }
-//                    }
                 }
 
                 return response()->json(['topping' => $topping], 200);
