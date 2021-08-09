@@ -49,6 +49,7 @@ Route::post('/updateUid', [AuthController::class, 'updateUid']);
 Route::post('/sendNotification', [NotificationController::class, 'sendNotification']);
 
 Route::middleware('auth:api')->group(function () {
+
     Route::post('/logout', [AuthController::class, 'logout']);
 
     Route::get('/sliders', [SliderController::class, 'getSliders']);
@@ -83,6 +84,8 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/getHistory', [OrderController::class, 'getHistory']);
     Route::get('/getdraftOrder', [OrderController::class, 'getdraftOrder']);
     Route::post('/deleteDraftOrder', [OrderController::class, 'deleteDraftOrder']);
+
+    Route::get('/saveNotification', [NotificationController::class, 'saveNotification']);
 
     //admin
     Route::get('/getCategory', [CategoryController::class, 'getCategory']);
@@ -159,7 +162,7 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/changeImageRestaurant', [AdminRestaurantController::class, 'changeImageRestaurant']);
 
     //notify
-    Route::get('/getNotify',[PushNotificationController::class,'getNotify']);
+    Route::get('/getNotify', [PushNotificationController::class, 'getNotify']);
 
 });
 
