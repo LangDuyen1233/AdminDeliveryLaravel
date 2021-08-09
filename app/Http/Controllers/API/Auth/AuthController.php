@@ -211,6 +211,7 @@ class   AuthController extends Controller
         $phone = $request->phone;
         $username = $request->username;
         $email = $request->email;
+        $uid = $request->uid;
         error_log($phone);
 
         $expires_at = Carbon::now()->addMinute(5)->format('Y-m-d H:i:s');
@@ -221,6 +222,7 @@ class   AuthController extends Controller
             'phone' => $request->phone,
             'active' => 1,
             'expires_at' => $expires_at,
+            'uid' => $uid,
         ]);
         $user->save();
 
@@ -262,5 +264,16 @@ class   AuthController extends Controller
         }
         error_log($user);
         return response()->json(['token' => $token, 'users' => $user], 200);
+    }
+
+    public function updateUid(Request $request)
+    {
+        $user_id = $request->user_id;
+        $uid = $request->uid;
+        $user = User::where('id', $user_id)->first();
+        $user->uid = $uid;
+        $user->update();
+
+        return response()->json(['message' => 'success'], 200);
     }
 }

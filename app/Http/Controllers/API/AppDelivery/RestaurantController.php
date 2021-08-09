@@ -17,7 +17,7 @@ class RestaurantController extends Controller
     {
         $restaurant_id = $request->restaurant_id;
         error_log($restaurant_id);
-        $restaurant = Restaurant::where('id', $restaurant_id)->first();
+        $restaurant = Restaurant::where('id', $restaurant_id)->with('user')->first();
         $restaurant->rating = number_format($restaurant->rating, 1);
         if ($restaurant != null) {
             return response()->json(['restaurants' => $restaurant], 200);
