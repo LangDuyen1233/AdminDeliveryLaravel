@@ -35,4 +35,9 @@ class Discount extends Model
     {
         return $this->belongsTo(Restaurant::class);
     }
+
+    public function food()
+    {
+        return $this->hasMany(Food::class, 'discount_id');
+    }
 }

@@ -19,6 +19,7 @@ class Food extends Model
         'status',
         'restaurant_id',
         'category_id',
+        'discount_id'
     ];
 
     public function restaurant()
@@ -59,5 +60,10 @@ class Food extends Model
     public function foodOrder()
     {
         return $this->hasMany(Food_Orders::class, 'food_id');
+    }
+
+    public function discount()
+    {
+        return $this->belongsTo(Discount::class, 'discount_id');
     }
 }

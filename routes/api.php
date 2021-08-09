@@ -133,11 +133,17 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/deleteMaterials', [AdminMaterialsController::class, 'deleteMaterials']);
 
     //admin discount
-    Route::get('/getDiscount', [AdminDiscountController::class, 'getDiscount']);
+    Route::get('/getDiscount', [AdminDiscountController::class, 'getDiscountVoucher']);
     Route::post('/addDiscountVoucher', [AdminDiscountController::class, 'addDiscountVoucher']);
     Route::get('/editDiscountVoucher', [AdminDiscountController::class, 'editDiscountVoucher']);
     Route::post('/updateDiscountVoucher', [AdminDiscountController::class, 'updateDiscountVoucher']);
     Route::post('/deleteDiscountVoucher', [AdminDiscountController::class, 'deleteDiscountVoucher']);
+
+    Route::get('/getDiscountFood', [AdminDiscountController::class, 'getDiscountFood']);
+    Route::post('/addDiscountFood', [AdminDiscountController::class, 'addDiscountFood']);
+    Route::get('/editDiscountFood', [AdminDiscountController::class, 'editDiscountFood']);
+    Route::post('/updateDiscountFood', [AdminDiscountController::class, 'updateDiscountFood']);
+    Route::post('/deleteDiscountFood', [AdminDiscountController::class, 'deleteDiscountFood']);
 
     //admin profile
     Route::post('/changeName', [ProfileController::class, 'changeName']);
