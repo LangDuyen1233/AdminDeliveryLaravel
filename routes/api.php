@@ -20,6 +20,7 @@ use App\Http\Controllers\API\AppDelivery\ProfileController;
 use App\Http\Controllers\API\AppDelivery\RestaurantController;
 use App\Http\Controllers\API\AppDelivery\DiscountController;
 use App\Http\Controllers\API\AppDelivery\OrderController;
+use App\Http\Controllers\API\NotificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,6 +46,7 @@ Route::get('/confirmemail/{email}/{key}', [AuthController::class, 'confirmEmail'
 Route::post('/checkUser', [AuthController::class, 'checkUser']);
 Route::post('/loginPhone', [AuthController::class, 'loginPhone']);
 Route::post('/updateUid', [AuthController::class, 'updateUid']);
+Route::post('/sendNotification', [NotificationController::class, 'sendNotification']);
 
 Route::middleware('auth:api')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
