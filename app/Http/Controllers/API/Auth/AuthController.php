@@ -184,7 +184,7 @@ class   AuthController extends Controller
         error_log($request->email);
         error_log($request->password);
 //
-        if (auth()->attempt($dataLogin) && auth()->user()->role_id == 3) {
+        if (auth()->attempt($dataLogin) && auth()->user()->role_id == 3 && auth()->user()->active == 1) {
             error_log($request->password);
             $token = auth()->user()->token;
             error_log($token);

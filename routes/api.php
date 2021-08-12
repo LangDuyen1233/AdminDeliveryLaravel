@@ -5,6 +5,7 @@ use App\Http\Controllers\API\AdminDelivery\AdminMaterialsController;
 use App\Http\Controllers\API\AdminDelivery\AdminOrderController;
 use App\Http\Controllers\API\AdminDelivery\AdminRestaurantController;
 use App\Http\Controllers\API\AdminDelivery\AdminStaffController;
+use App\Http\Controllers\API\AdminDelivery\AdminStatisticController;
 use App\Http\Controllers\API\AdminDelivery\CategoryController;
 use App\Http\Controllers\API\AdminDelivery\FoodController;
 use App\Http\Controllers\API\AdminDelivery\PushNotificationController;
@@ -161,11 +162,19 @@ Route::middleware('auth:api')->group(function () {
     //notify
     Route::get('/getNotify',[PushNotificationController::class,'getNotify']);
 
+    //admin statistic
+    Route::get('/getSales', [AdminStatisticController::class, 'getSales']);
+    Route::get('/getCancel', [AdminStatisticController::class, 'getCancel']);
+    Route::get('/getSum', [AdminStatisticController::class, 'getSum']);
+    Route::get('/getRevenue', [AdminStatisticController::class, 'getRevenue']);
+    Route::get('/changeRevenue', [AdminStatisticController::class, 'changeRevenue']);
+
+    Route::get('/getWarehouse', [AdminStatisticController::class, 'getWarehouse']);
+    Route::get('/changeWarehouse', [AdminStatisticController::class, 'changeWarehouse']);
+
 });
 
 Route::post('/uploadImage  ', [UploadImage::class, 'uploadImage']);
 Route::post('/uploadAvatar  ', [UploadImage::class, 'uploadAvatar']);
 
-
-Route::post('send-notification', [App\Http\Controllers\NotificationController::class, 'send']);
 

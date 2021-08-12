@@ -7,6 +7,7 @@ namespace App\Http\Controllers\API\AdminDelivery;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\OrderStatus;
+use App\Models\Restaurant;
 use Illuminate\Http\Request;
 use Symfony\Component\Workflow\Workflow;
 
@@ -16,10 +17,22 @@ class AdminOrderController extends Controller
     {
         $token = $request->bearerToken();
         error_log($token);
+        $user_id = auth()->user()->id;
+
+        $restaurant = Restaurant::where('user_id', $user_id)->first();
+        error_log($restaurant->id);
+
+
         if ($token != null) {
+//            $order = Order::with('user')->with('statusOrder')->with('foodOrder')
+//                ->with('foodOrder.food')->with('foodOrder.toppings')
+//                ->where('order_status_id', 1)->get();
+
             $order = Order::with('user')->with('statusOrder')->with('foodOrder')
                 ->with('foodOrder.food')->with('foodOrder.toppings')
-                ->where('order_status_id', 1)->get();
+                ->where('order_status_id', 1)->whereHas("food", function ($f) use ($restaurant) {
+                $f->where('restaurant_id', $restaurant->id);
+            })->get();
             foreach ($order as $o) {
                 foreach ($o->foodOrder as $fo) {
 
@@ -76,11 +89,17 @@ class AdminOrderController extends Controller
     public function getPrepareCard(Request $request)
     {
         $token = $request->bearerToken();
+        $user_id = auth()->user()->id;
+
+        $restaurant = Restaurant::where('user_id', $user_id)->first();
+        error_log($restaurant->id);
         error_log($token);
         if ($token != null) {
             $order = Order::with('user')->with('statusOrder')->with('foodOrder')
                 ->with('foodOrder.food')->with('foodOrder.toppings')
-                ->where('order_status_id', 2)->get();
+                ->where('order_status_id', 2)->whereHas("food", function ($f) use ($restaurant) {
+                    $f->where('restaurant_id', $restaurant->id);
+                })->get();
 
             foreach ($order as $o) {
                 foreach ($o->foodOrder as $fo) {
@@ -139,14 +158,19 @@ class AdminOrderController extends Controller
     public function getDeliveringCard(Request $request)
     {
         $token = $request->bearerToken();
+        $user_id = auth()->user()->id;
+
+        $restaurant = Restaurant::where('user_id', $user_id)->first();
+        error_log($restaurant->id);
         error_log($token);
         if ($token != null) {
             $order = Order::with('user')->with('statusOrder')->with('foodOrder')
                 ->with('foodOrder.food')->with('foodOrder.toppings')->with('staff')
-                ->where('order_status_id', 3)->get();
+                ->where('order_status_id', 3)->whereHas("food", function ($f) use ($restaurant) {
+                    $f->where('restaurant_id', $restaurant->id);
+                })->get();
             foreach ($order as $o) {
                 foreach ($o->foodOrder as $fo) {
-
                     $fo->food->weight = number_format($fo->food->weight, 1);
                 }
             }
@@ -180,11 +204,17 @@ class AdminOrderController extends Controller
     public function getDeliveredCard(Request $request)
     {
         $token = $request->bearerToken();
+        $user_id = auth()->user()->id;
+
+        $restaurant = Restaurant::where('user_id', $user_id)->first();
+        error_log($restaurant->id);
         error_log($token);
         if ($token != null) {
             $order = Order::with('user')->with('statusOrder')->with('foodOrder')
                 ->with('foodOrder.food')->with('foodOrder.toppings')->with('staff')
-                ->where('order_status_id', 4)->get();
+                ->where('order_status_id', 4)->whereHas("food", function ($f) use ($restaurant) {
+                    $f->where('restaurant_id', $restaurant->id);
+                })->get();
             foreach ($order as $o) {
                 foreach ($o->foodOrder as $fo) {
                     $fo->food->weight = number_format($fo->food->weight, 1);
@@ -199,11 +229,17 @@ class AdminOrderController extends Controller
     public function getHistoryCard(Request $request)
     {
         $token = $request->bearerToken();
+        $user_id = auth()->user()->id;
+
+        $restaurant = Restaurant::where('user_id', $user_id)->first();
+        error_log($restaurant->id);
         error_log($token);
         if ($token != null) {
             $order = Order::with('user')->with('statusOrder')->with('foodOrder')
                 ->with('foodOrder.food')->with('foodOrder.toppings')->with('staff')
-                ->whereIn('order_status_id', [4, 5])->get();
+                ->whereIn('order_status_id', [4, 5])->whereHas("food", function ($f) use ($restaurant) {
+                    $f->where('restaurant_id', $restaurant->id);
+                })->get();
             foreach ($order as $o) {
 //                $o->updated_at = date_create_from_format('Y/m/d', $o->updated_at);
                 foreach ($o->foodOrder as $fo) {
