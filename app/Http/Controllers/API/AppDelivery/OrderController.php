@@ -89,7 +89,12 @@ class OrderController extends Controller
         $card = Cart::where('id', $card_id)->first();
         $card->delete();
 
-        return response()->json(['order' => $order], 200);
+        $o = Order::with('food.restaurant.user')->where('id', $order->id)->first();
+        foreach ($o->food as $f){
+            $f->restaurant->rating= number_format($f->restaurant->rating, 1);
+        }
+
+        return response()->json(['order' => $o], 200);
     }
 
     public function getOrder()

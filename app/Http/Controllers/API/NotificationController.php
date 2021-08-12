@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 
 
 use App\Http\Controllers\Controller;
+use App\Models\Notify;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -137,6 +138,7 @@ class NotificationController extends Controller
     public function sendNotification(Request $request)
     {
         $uid = $request->uid;
+        error_log($uid);
         $title = $request->title;
         $body = $request->body;
 
@@ -181,5 +183,21 @@ class NotificationController extends Controller
         curl_close($ch);
 
         error_log($result);
+
+        return response()->json([], 200);
+    }
+
+    public function saveNotification(Request $request)
+    {
+        $user_id = auth()->user()->id;
+        error_log($user_id);
+        $notify = Notify::create([
+            'title' => $request->title,
+            'body' => $request->body,
+            'user_id' => $user_id,
+            'notification_type_id' => 1,
+        ]);
+        $notify->save();
+        return response()->json(['notify' => $notify], 200);
     }
 }

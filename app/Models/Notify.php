@@ -15,7 +15,7 @@ class Notify extends Model
         'title',
         'notification_type_id',
         'user_id',
-        'description'
+        'body',
     ];
 
     public function notifyType()
@@ -23,7 +23,8 @@ class Notify extends Model
         return $this->belongsTo(NotifyType::class, 'notification_type_id');
     }
 
-    public function user(){
-       return $this->belongsTo(User::class, 'user_id');
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }
