@@ -25,10 +25,15 @@ class HomeComtroller extends Controller
     public function getRestaurant(Request $request)
     {
         $limit = $request->limit;
+        error_log('kjehfjkewfnwefewf');
         error_log($limit);
         $restaurant = Restaurant::with('foods')->with('foods.image')->with('foods.toppings')->limit($limit)->get();
-
+        error_log($restaurant);
         foreach ($restaurant as $r) {
+            foreach ($r->foods as $f){
+                $f->weight = number_format($f->weight, 1);
+            }
+//
             $r->rating = number_format($r->rating, 1);
         }
         error_log($restaurant);

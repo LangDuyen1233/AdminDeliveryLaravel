@@ -10,6 +10,7 @@ use App\Http\Controllers\API\AdminDelivery\CategoryController;
 use App\Http\Controllers\API\AdminDelivery\FoodController;
 use App\Http\Controllers\API\AdminDelivery\PushNotificationController;
 use App\Http\Controllers\API\AdminDelivery\ReviewController;
+use App\Http\Controllers\API\AppDelivery\DeliveryController;
 use App\Http\Controllers\API\Auth\AuthController;
 use App\Http\Controllers\API\UploadImage;
 use Illuminate\Http\Request;
@@ -87,6 +88,9 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/deleteDraftOrder', [OrderController::class, 'deleteDraftOrder']);
 
     Route::get('/saveNotification', [NotificationController::class, 'saveNotification']);
+
+    //delivery
+    Route::get('/getDelivery', [DeliveryController::class, 'getDelivery']);
 
     //admin
     Route::get('/getCategory', [CategoryController::class, 'getCategory']);
@@ -174,6 +178,8 @@ Route::middleware('auth:api')->group(function () {
 
     Route::get('/getWarehouse', [AdminStatisticController::class, 'getWarehouse']);
     Route::get('/changeWarehouse', [AdminStatisticController::class, 'changeWarehouse']);
+
+
 
 });
 
