@@ -19,6 +19,7 @@ class RestaurantController extends Controller
         error_log($restaurant_id);
         $restaurant = Restaurant::where('id', $restaurant_id)->with('user')->first();
         $restaurant->rating = number_format($restaurant->rating, 1);
+
         if ($restaurant != null) {
             return response()->json(['restaurants' => $restaurant], 200);
         } else {
@@ -31,6 +32,9 @@ class RestaurantController extends Controller
         $restaurant_id = $request->restaurant_id;
         error_log($restaurant_id);
         $food = Food::with('image')->with('toppings')->where('restaurant_id', $restaurant_id)->get();
+        foreach ($food as $f) {
+            $f->weight = number_format($f->weight, 1);
+        }
         if ($food != null) {
             return response()->json(['foods' => $food], 200);
         } else {
@@ -137,6 +141,9 @@ class RestaurantController extends Controller
     {
         $card_id = $request->card_id;
         $card = Cart::with('cardOrder')->with('cardOrder.food')->with('cardOrder.food.image')->with('cardOrder.toppings')->where('id', $card_id)->first();
+        foreach ($card->cardOrder as $co) {
+            $co->food->weight = number_format($co->food->weight, 1);
+        }
         return response()->json(['card' => $card], 200);
     }
 }

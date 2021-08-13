@@ -26,12 +26,13 @@ class OrderController extends Controller
         $note = $request->note;
         $discount_id = $request->discount_id;
         $card_id = $request->card_id;
+        $status = $request->status;
         error_log($card_id);
 
 
         $payment = new Payment([
             'method' => $method,
-            'status' => 'Chưa thanh toán',
+            'status' => $status,
             'user_id' => $user_id,
         ]);
         $payment->save();
@@ -90,8 +91,9 @@ class OrderController extends Controller
         $card->delete();
 
         $o = Order::with('food.restaurant.user')->where('id', $order->id)->first();
-        foreach ($o->food as $f){
-            $f->restaurant->rating= number_format($f->restaurant->rating, 1);
+        foreach ($o->food as $f) {
+            $f->restaurant->rating = number_format($f->restaurant->rating, 1);
+            $f->weight = number_format($f->weight, 1);
         }
 
         return response()->json(['order' => $o], 200);
@@ -106,6 +108,7 @@ class OrderController extends Controller
         if ($order != null) {
             foreach ($order->food as $f) {
                 $f->restaurant->rating = number_format($f->restaurant->rating, 1);
+                $f->weight = number_format($f->weight, 1);
             }
         }
         return response()->json(['order' => $order], 200);
@@ -127,6 +130,7 @@ class OrderController extends Controller
                     error_log('vaof ddaay ddi');
 //                    $fo->weight = number_format($fo->weight, 1);
                     $fo->restaurant->rating = number_format($fo->restaurant->rating, 1);
+                    $fo->weight = number_format($fo->weight, 1);
                 }
             }
         }

@@ -31,6 +31,7 @@ class AddressController extends Controller
         $user_id = $request->user()->id;
         error_log($user_id);
         $user = User::with('address')->where('id', $user_id)->first();
+
         return response()->json(['users' => $user], 200);
     }
 
