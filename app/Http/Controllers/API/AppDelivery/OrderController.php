@@ -107,6 +107,7 @@ class OrderController extends Controller
 
         if ($order != null) {
             foreach ($order->food as $f) {
+                $f->weight = number_format($f->weight, 1);
                 $f->restaurant->rating = number_format($f->restaurant->rating, 1);
             }
         }
