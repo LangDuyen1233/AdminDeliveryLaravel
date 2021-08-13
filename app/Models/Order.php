@@ -45,6 +45,12 @@ class Order extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    public function userDelivery()
+    {
+        return $this->belongsTo(User::class, 'user_delivery_id');
+    }
+
+
 //    public function cart()
 //    {
 //        return $this->belongsTo(Cart::class, 'cart_id');

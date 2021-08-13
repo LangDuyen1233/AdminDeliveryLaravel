@@ -91,6 +91,10 @@ Route::middleware('auth:api')->group(function () {
 
     //delivery
     Route::get('/getDelivery', [DeliveryController::class, 'getDelivery']);
+    Route::get('/isDelivery', [DeliveryController::class, 'isDelivery']);
+    Route::get('/historyDelivery', [DeliveryController::class, 'historyDelivery']);
+    Route::post('/received', [DeliveryController::class, 'received']);
+    Route::post('/changeDelivery', [DeliveryController::class, 'changeDelivery']);
 
     //admin
     Route::get('/getCategory', [CategoryController::class, 'getCategory']);
@@ -178,7 +182,6 @@ Route::middleware('auth:api')->group(function () {
 
     Route::get('/getWarehouse', [AdminStatisticController::class, 'getWarehouse']);
     Route::get('/changeWarehouse', [AdminStatisticController::class, 'changeWarehouse']);
-
 
 
 });

@@ -108,7 +108,6 @@ class OrderController extends Controller
         if ($order != null) {
             foreach ($order->food as $f) {
                 $f->restaurant->rating = number_format($f->restaurant->rating, 1);
-                $f->weight = number_format($f->weight, 1);
             }
         }
         return response()->json(['order' => $order], 200);
