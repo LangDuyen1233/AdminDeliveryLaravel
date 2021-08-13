@@ -90,8 +90,8 @@ class OrderController extends Controller
         $card->delete();
 
         $o = Order::with('food.restaurant.user')->where('id', $order->id)->first();
-        foreach ($o->food as $f){
-            $f->restaurant->rating= number_format($f->restaurant->rating, 1);
+        foreach ($o->food as $f) {
+            $f->restaurant->rating = number_format($f->restaurant->rating, 1);
         }
 
         return response()->json(['order' => $o], 200);
@@ -114,6 +114,7 @@ class OrderController extends Controller
     public function getHistory()
     {
         $user_id = auth()->user()->id;
+        error_log('get history');
         error_log($user_id);
         $order = Order::with('statusOrder')
             ->with('food')

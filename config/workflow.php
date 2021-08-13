@@ -26,7 +26,7 @@ return [
                 'to' => '3',
             ],
             'DELIVERED' => [
-                'from' => ['3', '2'],
+                'from' => ['3'],
                 'to' => '4',
             ],
             'CANCEL' => [
@@ -36,6 +36,10 @@ return [
             'WAITING' => [
                 'from' => '2',
                 'to' => '6',
+            ],
+            'RECEIVED' => [
+                'from' => '6',
+                'to' => '3',
             ],
         ],
     ],
