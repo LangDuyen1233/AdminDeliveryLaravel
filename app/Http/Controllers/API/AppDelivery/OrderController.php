@@ -102,7 +102,9 @@ class OrderController extends Controller
     public function getOrder()
     {
         $user_id = auth()->user()->id;
-        $order = Order::where('user_id', $user_id)->where('status', 1)->with('food')->with('food.toppings')
+        $order = Order::where('user_id', $user_id)
+            ->where('status', 1)->with('food')
+            ->with('food.toppings')
             ->with('statusOrder')->with('food.restaurant')->with('payment')->first();
 
         if ($order != null) {
@@ -119,21 +121,21 @@ class OrderController extends Controller
         $user_id = auth()->user()->id;
         error_log($user_id);
         $order = Order::with('statusOrder')
-            ->with('food')
-            ->with('food.restaurant')
+//            ->with('foodOrder.food')
+            ->with('foodOrder.food.restaurant')
             ->with('foodOrder.toppings')
             ->whereIn('order_status_id', [4, 5])->where('user_id', $user_id)->get();
 
-        if ($order != null) {
+//        if ($order != null) {
             foreach ($order as $o) {
-                foreach ($o->food as $fo) {
+                foreach ($o->foodOrder as $fo) {
                     error_log('vaof ddaay ddi');
 //                    $fo->weight = number_format($fo->weight, 1);
-                    $fo->restaurant->rating = number_format($fo->restaurant->rating, 1);
-                    $fo->weight = number_format($fo->weight, 1);
+                    $fo->food->restaurant->rating = number_format($fo->food->restaurant->rating, 1);
+                    $fo->food->weight = number_format($fo->food->weight, 1);
                 }
             }
-        }
+//        }
         return response()->json(['order' => $order], 200);
     }
 

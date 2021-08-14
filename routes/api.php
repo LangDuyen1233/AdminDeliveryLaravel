@@ -11,6 +11,7 @@ use App\Http\Controllers\API\AdminDelivery\FoodController;
 use App\Http\Controllers\API\AdminDelivery\PushNotificationController;
 use App\Http\Controllers\API\AdminDelivery\ReviewController;
 use App\Http\Controllers\API\AppDelivery\DeliveryController;
+use App\Http\Controllers\API\AppDelivery\ReviewsController;
 use App\Http\Controllers\API\Auth\AuthController;
 use App\Http\Controllers\API\UploadImage;
 use Illuminate\Http\Request;
@@ -95,6 +96,9 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/historyDelivery', [DeliveryController::class, 'historyDelivery']);
     Route::post('/received', [DeliveryController::class, 'received']);
     Route::post('/changeDelivery', [DeliveryController::class, 'changeDelivery']);
+
+    //review
+    Route::post('/addReview', [ReviewsController::class, 'addReview']);
 
     //admin
     Route::get('/getCategory', [CategoryController::class, 'getCategory']);

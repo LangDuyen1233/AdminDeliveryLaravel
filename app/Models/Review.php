@@ -13,7 +13,6 @@ class Review extends Model
         'id',
         'review',
         'rate',
-        'date',
         'restaurant_id',
         'user_id',
         'status'
@@ -31,6 +30,6 @@ class Review extends Model
 
     public function image()
     {
-        return $this->hasMany(Image::class,'food_review_id');
+        return $this->hasMany(Image::class, 'food_review_id');
     }
 }
