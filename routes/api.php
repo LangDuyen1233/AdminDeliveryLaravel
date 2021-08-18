@@ -14,7 +14,6 @@ use App\Http\Controllers\API\AppDelivery\DeliveryController;
 use App\Http\Controllers\API\AppDelivery\ReviewsController;
 use App\Http\Controllers\API\Auth\AuthController;
 use App\Http\Controllers\API\UploadImage;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AppDelivery\SliderController;
 use App\Http\Controllers\API\AppDelivery\HomeComtroller;
@@ -24,6 +23,7 @@ use App\Http\Controllers\API\AppDelivery\RestaurantController;
 use App\Http\Controllers\API\AppDelivery\DiscountController;
 use App\Http\Controllers\API\AppDelivery\OrderController;
 use App\Http\Controllers\API\NotificationController;
+use App\Http\Controllers\API\AppDelivery\SearchController;
 
 /*
 |--------------------------------------------------------------------------
@@ -76,6 +76,10 @@ Route::middleware('auth:api')->group(function () {
     //discount
     Route::get('/listdiscount', [DiscountController::class, 'getDiscount']);
 
+    //search
+    Route::get('/searchRestaurant', [SearchController::class, 'searchRestaurant']);
+    Route::get('/searchFood', [SearchController::class, 'searchFood']);
+
     // card and order
     Route::post('/addorder', [OrderController::class, 'addOrder']);
     Route::get('/getcardorder', [RestaurantController::class, 'getFoodCard']);
@@ -88,7 +92,9 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/getdraftOrder', [OrderController::class, 'getdraftOrder']);
     Route::post('/deleteDraftOrder', [OrderController::class, 'deleteDraftOrder']);
 
-    Route::get('/saveNotification', [NotificationController::class, 'saveNotification']);
+    // notification
+    Route::post('/saveNotification', [NotificationController::class, 'saveNotification']);
+    Route::get('/getNotification', [NotificationController::class, 'getNotification']);
 
     //delivery
     Route::get('/getDelivery', [DeliveryController::class, 'getDelivery']);
