@@ -55,12 +55,12 @@
                                         <a class="edit hvicon" style="color: green"
                                            href="{{route('admin-category.edit',$ca->id)}}"
                                         ><i
-                                                class="material-icons">&#xE254;</i>Edit</a>
+                                                class="material-icons">&#xE254;</i></a>
                                         <a class="delete hvicon" data-toggle="modal"
                                            href="{{route('admin-category.destroy',$ca->id)}}"
                                            data-target="#modal-delete{{$ca->id}}"
                                            style="color: red"><i
-                                                class=" material-icons">&#xE872;</i>Delete</a>
+                                                class=" material-icons">&#xE872;</i></a>
                                     </td>
                                 </tr>
 

@@ -82,7 +82,7 @@
                                         <a class="edit hvicon" style="color: green"
                                            href="{{route('admin-user.edit',$user->id)}}"
                                         ><i
-                                                class="material-icons">&#xE254;</i>Edit</a>
+                                                class="material-icons">&#xE254;</i></a>
                                         @if($user->active==1)
                                             <a class="delete hvicon" data-toggle="modal"
                                                href="{{route('admin-user.destroy',$user->id)}}"
@@ -117,7 +117,7 @@
                                                     </button>
                                                     @if($user->active == 1)
                                                         <i class="flaticon-secure-shield d-block"></i>
-                                                        <h1>Khóa người dùng.</h1>
+                                                        <h1>Khóa tài khoản người dùng.</h1>
                                                         <p>Bạn có chắc chắn muốn khóa không?</p>
                                                         <button type="submit"
                                                                 class="btn btn-secondary btn-lg mr-2 rounded-lg"
@@ -130,7 +130,7 @@
                                                         </button>
                                                     @else
                                                         <i class="flaticon-secure-shield d-block"></i>
-                                                        <h1>Mở khóa người dùng.</h1>
+                                                        <h1>Mở khóa tài khoản người dùng.</h1>
                                                         <p>Bạn có chắc chắn muốn mở khóa không?</p>
                                                         <button type="submit"
                                                                 class="btn btn-secondary btn-lg mr-2 rounded-lg"
