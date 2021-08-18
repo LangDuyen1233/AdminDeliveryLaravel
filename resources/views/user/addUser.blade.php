@@ -120,7 +120,7 @@
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="radio" name="status"
                                                            id="employee_inactive"
-                                                           value="1" {{ (old('active' )==0?'checked="checked"':'') }}>
+                                                           value="0" {{ (old('active' )==0?'checked="checked"':'') }}>
                                                     <label class="form-check-label" for="employee_inactive">
                                                         Không kích hoạt
                                                     </label>
@@ -128,7 +128,7 @@
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="radio" name="status"
                                                            id="employee_active"
-                                                           value="0" checked=""
+                                                           value="1" checked=""
                                                         {{ (old('active' )==1?'checked="checked"':'') }}>
                                                     <label class="form-check-label" for="employee_active">
                                                         Kích hoạt

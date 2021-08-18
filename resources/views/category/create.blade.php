@@ -28,9 +28,9 @@
                                             <div class="row">
                                                 <div class="col-sm-6">
                                                     <div class="mx-auto avt-wrapper ">
-                                                        <img id='avt_img' name="image"
+                                                        <img id='avt_img'
                                                              {{--                                                             src="https://thaoduoc3mien.com/wp-content/uploads/2017/07/food-2-1.jpg"--}}
-                                                             alt="Photo" class="z-depth-1 mb-3 mx-auto"/>
+                                                             alt="" class="z-depth-1 mb-3 mx-auto"/>
                                                     </div>
                                                     <div>
                                                         <label>Hình ảnh <span class="text-danger">*</span></label>
@@ -41,8 +41,7 @@
                                                                    id="image"/>
                                                             <div class="input-group-append">
                                                                 <button class="btn btn-outline-secondary" type="button"
-                                                                        onclick="avatar('image','avt_img')">Select
-                                                                    file
+                                                                        onclick="avatar('image','avt_img')">Chọn ảnh
                                                                 </button>
                                                             </div>
                                                         </div>
