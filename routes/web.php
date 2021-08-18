@@ -6,7 +6,9 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Middleware\CheckLogin;
+use Illuminate\Http\File;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\View;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +33,12 @@ Route::get('register', "AuthController@getRegister")->name('register');
 Route::get('profile', [AuthController::class, 'getProfile'])->name('profile');
 
 Route::get('logout', [LogoutController::class, 'doLogout'])->name('logout');
+
+Route::get('policy.html', function () {
+//    return File::get(public_path().'/resources/views/policy.blade.php');
+    return View('policy');
+});
+
 
 //auth
 Route::middleware([CheckLogin::class])->group(function () {
