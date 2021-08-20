@@ -120,6 +120,7 @@ class FoodController extends Controller
             'restaurant_id' => 'required|max:100',
             'category_id' => 'required|max:100',
         ], $this->messages());
+
         try {
             $f->name = $request->get('name');
             $f->size = $request->get('size');

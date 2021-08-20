@@ -26,8 +26,14 @@ Route::post('login', [LoginController::class, 'doLogin'])->name('login');
 
 Route::get('forgotpass', [ForgotPasswordController::class, 'forgotPass'])->name('forgotpass');
 Route::post('forgotpass', [ForgotPasswordController::class, 'doForgotPass'])->name('forgotpass');
-Route::get('confirmforgotpass/{email}/{key}', [ForgotPasswordController::class, 'doConfirmPassword'])->name('doconfirmpass');
+Route::get('confirmforgotpass/{email}/{key}', [ForgotPasswordController::class, 'doConfirmPassword'])->name('doConfirmPassword');
 Route::post('resetpass/{email}/{key}', [ForgotPasswordController::class, 'resetPass'])->name('resetpass');
+
+Route::get( 'notify', function () {
+    return view( 'auth.notify' );
+} )->name( 'notify' );
+
+//Route::post('resetpass/{email}/{key}', 'Auth\ForgetPasswordController@resetPass')->name('resetpass');
 
 Route::get('register', "AuthController@getRegister")->name('register');
 Route::get('profile', [AuthController::class, 'getProfile'])->name('profile');
