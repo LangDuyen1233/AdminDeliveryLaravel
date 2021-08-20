@@ -117,25 +117,26 @@
                     <a class="media fs-14 p-2" href="{{route('profile')}}"> <span><i
                                 class="flaticon-user mr-2"></i> Profile</span>
                     </a>
-                    <a class="media fs-14 p-2" href="pages/apps/email.html"> <span><i
-                                class="flaticon-mail mr-2"></i> Inbox</span> <span
-                            class="badge badge-pill badge-info">3</span>
-                    </a>
-                    <a class="media fs-14 p-2" href="pages/prebuilt-pages/user-profile.html"> <span><i
-                                class="flaticon-gear mr-2"></i> Account Settings</span>
-                    </a>
-                </li>
-                <li class="dropdown-divider"></li>
-                <li class="dropdown-menu-footer">
-                    <a class="media fs-14 p-2" href="pages/prebuilt-pages/lock-screen.html"> <span><i
-                                class="flaticon-security mr-2"></i> Lock</span>
-                    </a>
-                </li>
+{{--                    <a class="media fs-14 p-2" href="pages/apps/email.html"> <span><i--}}
+{{--                                class="flaticon-mail mr-2"></i> Inbox</span> <span--}}
+{{--                            class="badge badge-pill badge-info">3</span>--}}
+{{--                    </a>--}}
+{{--                    <a class="media fs-14 p-2" href="pages/prebuilt-pages/user-profile.html"> <span><i--}}
+{{--                                class="flaticon-gear mr-2"></i> Account Settings</span>--}}
+{{--                    </a>--}}
                 <li class="dropdown-menu-footer">
                     <a class="media fs-14 p-2" href="{{route('logout')}}"> <span><i
                                 class="flaticon-shut-down mr-2"></i> Logout</span>
                     </a>
                 </li>
+{{--                </li>--}}
+{{--                <li class="dropdown-divider"></li>--}}
+{{--                <li class="dropdown-menu-footer">--}}
+{{--                    <a class="media fs-14 p-2" href="pages/prebuilt-pages/lock-screen.html"> <span><i--}}
+{{--                                class="flaticon-security mr-2"></i> Lock</span>--}}
+{{--                    </a>--}}
+{{--                </li>--}}
+
             </ul>
         </li>
     </ul>
