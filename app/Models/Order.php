@@ -27,7 +27,9 @@ class Order extends Model
         'status',
         'user_delivery_id',
         'reason',
-        'staff_id'
+        'staff_id',
+        'latitude',
+        'longitude'
     ];
 
     public function statusOrder()
