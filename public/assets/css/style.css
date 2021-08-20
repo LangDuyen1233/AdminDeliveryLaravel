@@ -812,7 +812,7 @@ a {
 }
 
 a:hover, a:active, a:focus {
-    color: #f8f9fa;
+    /*color: #f8f9fa;*/
     text-decoration: none;
 }
 
@@ -1352,7 +1352,7 @@ body:not(.ms-aside-left-open) .ms-aside-toggler .ms-toggler-bar {
 }
 
 .logo-sn a img {
-    max-width: 150px;
+    max-width: 62px;
 }
 
 .side-nav ul li.menu-item {

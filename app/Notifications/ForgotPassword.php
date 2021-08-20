@@ -42,11 +42,11 @@ class ForgotPassword extends Notification implements ShouldQueue
      */
     public function toMail( $notifiable ) {
         return ( new MailMessage )
-            ->subject( "Quên mật khẩu tài khoản hệ thống timviec.gtnlu.site " )
+            ->subject( "Quên mật khẩu tài khoản hệ thống FoodDelivery" )
             ->greeting( "Xin chào! " )
             ->line( 'Tài khoản của bạn vừa được yêu cầu quên mật khẩu.' )
             ->line( 'Nếu bạn thực sự thực hiện yêu cầu trên vui lòng nhấn nút Quên mật khẩu ở dưới.' )
-            ->action( 'Quên mật khẩu', route( 'doconfirmpass', [
+            ->action( 'Quên mật khẩu', route( 'doConfirmPassword', [
                 'email' => $notifiable->email,
                 'key'   => $notifiable->random_key
             ] ) )

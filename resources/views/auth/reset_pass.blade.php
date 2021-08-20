@@ -29,18 +29,35 @@
 
             <div class="ms-auth-col">
                 <div class="ms-auth-form">
-                    <form class="needs-validation" novalidate="" method="POST" action="{{route('forgotpass')}}" style=" border: 0.5px solid lightgray;
+                    <form class="needs-validation" novalidate="" method="POST" action="{{route('resetpass',['email'=>$email,'key'=>$key])}}" style=" border: 0.5px solid lightgray;
     padding: 25px;">
                         @csrf
-                        <h3>Forgot password</h3>
+                        <h3>Reset password</h3>
                         @error('mes')
                         <small class="form-text text-danger"><p style="color: red">{{ $message }}</p></small>
                         @enderror
-                        <div class="ms-form-group has-icon">
-                            <input type="text" placeholder="Email Address" class="form-control" name="email"
-                                   value=""> <i class="material-icons">email</i>
+                        @if ($errors->any())
+                            <div class="alert alert-warning" style="display: block !important;">
+                                @foreach ($errors->all() as $error)
+                                    {{$error}} <br/>
+                                @endforeach
+                            </div>
+                        @endif
+                        <div class="mb-2">
+                            <label >Password</label>
+                            <div class="input-group">
+                                <input type="password" class="form-control" name="password" value="">
+{{--                                <div class="invalid-feedback">Vui lòng nhập mật khẩu.</div>--}}
+                            </div>
                         </div>
-                        <button class="btn btn-primary mt-4 d-block w-100" type="submit">Reset Password</button>
+                        <div class="mb-3">
+                            <label >Confirm Password</label>
+                            <div class="input-group">
+                                <input type="password" name="re_password" class="form-control" >
+{{--                                <div class="invalid-feedback">Vui lòng nhập mật khẩu.</div>--}}
+                            </div>
+                        </div>
+                        <button class="btn btn-primary mt-4 d-block w-100" type="submit">Save</button>
                     </form>
                 </div>
             </div>

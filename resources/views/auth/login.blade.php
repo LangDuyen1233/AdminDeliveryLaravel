@@ -92,10 +92,10 @@
                             </label>
                         </div>
                         <button class="btn btn-primary mt-4 d-block w-100" type="submit">Sign In</button>
-                        <p class="mb-0 mt-3 text-center">Don't have an account? <a class="btn-link"
-                                                                                   href="{{route('register')}}">Create
-                                Account</a>
-                        </p>
+{{--                        <p class="mb-0 mt-3 text-center">Don't have an account? <a class="btn-link"--}}
+{{--                                                                                   href="{{route('register')}}">Create--}}
+{{--                                Account</a>--}}
+{{--                        </p>--}}
                     </form>
                 </div>
             </div>

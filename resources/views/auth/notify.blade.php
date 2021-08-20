@@ -23,30 +23,40 @@
 </head>
 <body>
 
-<main class="body-content">
-    <div class="ms-content-wrapper ms-auth">
-        <div class="ms-auth-container">
-
-            <div class="ms-auth-col">
-                <div class="ms-auth-form">
-                    <form class="needs-validation" novalidate="" method="POST" action="{{route('forgotpass')}}" style=" border: 0.5px solid lightgray;
-    padding: 25px;">
-                        @csrf
-                        <h3>Forgot password</h3>
-                        @error('mes')
-                        <small class="form-text text-danger"><p style="color: red">{{ $message }}</p></small>
-                        @enderror
-                        <div class="ms-form-group has-icon">
-                            <input type="text" placeholder="Email Address" class="form-control" name="email"
-                                   value=""> <i class="material-icons">email</i>
-                        </div>
-                        <button class="btn btn-primary mt-4 d-block w-100" type="submit">Reset Password</button>
-                    </form>
-                </div>
-            </div>
+<div class="container" style="height: 100vh;">
+    <div class="row h-100 justify-content-center align-items-center">
+        @error('mes')
+        <div class="alert alert-danger" role="alert">
+            <h4 class="alert-heading">OOPS!</h4>
+            <p>
+                {{$message}}
+            </p>
+            <hr/>
+            <p class="mb-0">
+                <button type="button" class="btn btn-primary border-0">
+                    Home Page
+                </button>
+            </p>
         </div>
+        @enderror
+
+        @if(Session::has('ok'))
+            <div class="alert alert-success" role="alert">
+                <h4 class="alert-heading">Notification!</h4>
+                <p>
+                    {{Session::get('ok')}}
+                </p>
+                <hr/>
+                <p class="mb-0">
+                    <a href="{{route('home')}}" type="button" class="btn btn-primary border-0">
+                        Home Page
+                    </a>
+                </p>
+            </div>
+        @endif
+
     </div>
-</main>
+</div>
 <!-- SCRIPTS -->
 <!-- Global Required Scripts Start -->
 <script src="../../assets/js/jquery-3.3.1.min.js"></script>

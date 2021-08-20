@@ -1,8 +1,10 @@
 <aside id="ms-side-nav" class="side-nav fixed ms-aside-scrollable ms-aside-left">
     <!-- Logo -->
     <div class="logo-sn ms-d-block-lg">
-        <a class="pl-0 ml-0 text-center" href="{{route('home')}}">
-            <img src="{{asset('assets/img/costic/costic-logo-216x62.png')}}" alt="logo">
+        <a class="pl-0 ml-0 text-center" href="{{route('home')}}" style="font-size: 20px;font-family: fantasy;">
+            <img src="{{asset('data/l.png')}}" sizes="216x62">
+            Food Delivery
+{{--            <img src="{{asset('assets/img/costic/costic-logo-216x62.png')}}" alt="logo">--}}
         </a>
     </div>
     <!-- Navigation -->

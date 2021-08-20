@@ -20,8 +20,8 @@
     <br/>
     <p>
         Tài khoản của bạn vừa được yêu cầu quên mật khẩu.
-        <br/>Nếu bạn thực sự thực hiện yêu cầu trên vui lòng nhấn <a href="{{route('doconfirmpass',['email'=>$email,'key'=>$key])}}"> vào đây</a>. Hoặc copy đường link sau và thực hiện truy cập trên trình duyệt của bạn.
-        <br/>{{route('doconfirmpass',['email'=>$email,'key'=>$key])}}
+        <br/>Nếu bạn thực sự thực hiện yêu cầu trên vui lòng nhấn <a href="{{route('doConfirmPassword',['email'=>$email,'key'=>$key])}}"> vào đây</a>. Hoặc copy đường link sau và thực hiện truy cập trên trình duyệt của bạn.
+        <br/>{{route('doConfirmPassword',['email'=>$email,'key'=>$key])}}
         <br/>Ngược lại nếu bạn không thực hiện yêu cầu trên bạn có thể bỏ qua email này.
         <br/>Lưu ý: Link có thời gian sử dụng là 6 giờ.
     </p>

@@ -14,13 +14,14 @@ class ForgotPass extends Mailable
 
     protected $email;
     protected $key;
-    protected $name;
+    protected $username;
 
-    public function __construct($email, $key, $name)
+
+    public function __construct($email, $key, $username)
     {
         $this->email = $email;
         $this->key = $key;
-        $this->name = $name;
+        $this->username = $username;
     }
 
     /**
@@ -30,13 +31,14 @@ class ForgotPass extends Mailable
      */
     public function build()
     {
-        return $this->from('Greenteawindowsservice@gmail.com')
+        return $this
+//            ->from('Greenteawindowsservice@gmail.com')
             ->view('mail.forgetPass')
-            ->subject("DHNL")
+            ->subject("FoodDelivery")
             ->with([
                 'email' => $this->email,
                 'key' => $this->key,
-                'name' => $this->name
+                'name' => $this->username
             ]);
     }
 }
