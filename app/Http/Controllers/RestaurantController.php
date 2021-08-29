@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Restaurant;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use phpDocumentor\Reflection\Types\Array_;
@@ -24,10 +25,19 @@ class RestaurantController extends Controller
 
     public function create()
     {
-        $category = Category::all();
+        $category = Category::where('status', 1)->get();
+        $restaurant = Restaurant::with('user')->get();
+        foreach ($restaurant as $res) {
+            error_log($res->user_id);
+            $data[] = $res->user_id;
+        }
+
+        $user = User::whereNotIn('id', $data)->where('active', 1)->where('role_id', 3)->get();
+//        dd($user);
         return View('restaurant.create',
             [
                 'category' => $category,
+                'user' => $user,
             ]
         );
     }
@@ -40,7 +50,9 @@ class RestaurantController extends Controller
             'address' => 'required|max:100',
             'image' => 'required|max:100',
             'category_id' => 'required|max:100',
+            'user_id' => 'required',
         ], $this->messages());
+
         $name = $request->get('name');
         $phone = $request->get('phone');
         $address = $request->get('address');
@@ -48,6 +60,9 @@ class RestaurantController extends Controller
         $rating = $request->get('rating');
         $description = $request->get('description');
         $category_id = $request->get('category_id');
+        $user_id = $request->get('user_id');
+        error_log('tao ở đây');
+        error_log($user_id);
         $restaurant = new Restaurant([
             'name' => $name,
             'address' => $address,
@@ -55,6 +70,7 @@ class RestaurantController extends Controller
             'phone' => $phone,
             'rating' => $rating,
             'description' => $description,
+            'user_id' => $user_id,
             'active' => $request->get('active'),
         ]);
 //        dd($restaurant);
@@ -70,11 +86,22 @@ class RestaurantController extends Controller
     public function edit($id)
     {
         $category = Category::all();
-        $restaurant = Restaurant::where('id', $id)->with('category')->first();
+        $restaurant = Restaurant::where('id', $id)->with('category')->with('user')->first();
+        $res = Restaurant::all();
+        foreach ($res as $r) {
+            error_log($r->user_id);
+            if ($r->id != $id) {
+                $data[] = $r->user_id;
+            }
+        }
+
+        $user = User::whereNotIn('id', $data)->where('active', 1)->where('role_id', 3)->get();
+//        dd($user);
         return View('restaurant.edit',
             [
                 'category' => $category,
                 'restaurant' => $restaurant,
+                'user' => $user,
             ]);
     }
 
@@ -93,6 +120,7 @@ class RestaurantController extends Controller
             'phone' => 'required|numeric|min:10|regex:/^0[0-9]/',
             'image' => 'required|max:100',
             'category_id' => 'required|max:100',
+            'user_id' => 'required',
         ], $this->messages());
         try {
             $r->name = $request->get('name');
@@ -102,6 +130,8 @@ class RestaurantController extends Controller
             $r->rating = $request->get('rating');
             $r->description = $request->get('description');
             $r->active = $request->get('active');
+            $r->user_id = $request->get('user_id');
+            error_log($request->get('user_id'));
             $category_id = $request->get('category_id');
 
             $r->save();
@@ -147,6 +177,7 @@ class RestaurantController extends Controller
             'phone.regex' => 'Số điện thoại không đúng định dạng.',
             'image.required' => 'Bạn cần chọn hình ảnh',
             'category_id.required' => 'Bạn cần chọn danh mục',
+            'user_id.required' => 'Bạn cần chọn chủ quán ăn',
         ];
     }
 

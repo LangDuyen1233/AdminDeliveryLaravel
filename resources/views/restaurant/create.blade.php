@@ -88,15 +88,15 @@
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
-                                                        <label>Thể loại<span class="text-danger">*</span></label>
-                                                        <select
-                                                            class="selectpicker w-100"
-                                                            tabindex="-1" aria-hidden="true" name="category_id[]"
-                                                            multiple="multiple" title="Chọn thể loại">
-                                                            @foreach($category as $c)
+                                                        <label>Chủ quán ăn<span class="text-danger">*</span></label>
+                                                        <select class="custom-select select select2-hidden-accessible"
+                                                                tabindex="-1" aria-hidden="true" name="user_id">
+                                                            <option>Chọn chủ quán
+                                                            </option>
+                                                            @foreach($user as $u)
                                                                 <option
-                                                                    {{old('category_id')=="1"? 'selected':''}} value="{{$c->id}}">
-                                                                    {{$c->name}}
+                                                                    {{old('user_id')=="1"? 'selected':''}} value="{{$u->id}}">
+                                                                    {{$u->username}}
                                                                 </option>
                                                             @endforeach
                                                         </select>
@@ -106,7 +106,8 @@
                                                     <div class="mx-auto avt-wrapper ">
                                                         <img id='avt_img' name="image"
                                                              {{--                                                             src="https://thaoduoc3mien.com/wp-content/uploads/2017/07/food-2-1.jpg"--}}
-                                                             alt="Photo" class="z-depth-1 mb-3 mx-auto"/>
+                                                             {{--                                                             alt="Photo" --}}
+                                                             class="z-depth-1 mb-3 mx-auto"/>
                                                     </div>
                                                     <div>
                                                         <label>Hình ảnh <span class="text-danger">*</span></label>
@@ -125,6 +126,23 @@
                                                     </div>
 
                                                 </div>
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label>Danh mục<span class="text-danger">*</span></label>
+                                                        <select
+                                                            class="selectpicker w-100"
+                                                            tabindex="-1" aria-hidden="true" name="category_id[]"
+                                                            multiple="multiple" title="Chọn danh mục">
+                                                            @foreach($category as $c)
+                                                                <option
+                                                                    {{old('category_id')=="1"? 'selected':''}} value="{{$c->id}}">
+                                                                    {{$c->name}}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+
                                             </div>
                                             <div class="form-group">
                                                 <label class="display-block">Trạng thái</label>
