@@ -20,7 +20,7 @@
                     <div class="ms-panel-header">
                         <div class="d-flex justify-content-between">
                             <div class="ms-header-text">
-                                <h6>Thêm quán ăn mới</h6>
+                                <h6>Sửa thông tin quán ăn</h6>
                             </div>
                         </div>
                     </div>
@@ -80,15 +80,19 @@
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
-                                                        <label>Thể loại<span class="text-danger">*</span></label>
-                                                        <select class="selectpicker w-100"
-                                                            tabindex="-1" aria-hidden="true" name="category_id[]"
-                                                            multiple="multiple" title="">
-                                                            @foreach($category as $c)
+                                                        <label>Chủ quán ăn<span class="text-danger">*</span></label>
+                                                        <select class="custom-select select select2-hidden-accessible"
+                                                                tabindex="-1" aria-hidden="true" name="user_id">
+                                                            <option>
+                                                                Chọn chủ quán ăn
+                                                            </option>
+                                                            @foreach($user as $u)
                                                                 <option
-                                                                    @if(in_array($c->id, $restaurant->category->pluck('id')->toArray())) selected
-                                                                    @endif value="{{ $c->id }}">{{ $c->name }}</option>
+                                                                    {{($restaurant->user_id) == $u->id ? 'selected' : '' }} value="{{$u->id}}">
+                                                                    {{$u->username}}
+                                                                </option>
                                                             @endforeach
+
                                                         </select>
                                                     </div>
                                                 </div>
@@ -114,7 +118,20 @@
                                                         </div>
                                                     </div>
                                                 </div>
-
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label>Thể loại<span class="text-danger">*</span></label>
+                                                        <select class="selectpicker w-100"
+                                                            tabindex="-1" aria-hidden="true" name="category_id[]"
+                                                            multiple="multiple" title="">
+                                                            @foreach($category as $c)
+                                                                <option
+                                                                    @if(in_array($c->id, $restaurant->category->pluck('id')->toArray())) selected
+                                                                    @endif value="{{ $c->id }}">{{ $c->name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="form-group">
                                                 <label class="display-block">Trạng thái</label>
@@ -138,7 +155,7 @@
                                             <div class="m-t-20 text-center">
                                                 <button type="submit"
                                                         class="btn btn-outline-primary ms-graph-metrics"
-                                                        name="button">Tạo quán ăn
+                                                        name="button">Sửa quán ăn
                                                 </button>
                                             </div>
                                         </form>

@@ -35,7 +35,7 @@
                                 <th>Số ĐT</th>
                                 <th>Xếp hạng</th>
                                 {{--                                <th>Mô tả</th>--}}
-                                <th>Danh mục</th>
+{{--                                <th>Danh mục</th>--}}
                                 <th>Trạng thái</th>
                                 <th>Thao tác</th>
                             </tr>
@@ -105,12 +105,6 @@
                                             </div>
                                         </div>
                                         {{--                                        </div>--}}
-                                    </td>
-                                    {{--                                    <td>{{$res->description}}</td>--}}
-                                    <td>
-                                        @foreach($res->category as $r)
-                                            <li style="list-style-type: none">{{$r->name}}</li>
-                                        @endforeach
                                     </td>
                                     <td style="text-align: center">
                                         @if($res->active==1)

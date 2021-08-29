@@ -12,7 +12,7 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $category = Category::all();
+        $category = Category::where('status', 1)->get();
 //        dd($category[0]->restaurant->name);
         return view('category.index',
             [
@@ -86,7 +86,8 @@ class CategoryController extends Controller
         $category = Category::find($id);
 
         try {
-            $category->delete();
+            $category->status = 0;
+            $category->update();
             return redirect()->back()->withErrors(['mes' => "Xóa danh mục thành công"]);
         } catch (\Exception $e) {
             return response('', 500);
