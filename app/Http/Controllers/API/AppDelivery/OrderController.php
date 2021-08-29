@@ -27,6 +27,8 @@ class OrderController extends Controller
         $discount_id = $request->discount_id;
         $card_id = $request->card_id;
         $status = $request->status;
+        $latitude = $request->latitude;
+        $longitude = $request -> longitude;
         error_log($card_id);
 
 
@@ -62,7 +64,9 @@ class OrderController extends Controller
             'discount_id' => $discount_id,
             'note' => $note,
             'status' => 1,
-            'order_status_id' => 3,
+            'order_status_id' => 1,
+            'latitude' => $latitude,
+            'longitude' => $longitude,
         ]);
         $order->save();
 

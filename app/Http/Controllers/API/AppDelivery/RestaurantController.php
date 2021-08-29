@@ -89,7 +89,6 @@ class RestaurantController extends Controller
             $card_order->update();
         }
 
-
         if ($topping_id != '') {
             $arrTopping = explode(',', $topping_id);
             $card_order->toppings()->sync($arrTopping);
@@ -97,17 +96,18 @@ class RestaurantController extends Controller
             $card_order->toppings()->sync($topping_id);
         }
 
-        $price_topping = 0;
-        foreach ($card_order->toppings as $f) {
-            error_log($f->price);
-            $price_topping += $f->price;
-        }
-        error_log($price_topping);
+//        $price_topping = 0;
+//        foreach ($card_order->toppings as $f) {
+//            error_log($f->price);
+//            $price_topping += $f->price;
+//        }
+//        error_log($price_topping);
 
-        $price = $card_order->price + $price_topping;
+//        $price = $card_order->price ;
+//            + $price_topping * $quantity;
 
-        $card_order->price = $price;
-        $card_order->update();
+//        $card_order->price = $price;
+//        $card_order->update();
 
         $sum_card = CartOrder::where('cart_id', $card->id)->get();
 
