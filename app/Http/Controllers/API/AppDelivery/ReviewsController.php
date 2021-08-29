@@ -20,10 +20,6 @@ class ReviewsController extends Controller
         error_log('ẻthyj $restaurantId');
         $review = $request->review;
         $rate = $request->rate;
-//        $date = Carbon::now();
-
-        error_log($review);
-        error_log($rate);
 
         $reviews = new Review([
             'review' => $review,
@@ -49,4 +45,17 @@ class ReviewsController extends Controller
         return response()->json(['success' => 'Tạo thành công', 'review' => $review], 200);
     }
 
+    public function reviewRestaurant(Request $request)
+    {
+        $restauran_id = $request->restaurantId;
+        $review = Review::where('restaurant_id', $restauran_id)->with('image')->with('user')->get();
+        if ($review != null) {
+            foreach ($review as $r) {
+                $r->rate = number_format($r->rate, 1);
+            }
+            return response()->json(['review' => $review], 200);
+        } else {
+            return response()->json(['error' => 'review not found'], 401);
+        }
+    }
 }

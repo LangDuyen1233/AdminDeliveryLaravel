@@ -66,10 +66,11 @@ class NotificationController extends Controller
 
     public function saveNotification(Request $request)
     {
-        $user_id = auth()->user()->id;
+        $user_id = $request->user_id;
         error_log($user_id);
         $title = $request->title;
         $body = $request->body;
+        $notification_type_id = $request->notification_type_id;
         error_log($title);
         error_log($body);
 
@@ -77,7 +78,7 @@ class NotificationController extends Controller
             'title' => $title,
             'body' => $body,
             'user_id' => $user_id,
-            'notification_type_id' => 1,
+            'notification_type_id' => $notification_type_id,
         ]);
         $notify->save();
         return response()->json(['notify' => $notify], 200);

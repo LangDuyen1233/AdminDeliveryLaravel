@@ -17,7 +17,7 @@ class DeliveryController extends Controller
         error_log('dsaas');
         if ($token != null) {
             $order = Order::where('order_status_id', 6)->with('foodOrder')->with('user')->with('userDelivery')
-                ->with('foodOrder.food')->with('foodOrder.toppings')->with('foodOrder.food.restaurant')->get();
+                ->with('foodOrder.food')->with('foodOrder.toppings')->with('foodOrder.food.restaurant')->with('foodOrder.food.restaurant.user')->get();
             if ($order != null) {
                 foreach ($order as $o) {
                     foreach ($o->foodOrder as $fo) {
@@ -39,7 +39,7 @@ class DeliveryController extends Controller
         if ($token != null) {
             error_log($request->orderId);
             $orderId = $request->orderId;
-            $order = Order::find($orderId);
+            $order = Order::where('id', $orderId)->first();
             error_log($order);
 
 
@@ -65,7 +65,7 @@ class DeliveryController extends Controller
         if ($token != null) {
             $order = Order::where('order_status_id', 3)->where('user_delivery_id', $userId)
                 ->with('foodOrder')->with('user')->with('userDelivery')->with('payment')
-                ->with('foodOrder.food')->with('foodOrder.toppings')->with('foodOrder.food.restaurant')
+                ->with('foodOrder.food')->with('foodOrder.toppings')->with('foodOrder.food.restaurant')->with('foodOrder.food.restaurant.user')
                 ->first();
             if ($order != null) {
                 foreach ($order->foodOrder as $fo) {
@@ -87,14 +87,14 @@ class DeliveryController extends Controller
         if ($token != null) {
             $orderId = $request->orderId;
             error_log($orderId);
-            $order = Order::find($orderId);
+            $order = Order::where('id', $orderId)->with('payment')->first();
             error_log($order);
 
             $workflow = $order->workflow_get();
             if ($workflow->can($order, 'DELIVERED') == true) {
                 $workflow->apply($order, 'DELIVERED');
-//                error_log($request->userId);
-//                $order->user_delivery_id = $request->userId;
+                $order->payment->status = 'Đã thanh toán';
+                $order->payment->update();
                 $order->save();
                 return response()->json(['success' => 'Thay đổi thành công', 'order' => $order], 200);
             } else {

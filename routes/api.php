@@ -24,6 +24,7 @@ use App\Http\Controllers\API\AppDelivery\DiscountController;
 use App\Http\Controllers\API\AppDelivery\OrderController;
 use App\Http\Controllers\API\NotificationController;
 use App\Http\Controllers\API\AppDelivery\SearchController;
+use App\Http\Controllers\API\AdminDelivery\AdminAddressController;
 
 /*
 |--------------------------------------------------------------------------
@@ -55,10 +56,15 @@ Route::middleware('auth:api')->group(function () {
 
     Route::post('/logout', [AuthController::class, 'logout']);
 
+    // home
     Route::get('/sliders', [SliderController::class, 'getSliders']);
     Route::get('/listfood', [HomeComtroller::class, 'getFood']);
-    Route::get('/getuser', [ProfileController::class, 'getUsers']);
     Route::get('/listrestaurants', [HomeComtroller::class, 'getRestaurant']);
+
+    //profile
+    Route::get('/getuser', [ProfileController::class, 'getUsers']);
+    Route::post('/updateDelivery', [ProfileController::class, 'updateDelivery']);
+
 
     //address
     Route::get('/listaddress', [AddressController::class, 'getAddress']);
@@ -85,8 +91,9 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/getcardorder', [RestaurantController::class, 'getFoodCard']);
     Route::post('/addcardorder', [RestaurantController::class, 'addCardOrder']);
     Route::get('/getcard', [RestaurantController::class, 'getCard']);
-
-
+    Route::post('/deleteCard', [RestaurantController::class, 'deleteCard']);
+    Route::post('/increaseQuantity', [RestaurantController::class, 'increaseQuantity']);
+    Route::post('/decreaseQuantity', [RestaurantController::class, 'decreaseQuantity']);
     Route::get('/getOrder', [OrderController::class, 'getOrder']);
     Route::get('/getHistory', [OrderController::class, 'getHistory']);
     Route::get('/getdraftOrder', [OrderController::class, 'getdraftOrder']);
@@ -105,6 +112,7 @@ Route::middleware('auth:api')->group(function () {
 
     //review
     Route::post('/addReview', [ReviewsController::class, 'addReview']);
+    Route::get('/reviewRestaurant', [ReviewsController::class, 'reviewRestaurant']);
 
     //admin
     Route::get('/getCategory', [CategoryController::class, 'getCategory']);
@@ -170,7 +178,7 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/updateDiscountFood', [AdminDiscountController::class, 'updateDiscountFood']);
     Route::post('/deleteDiscountFood', [AdminDiscountController::class, 'deleteDiscountFood']);
 
-    //admin profile
+    //admin profile and app delivery
     Route::post('/changeName', [ProfileController::class, 'changeName']);
     Route::post('/changeDob', [ProfileController::class, 'changeDob']);
     Route::post('/changeGender', [ProfileController::class, 'changeGender']);
@@ -192,6 +200,9 @@ Route::middleware('auth:api')->group(function () {
 
     Route::get('/getWarehouse', [AdminStatisticController::class, 'getWarehouse']);
     Route::get('/changeWarehouse', [AdminStatisticController::class, 'changeWarehouse']);
+
+    //admin address
+    Route::post('/updateAddressMap', [AdminAddressController::class, 'updateAddressMap']);
 
 
 });

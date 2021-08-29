@@ -132,4 +132,19 @@ class ProfileController extends Controller
             return response()->json(['error' => 'Unauthorised'], 401);
         }
     }
+
+    public function updateDelivery(Request $request)
+    {
+        $user_id = $request->id;
+        error_log($user_id);
+
+        $user = User::where('id', $user_id)->first();
+        if ($user != null) {
+            error_log('vào đầu');
+            $user->role_id = 4;
+            $user->update();
+            return response()->json(['users' => $user], 200);
+        }
+        return response()->json(['error' => 'Người dùng không tồn tại', 401]);
+    }
 }

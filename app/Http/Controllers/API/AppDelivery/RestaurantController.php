@@ -9,6 +9,7 @@ use App\Models\Cart;
 use App\Models\CartOrder;
 use App\Models\Food;
 use App\Models\Restaurant;
+use App\Models\Review;
 use Illuminate\Http\Request;
 
 class RestaurantController extends Controller
@@ -17,8 +18,11 @@ class RestaurantController extends Controller
     {
         $restaurant_id = $request->restaurant_id;
         error_log($restaurant_id);
-        $restaurant = Restaurant::where('id', $restaurant_id)->with('user')->first();
+        $restaurant = Restaurant::where('id', $restaurant_id)->with('foods')->with('foods.toppings')->with('foods.image')->with('user')->first();
         $restaurant->rating = number_format($restaurant->rating, 1);
+        foreach ($restaurant->foods as $f) {
+            $f->weight = number_format($f->weight, 1);
+        }
 
         if ($restaurant != null) {
             return response()->json(['restaurants' => $restaurant], 200);
@@ -96,19 +100,6 @@ class RestaurantController extends Controller
             $card_order->toppings()->sync($topping_id);
         }
 
-//        $price_topping = 0;
-//        foreach ($card_order->toppings as $f) {
-//            error_log($f->price);
-//            $price_topping += $f->price;
-//        }
-//        error_log($price_topping);
-
-//        $price = $card_order->price ;
-//            + $price_topping * $quantity;
-
-//        $card_order->price = $price;
-//        $card_order->update();
-
         $sum_card = CartOrder::where('cart_id', $card->id)->get();
 
         foreach ($sum_card as $c) {
@@ -128,9 +119,13 @@ class RestaurantController extends Controller
         $restaurant_id = $request->restaurant_id;
         error_log('vào đây bè');
         error_log($request->restaurant_id);
-        $card = Cart::with('cardOrder')->where('restaurant_id', $restaurant_id)->first();
+        $card = Cart::with('cardOrder')->with('cardOrder.food')->with('cardOrder.food.toppings')->with('cardOrder.food.image')->where('restaurant_id', $restaurant_id)->first();
         error_log($card);
+
         if ($card != null) {
+            foreach ($card->cardOrder as $co) {
+                $co->food->weight = number_format($co->food->weight, 1);
+            }
             return response()->json(['card' => $card], 200);
         } else {
             return response()->json(['error' => 'Card not found'], 401);
@@ -146,4 +141,80 @@ class RestaurantController extends Controller
         }
         return response()->json(['card' => $card], 200);
     }
+
+    public function deleteCard(Request $request)
+    {
+        $cart_id = $request->cart_id;
+        $cardOrder = CartOrder::where('cart_id', $cart_id)->get();
+        foreach ($cardOrder as $co) {
+            $co->delete();
+        }
+        $card = Cart::where('id', $cart_id)->first();
+        if ($card->delete()) {
+            return response()->json(['card' => $card], 200);
+        } else {
+            return response()->json(['error' => 'Card not delete'], 401);
+        }
+    }
+
+    public function increaseQuantity(Request $request)
+    {
+        $cardOrderId = $request->cardOrderId;
+        $cardOrder = CartOrder::where('id', $cardOrderId)->with('food')->with('food.toppings')->with('food.image')->first();
+        $cardOrder->quantity = $cardOrder->quantity + 1;
+
+        $price = $cardOrder->food->price * $cardOrder->quantity;
+        $priceTopping = 0;
+        foreach ($cardOrder->food->toppings as $topping) {
+            $priceTopping = $priceTopping + $cardOrder->quantity * $topping->price;
+        }
+        $cardOrder->price = $price + $priceTopping;
+
+        if ($cardOrder->update()) {
+            $cardOrder->food->weight = number_format($cardOrder->food->weight, 1);
+            $cardO = CartOrder::where('cart_id', $cardOrder->cart_id)->get();
+            $sumPrice = 0;
+            foreach ($cardO as $co) {
+                $sumPrice = $sumPrice + $co->price;
+            }
+            $card = Cart::where('id', $cardOrder->cart_id)->first();
+            $card->sum_price = $sumPrice;
+            $card->update();
+            return response()->json(['cardOrder' => $cardOrder], 200);
+        } else {
+            return response()->json(['error' => 'Card not found'], 401);
+        }
+
+    }
+
+    public function decreaseQuantity(Request $request)
+    {
+        $cardOrderId = $request->cardOrderId;
+        $cardOrder = CartOrder::where('id', $cardOrderId)->with('food')->with('food.toppings')->with('food.image')->first();
+        $cardOrder->quantity = $cardOrder->quantity - 1;
+
+        $price = $cardOrder->food->price * $cardOrder->quantity;
+
+        $priceTopping = 0;
+        foreach ($cardOrder->food->toppings as $topping) {
+            $priceTopping = $priceTopping + $cardOrder->quantity * $topping->price;
+        }
+        $cardOrder->price = $price + $priceTopping;
+
+        if ($cardOrder->update()) {
+            $cardOrder->food->weight = number_format($cardOrder->food->weight, 1);
+            $cardO = CartOrder::where('cart_id', $cardOrder->cart_id)->get();
+            $sumPrice = 0;
+            foreach ($cardO as $co) {
+                $sumPrice = $sumPrice + $co->price;
+            }
+            $card = Cart::where('id', $cardOrder->cart_id)->first();
+            $card->sum_price = $sumPrice;
+            $card->update();
+            return response()->json(['cardOrder' => $cardOrder], 200);
+        } else {
+            return response()->json(['error' => 'Card not found'], 401);
+        }
+    }
+
 }

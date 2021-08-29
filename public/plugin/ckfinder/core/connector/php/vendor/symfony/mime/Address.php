@@ -27,7 +27,7 @@ final class Address
     /**
      * A regex that matches a structure like 'Name <email@address.com>'.
      * It matches anything between the first < and last > as email address.
-     * This allows to use a single string to construct an AddressController, which can be convenient to use in
+     * This allows to use a single string to construct an AdminAddressController, which can be convenient to use in
      * config, and allows to have more readable config.
      * This does not try to cover all edge cases for address.
      */
@@ -101,11 +101,11 @@ final class Address
             return new self($matches['addrSpec'], trim($matches['displayName'], ' \'"'));
         }
 
-        throw new InvalidArgumentException(sprintf('An address can be an instance of AddressController or a string ("%s" given).', get_debug_type($address)));
+        throw new InvalidArgumentException(sprintf('An address can be an instance of AdminAddressController or a string ("%s" given).', get_debug_type($address)));
     }
 
     /**
-     * @param (AddressController|string)[] $addresses
+     * @param (AdminAddressController|string)[] $addresses
      *
      * @return Address[]
      */
