@@ -37,7 +37,7 @@ class ProfileController extends Controller
             $email = $request->get('email');
             $phone = $request->get('phone');
             $gender = $request->get('gender');
-            $dob = $request->get('dob');
+            $dob = date("Y-m-d", strtotime($request->get('dob')));
             $bio = $request->get('bio');
 
             $user = User::find($request->id);
