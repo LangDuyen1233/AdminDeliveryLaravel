@@ -7,6 +7,7 @@ use App\Models\Restaurant;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use phpDocumentor\Reflection\Types\Array_;
 use function Complex\add;
 
@@ -15,10 +16,11 @@ class RestaurantController extends Controller
     public function index()
     {
         $restaurant = Restaurant::with('category')->with('user')->get();
-//        dd($restaurant);
+        $user = Session::get('auth');
         return view('restaurant.index',
             [
                 'restaurant' => $restaurant,
+                'user' => $user,
             ]
         );
     }
@@ -27,16 +29,19 @@ class RestaurantController extends Controller
     {
         $category = Category::where('status', 1)->get();
         $restaurant = Restaurant::with('user')->get();
+        $user = Session::get('auth');
+
         foreach ($restaurant as $res) {
             error_log($res->user_id);
             $data[] = $res->user_id;
         }
 
-        $user = User::whereNotIn('id', $data)->where('active', 1)->where('role_id', 3)->get();
-//        dd($user);
+        $userNotRestaurant = User::whereNotIn('id', $data)->where('active', 1)->where('role_id', 3)->get();
+
         return View('restaurant.create',
             [
                 'category' => $category,
+                'userRestaurant' => $userNotRestaurant,
                 'user' => $user,
             ]
         );
@@ -88,6 +93,7 @@ class RestaurantController extends Controller
         $category = Category::all();
         $restaurant = Restaurant::where('id', $id)->with('category')->with('user')->first();
         $res = Restaurant::all();
+        $user = Session::get('auth');
         foreach ($res as $r) {
             error_log($r->user_id);
             if ($r->id != $id) {
@@ -95,12 +101,13 @@ class RestaurantController extends Controller
             }
         }
 
-        $user = User::whereNotIn('id', $data)->where('active', 1)->where('role_id', 3)->get();
+        $userNotRestaurant = User::whereNotIn('id', $data)->where('active', 1)->where('role_id', 3)->get();
 //        dd($user);
         return View('restaurant.edit',
             [
                 'category' => $category,
                 'restaurant' => $restaurant,
+                'userRestaurant' => $userNotRestaurant,
                 'user' => $user,
             ]);
     }

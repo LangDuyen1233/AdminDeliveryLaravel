@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('css')
-    <link rel="stylesheet" type="text/css" href="assets/css/jquery.dataTables.css">
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/jquery.dataTables.css')}}">
 @endsection
 @section('content')
     <div class="ms-content-wrapper">
@@ -31,10 +31,10 @@
                                 <th>Đơn giá</th>
                                 <th>Khối lượng</th>
                                 <th>Thành phần</th>
-                                <th>Thể loại</th>
+                                <th>Danh mục</th>
                                 <th>Quán ăn</th>
                                 <th>Topping</th>
-                                <th>Trạng thái</th>
+{{--                                <th>Trạng thái</th>--}}
                                 <th>Thao tác</th>
                             </tr>
                             </thead>
@@ -70,31 +70,36 @@
                                             <li style="list-style-type: none">{{$r->name}}</li>
                                         @endforeach
                                     </td>
-                                    <td style="text-align: center">
-                                        @if($f->status==1)
-                                            <span class="badge badge-success">Họat động</span>
-                                        @elseif($f->status==0)
-                                            <span class="badge badge-danger">Khóa</span>
-                                        @endif
-                                    </td>
+{{--                                    <td style="text-align: center">--}}
+{{--                                        @if($f->status==1)--}}
+{{--                                            <span class="badge badge-success">Họat động</span>--}}
+{{--                                        @elseif($f->status==0)--}}
+{{--                                            <span class="badge badge-danger">Khóa</span>--}}
+{{--                                        @endif--}}
+{{--                                    </td>--}}
                                     <td style="text-align: center">
                                         <a class="edit hvicon" style="color: green;padding: 10px"
                                            href="{{route('admin-food.edit',$f->id)}}"
                                         ><i
                                                 class="material-icons">&#xE254;</i></a>
-                                        @if($f->status==1)
-                                            <a class="delete hvicon" data-toggle="modal"
-                                               href="{{route('admin-food.destroy',$f->id)}}"
-                                               data-target="#modal-delete{{$f->id}}"
-                                               style="color: red"><i
-                                                    class=" material-icons">&#xe897;</i></a>
-                                        @else
-                                            <a class="delete hvicon" data-toggle="modal"
-                                               href="{{route('admin-food.destroy',$f->id)}}"
-                                               data-target="#modal-delete{{$f->id}}"
-                                               style="color: red"><i
-                                                    class=" material-icons">&#xe898;</i></a>
-                                        @endif
+                                        <a class="delete hvicon" data-toggle="modal"
+                                           href="{{route('admin-food.destroy',$f->id)}}"
+                                           data-target="#modal-delete{{$f->id}}"
+                                           style="color: red"><i
+                                                class=" material-icons">&#xE872;</i></a>
+{{--                                        @if($f->status==1)--}}
+{{--                                            <a class="delete hvicon" data-toggle="modal"--}}
+{{--                                               href="{{route('admin-food.destroy',$f->id)}}"--}}
+{{--                                               data-target="#modal-delete{{$f->id}}"--}}
+{{--                                               style="color: red"><i--}}
+{{--                                                    class=" material-icons">&#xe897;</i></a>--}}
+{{--                                        @else--}}
+{{--                                            <a class="delete hvicon" data-toggle="modal"--}}
+{{--                                               href="{{route('admin-food.destroy',$f->id)}}"--}}
+{{--                                               data-target="#modal-delete{{$f->id}}"--}}
+{{--                                               style="color: red"><i--}}
+{{--                                                    class=" material-icons">&#xe898;</i></a>--}}
+{{--                                        @endif--}}
                                     </td>
                                 </tr>
 
@@ -157,7 +162,7 @@
 @endsection
 @section('script')
     <script type="text/javascript" charset="utf8"
-            src="assets/js/jquery.dataTables.js"></script>
+            src="{{asset('assets/js/jquery.dataTables.js')}}"></script>
     <script>
         $(document).ready(function () {
             $('#table_id').DataTable();

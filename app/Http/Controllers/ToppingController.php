@@ -8,23 +8,30 @@ use App\Models\Category;
 use App\Models\Restaurant;
 use App\Models\Topping;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class ToppingController extends Controller
 {
     public function index()
     {
         $topping = Topping::with('food')->get();
+        $user = Session::get('auth');
 //        dd($topping);
         return view('topping.index',
             [
                 'topping' => $topping,
+                'user' => $user,
             ]
         );
     }
 
     public function create()
     {
-        return View('topping.create');
+        $user = Session::get('auth');
+        return View('topping.create',
+            [
+                'user' => $user,
+            ]);
     }
 
     public function store(Request $request)
@@ -48,9 +55,11 @@ class ToppingController extends Controller
     public function edit($id)
     {
         $topping = Topping::where('id', $id)->first();
+        $user = Session::get('auth');
         return View('topping.edit',
             [
-                'topping' => $topping
+                'topping' => $topping,
+                'user' => $user,
             ]);
     }
 

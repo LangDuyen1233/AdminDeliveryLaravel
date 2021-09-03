@@ -32,9 +32,10 @@
                                                         <label>Tên khách hàng</label>
                                                         <input class="form-control" type="text" name="name"
                                                                disabled="disabled"
-                                                               value="{{$order->user[0]->username}}">
+                                                               value="{{$order->user->username}}">
                                                     </div>
-                                                </div><div class="col-sm-6">
+                                                </div>
+                                                <div class="col-sm-6">
                                                     <div class="form-group">
                                                         <label>Địa chỉ giao hàng<span
                                                                 class="text-danger">*</span></label>
@@ -64,13 +65,6 @@
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
-                                                        <label>Thuế </label>
-                                                        <input class="form-control" type="text" name="tax"
-                                                               value="{{$order->tax}}">
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <div class="form-group">
                                                         <label>Phí giao hàng<span class="text-danger">*</span></label>
                                                         <input class="form-control" type="text" name="price_delivery"
                                                                value="{{$order->price_delivery}}">
@@ -81,16 +75,37 @@
                                                         <label>Trạng thái thanh toán<span
                                                                 class="text-danger">*</span></label>
                                                         <select class="custom-select select select2-hidden-accessible"
-                                                                tabindex="-1" aria-hidden="true" name="payment_status_id">
-                                                            <option>
-                                                                Chọn trạng thái
-                                                            </option>
-                                                            @foreach($payment as $ps)
-                                                                <option
-                                                                    {{($order->payment->id) == $ps->id ? 'selected' : '' }} value="{{$ps->id}}">
-                                                                    {{$ps->status}}
+                                                                tabindex="-1" aria-hidden="true"
+                                                                name="payment_status_id">
+
+                                                            @if($order->payment->status =='Chưa thanh toán')
+                                                                <option>
+                                                                    Chọn trạng thái
                                                                 </option>
-                                                            @endforeach
+                                                                <option selected value="{{$order->payment->status}}">
+                                                                    Chưa thanh toán
+                                                                </option>
+                                                                <option value="Đã thanh toán">
+                                                                    Đã thanh toán
+                                                                </option>
+
+                                                            @elseif($order->payment->status =='Đã thanh toán')
+                                                                <option>
+                                                                    Chọn trạng thái
+                                                                </option>
+                                                                <option value="Chưa thanh toán">
+                                                                    Chưa thanh toán
+                                                                </option>
+                                                                <option selected value="{{$order->payment->status}}">
+                                                                    Đã thanh toán
+                                                                </option>
+                                                            @endif
+                                                            {{--                                                            @foreach($payment as $ps)--}}
+                                                            {{--                                                                <option--}}
+                                                            {{--                                                                    {{($order->payment->id) == $ps->id ? 'selected' : '' }} value="{{$ps->id}}">--}}
+                                                            {{--                                                                    {{$ps->status}}--}}
+                                                            {{--                                                                </option>--}}
+                                                            {{--                                                            @endforeach--}}
                                                         </select>
                                                     </div>
                                                 </div>
@@ -101,7 +116,8 @@
                                                         <div class="cal-icon input-group date"
                                                              data-date-format="dd/mm/yyyy">
                                                             <input id="datePicker" class="form-control datepicker"
-                                                                   placeholder="dd/mm/yyyy" type="text" name="date" value="{{$order->date}}">
+                                                                   placeholder="dd/mm/yyyy" type="text" name="date"
+                                                                   value="{{$order->date}}">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -110,42 +126,63 @@
                                                     <div class="form-group">
                                                         <label>Phương thức thanh toán<span class="text-danger">*</span></label>
                                                         <select class="custom-select select select2-hidden-accessible"
-                                                                tabindex="-1" aria-hidden="true" name="payment_method_id">
-                                                            <option>
-                                                                Chọn trạng thái
-                                                            </option>
-                                                            @foreach($payment as $pm)
-                                                                <option
-                                                                    {{($order->payment->id) == $pm->id ? 'selected' : '' }} value="{{$pm->id}}">
-                                                                    {{$pm->method}}
+                                                                tabindex="-1" aria-hidden="true"
+                                                                name="payment_method_id">
+                                                            @if($order->payment->method =='Tiền mặt')
+                                                                <option>
+                                                                    Chọn trạng thái
                                                                 </option>
-                                                            @endforeach
+                                                                <option selected value="{{$order->payment->method}}">
+                                                                    Tiền mặt
+                                                                </option>
+                                                                <option value="Zalopay">
+                                                                    Zalopay
+                                                                </option>
+
+                                                            @elseif($order->payment->method =='Zalopay')
+                                                                <option>
+                                                                    Chọn trạng thái
+                                                                </option>
+                                                                <option value="Tiền mặt">
+                                                                    Tiền mặt
+                                                                </option>
+                                                                <option selected value="{{$order->payment->method}}">
+                                                                    Zalopay
+                                                                </option>
+                                                            @endif
+
+                                                            {{--                                                            @foreach($payment as $pm)--}}
+                                                            {{--                                                                <option--}}
+                                                            {{--                                                                    {{($order->payment->id) == $pm->id ? 'selected' : '' }} value="{{$pm->id}}">--}}
+                                                            {{--                                                                    {{$pm->method}}--}}
+                                                            {{--                                                                </option>--}}
+                                                            {{--                                                            @endforeach--}}
                                                         </select>
                                                     </div>
                                                 </div>
                                             </div>
 
-                                            <div class="form-group">
-                                                <label class="display-block">Trạng thái</label>
-                                                <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="status"
-                                                           id="{{$order->id}}employee_inactive"
-                                                           value="0" {{ ($order->active==0?'checked="checked"':'') }}>
-                                                    <label class="form-check-label"
-                                                           for="{{$order->id}}employee_inactive">
-                                                        Hủy
-                                                    </label>
-                                                </div>
-                                                <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="status"
-                                                           id="{{$order->id}}employee_active"
-                                                           value="1" checked=""
-                                                        {{ ($order->active==1?'checked="checked"':'') }}>
-                                                    <label class="form-check-label" for="{{$order->id}}employee_active">
-                                                        Hoạt động
-                                                    </label>
-                                                </div>
-                                            </div>
+{{--                                            <div class="form-group">--}}
+{{--                                                <label class="display-block">Trạng thái</label>--}}
+{{--                                                <div class="form-check form-check-inline">--}}
+{{--                                                    <input class="form-check-input" type="radio" name="status"--}}
+{{--                                                           id="{{$order->id}}employee_inactive"--}}
+{{--                                                           value="0" {{ ($order->active==0?'checked="checked"':'') }}>--}}
+{{--                                                    <label class="form-check-label"--}}
+{{--                                                           for="{{$order->id}}employee_inactive">--}}
+{{--                                                        Hủy--}}
+{{--                                                    </label>--}}
+{{--                                                </div>--}}
+{{--                                                <div class="form-check form-check-inline">--}}
+{{--                                                    <input class="form-check-input" type="radio" name="status"--}}
+{{--                                                           id="{{$order->id}}employee_active"--}}
+{{--                                                           value="1" checked=""--}}
+{{--                                                        {{ ($order->active==1?'checked="checked"':'') }}>--}}
+{{--                                                    <label class="form-check-label" for="{{$order->id}}employee_active">--}}
+{{--                                                        Hoạt động--}}
+{{--                                                    </label>--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
                                             <div class="m-t-20 text-center">
                                                 <button type="submit" class="btn btn-outline-primary ms-graph-metrics"
                                                         name="button">Sửa đơn hàng

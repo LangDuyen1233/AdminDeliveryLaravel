@@ -14,7 +14,6 @@ class Order extends Model
     protected $table = 'orders';
     protected $fillable = [
         'id',
-        'tax',
         'price',
         'price_delivery',
         'address_delivery',
@@ -29,7 +28,8 @@ class Order extends Model
         'reason',
         'staff_id',
         'latitude',
-        'longitude'
+        'longitude',
+        'is_delete'
     ];
 
     public function statusOrder()

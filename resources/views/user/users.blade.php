@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('css')
-    <link rel="stylesheet" type="text/css" href="assets/css/jquery.dataTables.css">
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/jquery.dataTables.css')}}">
 @endsection
 @section('content')
     <div class="ms-content-wrapper">
@@ -48,58 +48,58 @@
                             @php
                                 $i = 1;
                             @endphp
-                            @foreach($users as $user)
+                            @foreach($usersList as $u)
                                 <tr role="row" class="odd">
                                     <td class="sorting_1" style="text-align: center">{{$i++}}</td>
                                     <td>
                                         <img src="../../assets/img/costic/customer-3.jpg" --}}
                                              style="width:50px; height:30px;">
-                                        {{$user->username}}
+                                        {{$u->username}}
                                     </td>
-                                    <td>{{$user->email}}</td>
-                                    <td>{{$user->phone}}</td>
+                                    <td>{{$u->email}}</td>
+                                    <td>{{$u->phone}}</td>
                                     {{--                                                    klsedrftgyhjkl--}}
                                     <td>
-                                        @foreach($user->address as $ua)
+                                        @foreach($u->address as $ua)
                                             @if($ua->status ==1)
                                                 {{$ua->address}}
                                             @endif
                                         @endforeach
                                     </td>
-                                    <td>{{$user->gender}}</td>
-                                    <td>{{$user->dob}}</td>
+                                    <td>{{$u->gender}}</td>
+                                    <td>{{$u->dob}}</td>
                                     <td style="text-align: center">
-                                        {{$user->role->name}}
+                                        {{$u->role->name}}
                                     </td>
                                     <td style="text-align: center">
-                                        @if($user->active==1)
+                                        @if($u->active==1)
                                             <span class="badge badge-success">Hoạt động</span>
-                                        @elseif($user->active==0)
+                                        @elseif($u->active==0)
                                             <span class="badge badge-danger">Khóa</span>
                                         @endif
                                     </td>
                                     <td style="display: flex; justify-content: space-around;border-bottom: none;">
                                         <a class="edit hvicon" style="color: green"
-                                           href="{{route('admin-user.edit',$user->id)}}"
+                                           href="{{route('admin-user.edit',$u->id)}}"
                                         ><i
                                                 class="material-icons">&#xE254;</i></a>
                                         @if($user->active==1)
                                             <a class="delete hvicon" data-toggle="modal"
-                                               href="{{route('admin-user.destroy',$user->id)}}"
-                                               data-target="#modal-delete{{$user->id}}"
+                                               href="{{route('admin-user.destroy',$u->id)}}"
+                                               data-target="#modal-delete{{$u->id}}"
                                                style="color: red"><i
                                                     class=" material-icons">&#xe897;</i></a>
                                         @else
                                             <a class="delete hvicon" data-toggle="modal"
-                                               href="{{route('admin-user.destroy',$user->id)}}"
-                                               data-target="#modal-delete{{$user->id}}"
+                                               href="{{route('admin-user.destroy',$u->id)}}"
+                                               data-target="#modal-delete{{$u->id}}"
                                                style="color: red"><i
                                                     class=" material-icons">&#xe898;</i></a>
                                         @endif
                                     </td>
                                 </tr>
 
-                                <div class="modal fade" id="modal-delete{{$user->id}}" tabindex="-1"
+                                <div class="modal fade" id="modal-delete{{$u->id}}" tabindex="-1"
                                      role="dialog" aria-labelledby="modal-delete"
                                      style="display: none;" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered modal-min"
@@ -107,7 +107,7 @@
                                         <div class="modal-content">
                                             <div class="modal-body text-center">
                                                 <form method="post"
-                                                      action="{{route('admin-user.destroy',$user->id)}}">
+                                                      action="{{route('admin-user.destroy',$u->id)}}">
                                                     {{ method_field('Delete') }}
                                                     {{ csrf_field() }}
                                                     <button type="button" class="close"
@@ -115,7 +115,7 @@
                                                             aria-label="Close"><span
                                                             aria-hidden="true">×</span>
                                                     </button>
-                                                    @if($user->active == 1)
+                                                    @if($u->active == 1)
                                                         <i class="flaticon-secure-shield d-block"></i>
                                                         <h1>Khóa tài khoản người dùng.</h1>
                                                         <p>Bạn có chắc chắn muốn khóa không?</p>
@@ -190,7 +190,7 @@
 @endsection
 @section('script')
     <script type="text/javascript" charset="utf8"
-            src="assets/js/jquery.dataTables.js"></script>
+            src="{{asset('assets/js/jquery.dataTables.js')}}"></script>
     <script>
         $(document).ready(function () {
             $('#table_id').DataTable();

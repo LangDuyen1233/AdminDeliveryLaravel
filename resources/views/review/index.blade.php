@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('css')
-    <link rel="stylesheet" type="text/css" href="assets/css/jquery.dataTables.css">
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/jquery.dataTables.css')}}">
 @endsection
 @section('content')
     <div class="ms-content-wrapper">
@@ -13,10 +13,10 @@
                                 <h6>Danh sách đánh giá</h6>
                             </div>
 
-                            {{--                            <button type="submit" class="btn btn-outline-primary ms-graph-metrics" name="button"><a--}}
-                            {{--                                    href="{{route('admin-review.create')}}"--}}
-                            {{--                                >Thêm đánh giá</a>--}}
-                            {{--                            </button>--}}
+                            <button type="submit" class="btn btn-outline-primary ms-graph-metrics" name="button"><a
+                                    href="{{route('admin-review.create')}}"
+                                >Thêm đánh giá</a>
+                            </button>
                         </div>
                     </div>
                     <div class="ms-panel-body">
@@ -30,7 +30,7 @@
                                 <th>Đánh giá</th>
                                 <th>Xếp hạng</th>
                                 <th>Quán ăn</th>
-                                <th>Trạng thái</th>
+{{--                                <th>Trạng thái</th>--}}
                                 <th>Thao tác</th>
                             </tr>
                             </thead>
@@ -50,13 +50,14 @@
                                             <img class=" rounded " style="width:70px" src="{{$r->image[0]->url}}"
                                                  alt="food1">
                                         @else
-                                            <img class=" rounded " style="width:70px" src=""
-                                                 alt="food1">
+                                            {{--                                            <img class="rounded " style="width:70px" src=""--}}
+                                            {{--                                                 alt="food1">--}}
+                                            <p></p>
                                         @endif
                                     </td>
                                     <td>{{$r->review}}</td>
                                     <td style="">
-{{--                                        display: flex;justify-content: center--}}
+                                        {{--                                        display: flex;justify-content: center--}}
                                         <div class="container" style="width: 85%; height: 25px">
                                             <div class="rating-container rating-xs rating-animate">
                                                 <div class="rating-stars">
@@ -98,23 +99,23 @@
                                         </div>
                                     </td>
                                     <td>{{$r->restaurant->name}}</td>
-                                    <td style="text-align: center">
-                                        @if($r->status==1)
-                                            <span class="badge badge-success">Yes</span>
-                                        @elseif($r->status==0)
-                                            <span class="badge badge-danger">No</span>
-                                        @endif
-                                    </td>
-                                    <td style="display: flex;justify-content: space-around;border-bottom: none;">
-                                        <a class="edit hvicon" style="color: green"
+{{--                                    <td style="text-align: center">--}}
+{{--                                        @if($r->status==1)--}}
+{{--                                            <span class="badge badge-success">Hoạt động</span>--}}
+{{--                                        @elseif($r->status==0)--}}
+{{--                                            <span class="badge badge-danger">Khóa</span>--}}
+{{--                                        @endif--}}
+{{--                                    </td>--}}
+                                    <td style="align-content: center">
+                                        <a class="edit hvicon" style="color: green; padding-right: 8px"
                                            href="{{route('admin-review.edit',$r->id)}}"
                                         ><i
-                                                class="material-icons">&#xE254;</i>Edit</a>
+                                                class="material-icons">&#xE254;</i></a>
                                         <a class="delete hvicon" data-toggle="modal"
                                            href="{{route('admin-review.destroy',$r->id)}}"
                                            data-target="#modal-delete{{$r->id}}"
                                            style="color: red"><i
-                                                class=" material-icons">&#xE872;</i>Delete</a>
+                                                class=" material-icons">&#xE872;</i></a>
                                     </td>
 
                                 </tr>
@@ -160,4 +161,14 @@
             </div>
         </div>
     </div>
+@endsection
+@section('script')
+    <script src="{{asset('assets/js/rating.js')}}"></script>
+    <script type="text/javascript" charset="utf8"
+            src="{{asset('assets/js/jquery.dataTables.js')}}"></script>
+    <script>
+        $(document).ready(function () {
+            $('#table_id').DataTable();
+        });
+    </script>
 @endsection

@@ -8,6 +8,7 @@ use App\Models\Address;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 use Maatwebsite\Excel\Exceptions\NoTypeDetectedException;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -15,18 +16,23 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::with('role')->with('address')->get();
-//        dd($users->role->name);
+        $usersList = User::with('role')->with('address')->get();
+        $user = Session::get('auth');
         return view('user.users',
             [
-                'users' => $users,
+                'usersList' => $usersList,
+                'user'=>$user,
             ]
         );
     }
 
     public function create()
     {
-        return View('user.addUser');
+        $user = Session::get('auth');
+        return View('user.addUser',
+        [
+            'user'=>$user,
+        ]);
     }
 
     public function store(Request $request)
@@ -34,15 +40,17 @@ class UserController extends Controller
         $request->validate([
             'username' => 'required|max:100',
             'address' => 'required|max:100',
+            'detail' => 'required|max:100',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:8',
             're_password' => 'required|same:password',
-            'phone' => 'required|numeric|min:11'
+            'phone' => 'required|numeric|min:11|unique:users'
         ], $this->messages());
         $username = $request->get('username');
         $email = $request->get('email');
         $password = $request->get('password');
         $address = $request->get('address');
+        $detail = $request->get('detail');
         $dob = $request->get('dob');
         $phone = $request->get('phone');
         $gender = $request->get('gender');
@@ -51,7 +59,6 @@ class UserController extends Controller
             'username' => $username,
             'email' => $email,
             'password' => Hash::make($password),
-//            'address' => $address,
             'dob' => date("Y-m-d", strtotime($dob)),
             'phone' => $phone,
             'gender' => $gender,
@@ -60,9 +67,8 @@ class UserController extends Controller
             'role_id' => $request->get('role_id'),
             'is_delete' => 1,
         ]);
-//        dd($user);
         $user->save();
-        $addresses = [new Address(['address' => $address, 'user_id' => $user->id, 'status' => 1])];
+        $addresses = [new Address(['detail' => $detail, 'address' => $address, 'user_id' => $user->id, 'status' => 1])];
         $user->address()->saveMany($addresses);
         return redirect('admin-user')->withErrors(['mes' => "Thêm người dùng thành công"]);
     }
@@ -70,10 +76,12 @@ class UserController extends Controller
     public function edit($id)
     {
         $users = User::where('id', $id)->with('address')->first();
+        $user = Session::get('auth');
 //        dd($users);
         return View('user.editUser',
             [
                 'users' => $users,
+                'user'=>$user,
             ]);
     }
 
@@ -82,16 +90,18 @@ class UserController extends Controller
         if (!isset($id)) {
             return response('', 400);
         }
-        $u = User::find($id);
+        $u = User::where('id', $id)->with('address')->first();
         if (!isset($u)) {
             return response('', 404);
         }
         $request->validate([
             'username' => 'required|max:100',
             'address' => 'required|max:100',
+            'detail' => 'required|max:100',
             'email' => 'required|email',
             'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10'
         ], $this->messages());
+
         try {
             error_log($u);
             $u->username = $request->get('username');
@@ -105,14 +115,27 @@ class UserController extends Controller
 
             $count = 0;
 
-            foreach ($u->address as $add) {
+            if (count($u->address) == 0) {
+                $a = new Address([
+                    'detail' => $request->get('detail'),
+                    'address' => $request->get('address'),
+                    'user_id' => $u->id,
+                    'status' => 1,
+                ]);
 
-                if ($add->status == 1) {
-                    error_log($add->address);
-                    $u->address[$count]->update(['address' => $request->get('address')]);
+                $u->address()->save($a);
+            } else {
+                foreach ($u->address as $add) {
+                    if ($add->status == 1) {
+                        error_log($add->address);
+                        $u->address[$count]->update(['address' => $request->get('address')]);
+                        $u->address[$count]->update(['detail' => $request->get('detail')]);
+                    }
+                    $count++;
                 }
-                $count++;
             }
+
+//            dd($u);
             $u->save();
 //            $u->address()
             return redirect('admin-user')->withErrors(['mes' => "Cập nhật người dùng thành công"]);
@@ -169,7 +192,9 @@ class UserController extends Controller
             'email.required' => 'Bạn cần phải nhập Email.',
             'email.email' => 'Định dạng Email bị sai.',
             'email.unique' => 'Email đã tồn tại',
+            'phone.unique'=> 'Số điện thoại đã tồn tại',
             'address.required' => 'Bạn cần phải nhập địa chỉ.',
+            'detail.required' => 'Bạn cần phải nhập địa chỉ.',
             'password.required' => 'Bạn cần phải nhập mật khẩu.',
             'password.min' => 'Mật khẩu phải nhiều hơn 8 ký tự.',
             're_password.same' => 'Nhắc lại mật khẩu không trùng với mật khẩu',

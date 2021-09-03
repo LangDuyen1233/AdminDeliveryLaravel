@@ -67,6 +67,14 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label>Địa chỉ cụ thể<span
+                                                                class="text-danger">*</span></label>
+                                                        <input type="text" class="form-control" name="detail"
+                                                               value="@foreach($users->address as $ua)@if($ua->status ==1){{$ua->detail}}@endif @endforeach">
+                                                    </div>
+                                                </div>
 
                                                 <div class="col-sm-6">
                                                     <div class="form-group">

@@ -7,16 +7,18 @@ use App\Models\Category;
 use App\Models\Restaurant;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class CategoryController extends Controller
 {
     public function index()
     {
         $category = Category::where('status', 1)->get();
-//        dd($category[0]->restaurant->name);
+        $user = Session::get('auth');
         return view('category.index',
             [
                 'category' => $category,
+                'user' => $user,
             ]
         );
     }
@@ -24,9 +26,11 @@ class CategoryController extends Controller
     public function create()
     {
         $restaurant = Restaurant::all();
+        $user = Session::get('auth');
         return View('category.create',
             [
-                'restaurant' => $restaurant
+                'restaurant' => $restaurant,
+                'user' => $user,
             ]
         );
     }
@@ -45,7 +49,6 @@ class CategoryController extends Controller
             'image' => $image,
             'description' => $description,
         ]);
-//        dd($category);
         $category->save();
         return redirect('admin-category')->withErrors(['mes' => "Thêm danh mục thành công"]);
     }
@@ -53,9 +56,11 @@ class CategoryController extends Controller
     public function edit($id)
     {
         $category = Category::where('id', $id)->first();
+        $user = Session::get('auth');
         return View('category.edit',
             [
                 'category' => $category,
+                'user' => $user,
             ]);
     }
 

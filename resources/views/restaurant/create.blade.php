@@ -93,7 +93,7 @@
                                                                 tabindex="-1" aria-hidden="true" name="user_id">
                                                             <option>Chọn chủ quán
                                                             </option>
-                                                            @foreach($user as $u)
+                                                            @foreach($userRestaurant as $u)
                                                                 <option
                                                                     {{old('user_id')=="1"? 'selected':''}} value="{{$u->id}}">
                                                                     {{$u->username}}

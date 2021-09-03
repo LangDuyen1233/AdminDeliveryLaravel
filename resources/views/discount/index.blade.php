@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('css')
-    <link rel="stylesheet" type="text/css" href="assets/css/jquery.dataTables.css">
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/jquery.dataTables.css')}}">
 @endsection
 @section('content')
     <div class="ms-content-wrapper">
@@ -33,7 +33,7 @@
                                 <th>Ngày kết thúc</th>
                                 <th>Loại khuyễn mãi</th>
                                 <th>Quán ăn</th>
-                                <th>Trạng thái</th>
+{{--                                <th>Trạng thái</th>--}}
                                 <th>Thao tác</th>
                             </tr>
                             </thead>
@@ -55,23 +55,23 @@
                                     <td>{{$d->end_date}}</td>
                                     <td>{{$d->typeDiscount->type}}</td>
                                     <td>{{$d->restaurant->name}}</td>
-                                    <td style="text-align: center">
-                                        @if($d->status==1)
-                                            <span class="badge badge-success">Yes</span>
-                                        @elseif($d->status==0)
-                                            <span class="badge badge-danger">No</span>
-                                        @endif
-                                    </td>
+{{--                                    <td style="text-align: center">--}}
+{{--                                        @if($d->status==1)--}}
+{{--                                            <span class="badge badge-success">Hoạt động</span>--}}
+{{--                                        @elseif($d->status==0)--}}
+{{--                                            <span class="badge badge-danger">Khóa</span>--}}
+{{--                                        @endif--}}
+{{--                                    </td>--}}
                                     <td style="display: flex;justify-content: space-around;border-bottom: none;">
                                         <a class="edit hvicon" style="color: green"
                                            href="{{route('admin-discount.edit',$d->id)}}"
                                         ><i
-                                                class="material-icons">&#xE254;</i>Edit</a>
+                                                class="material-icons">&#xE254;</i></a>
                                         <a class="delete hvicon" data-toggle="modal"
                                            href="{{route('admin-discount.destroy',$d->id)}}"
                                            data-target="#modal-delete{{$d->id}}"
                                            style="color: red"><i
-                                                class=" material-icons">&#xE872;</i>Delete</a>
+                                                class=" material-icons">&#xE872;</i></a>
                                     </td>
                                 </tr>
 
@@ -119,7 +119,7 @@
 @endsection
 @section('script')
     <script type="text/javascript" charset="utf8"
-            src="assets/js/jquery.dataTables.js"></script>
+            src="{{asset('assets/js/jquery.dataTables.js')}}"></script>
     <script>
         $(document).ready(function () {
             $('#table_id').DataTable();

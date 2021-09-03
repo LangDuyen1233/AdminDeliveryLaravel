@@ -28,7 +28,7 @@ class OrderController extends Controller
         $card_id = $request->card_id;
         $status = $request->status;
         $latitude = $request->latitude;
-        $longitude = $request -> longitude;
+        $longitude = $request->longitude;
         error_log($card_id);
 
 
@@ -67,6 +67,7 @@ class OrderController extends Controller
             'order_status_id' => 1,
             'latitude' => $latitude,
             'longitude' => $longitude,
+            'is_delete' => 1,
         ]);
         $order->save();
 
@@ -131,14 +132,14 @@ class OrderController extends Controller
             ->whereIn('order_status_id', [4, 5])->where('user_id', $user_id)->get();
 
 //        if ($order != null) {
-            foreach ($order as $o) {
-                foreach ($o->foodOrder as $fo) {
-                    error_log('vaof ddaay ddi');
+        foreach ($order as $o) {
+            foreach ($o->foodOrder as $fo) {
+                error_log('vaof ddaay ddi');
 //                    $fo->weight = number_format($fo->weight, 1);
-                    $fo->food->restaurant->rating = number_format($fo->food->restaurant->rating, 1);
-                    $fo->food->weight = number_format($fo->food->weight, 1);
-                }
+                $fo->food->restaurant->rating = number_format($fo->food->restaurant->rating, 1);
+                $fo->food->weight = number_format($fo->food->weight, 1);
             }
+        }
 //        }
         return response()->json(['order' => $order], 200);
     }

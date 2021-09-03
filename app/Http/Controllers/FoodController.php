@@ -10,18 +10,22 @@ use App\Models\Image;
 use App\Models\Restaurant;
 use App\Models\Topping;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Yajra\DataTables\Facades\DataTables;
 
 class FoodController extends Controller
 {
     public function index()
     {
-        $food = Food::with('toppings')->get();
+        $food = Food::with('toppings')->where('status',1)->get();
         $image = Image::all();
+        $user = Session::get('auth');
+
         return view('food.index',
             [
                 'food' => $food,
                 'image' => $image,
+                'user' => $user,
             ]
         );
     }
@@ -31,11 +35,13 @@ class FoodController extends Controller
         $category = Category::all();
         $restaurant = Restaurant::all();
         $topping = Topping::all();
+        $user = Session::get('auth');
         return View('food.create',
             [
                 'category' => $category,
                 'restaurant' => $restaurant,
                 'topping' => $topping,
+                'user' => $user,
             ]
         );
     }
@@ -98,12 +104,14 @@ class FoodController extends Controller
         $restaurant = Restaurant::all();
         $topping = Topping::all();
         $food = Food::where('id', $id)->with('image')->with('toppings')->with('category')->first();
+        $user = Session::get('auth');
         return View('food.edit',
             [
                 'category' => $category,
                 'restaurant' => $restaurant,
                 'topping' => $topping,
                 'food' => $food,
+                'user' => $user,
             ]);
     }
 

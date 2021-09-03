@@ -9,17 +9,19 @@ use App\Models\OrderStatus;
 use App\Models\Payment;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class OrderController extends Controller
 {
     public function index()
     {
-        $user = User::all();
-        $order = Order::with('statusOrder')->with('payment')->with('discount')->get();
 
+        $order = Order::with('statusOrder')->with('payment')->with('discount')->with('user')->where('is_delete', 1)->get();
+        $user = Session::get('auth');
+//        dd($order);
         return view('order.index',
             [
-                'user' => $user,
+               'user' => $user,
                 'order' => $order,
             ]
         );
@@ -27,11 +29,13 @@ class OrderController extends Controller
 
     public function show($id)
     {
-        $order = Order::with('food.restaurant')->with('food.toppings')->with('user.address')->find($id);
-//        dd($order->user->address);
+        $order = Order::with('food.restaurant')->with('food.toppings')->with('user.address')->with('userDelivery')->find($id);
+        $user = Session::get('auth');
+//        dd($order);
         return view('order.show',
             [
                 'order' => $order,
+                'user' => $user,
             ]
         );
     }
@@ -39,27 +43,21 @@ class OrderController extends Controller
     public function edit($id)
     {
         $statusOrder = OrderStatus::all();
-        $payment = Payment::all();
-        $order = Order::where('id', $id)->first();
+        $order = Order::where('id', $id)->with('user')->with('payment')->first();
+        $user = Session::get('auth');
         return View('order.edit',
             [
                 'statusOrder' => $statusOrder,
-                'payment' => $payment,
                 'order' => $order,
+                'user' => $user,
             ]);
     }
 
     public function update(Request $request, $id)
     {
-//        if (!isset($id)) {
-//            return response('', 400);
-//        }
-        $o = Order::find($id);
-//        dd($f->image[0]->id);
-//        $image = Image::find($f->image[0]->id);
-//        if (!isset($f)) {
-//            return response('', 404);
-//        }
+
+        $o = Order::with('payment')->find($id);
+
         $request->validate([
             'order_status_id' => 'required|max:100',
             'price_delivery' => 'required|max:100',
@@ -68,17 +66,17 @@ class OrderController extends Controller
             'payment_status_id' => 'required|max:100',
             'payment_method_id' => 'required|max:100',
         ], $this->messages());
+        error_log($request->get('payment_status_id'));
         try {
             $o->address_delivery = $request->get('address_delivery');
             $o->order_status_id = $request->get('order_status_id');
-            $o->tax = $request->get('tax');
             $o->price_delivery = $request->get('price_delivery');
-            $o->payment_status_id = $request->get('payment_status_id');
-            $o->payment_method_id = $request->get('payment_method_id');
             $o->date = $request->get('date');
             $o->status = $request->get('status');
-//            dd($o);
             $o->save();
+
+            $o->payment->update(['status' => $request->get('payment_status_id')]);
+            $o->payment->update(['method' => $request->get('payment_method_id')]);
 
             return redirect('admin-order')->withErrors(['mes' => "Cập nhật đơn hàng thành công"]);
 
@@ -91,17 +89,16 @@ class OrderController extends Controller
 
     public function destroy($id)
     {
-
         $o = Order::find($id);
 
         try {
-            if ($o->status == 0) {
-                $o->status = 1;
-                $o->update();
-            } else {
-                $o->status = 0;
-                $o->update();
-            }
+//            if ($o->is_delete == 0) {
+//                $o->is_delete = 1;
+//                $o->update();
+//            } else {
+            $o->is_delete = 0;
+            $o->update();
+//            }
             return redirect()->back()->withErrors(['mes' => "Cập nhật đơn hàng thành công"]);
         } catch (\Exception $e) {
             return response('', 500);

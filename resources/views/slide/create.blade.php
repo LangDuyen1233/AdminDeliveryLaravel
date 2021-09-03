@@ -7,7 +7,7 @@
                     <div class="ms-panel-header">
                         <div class="d-flex justify-content-between">
                             <div class="ms-header-text">
-                                <h6>Thêm danh mục mới</h6>
+                                <h6>Thêm banner mới</h6>
                             </div>
                         </div>
                     </div>
@@ -23,29 +23,39 @@
                                                 @endforeach
                                             </div>
                                         @endif
-                                        <form method="post"
-                                              action="{{route('admin-category.update',$orderStatus->id)}}">
-                                            {{ method_field('PUT') }}
+                                        <form method="post" action="{{route('admin-slides.store')}}">
                                             @csrf
                                             <div class="row">
                                                 <div class="col-sm-6">
-                                                    <div class="form-group">
-                                                        <label>Tên trạng thái <span class="text-danger">*</span></label>
-                                                        <input class="form-control" type="text" name="name"
-                                                               value="{{$orderStatus->status}}">
+                                                    <div>
+                                                        <label>Hình ảnh <span class="text-danger">*</span></label>
+                                                        <div class="input-group mb-3">
+
+                                                            <input aria-describedby="basic-addon2" class="form-control"
+                                                                   type="text" size="48" name="image"
+                                                                   id="image"/>
+                                                            <div class="input-group-append">
+                                                                <button class="btn btn-outline-secondary" type="button"
+                                                                        onclick="avatar('image','avt_img')">Chọn ảnh
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="mx-auto avt-wrapper ">
+                                                        <img id='avt_img' alt="" class="z-depth-1 mb-3 mx-auto"/>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
-                                                        <label>Tên trạng thái <span class="text-danger">*</span></label>
+                                                        <label>Mô tả</label>
                                                         <input class="form-control" type="text" name="description"
-                                                               value="{{$orderStatus->description}}">
+                                                               value="{{ old('description') }}">
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="m-t-20 text-center">
                                                 <button type="submit" class="btn btn-outline-primary ms-graph-metrics"
-                                                        name="button">Sửa trạng thái
+                                                        name="button">Tạo danh mục
                                                 </button>
                                             </div>
                                         </form>
@@ -74,7 +84,6 @@
                         var out = document.getElementById(ava);
                         output.value = file.getUrl();
                         out.src = file.getUrl();
-
                     });
 
                     finder.on("file:choose:res ", function (

@@ -49,7 +49,7 @@
                                     </div>
                                 </div>
                                 <div class="card col-3" style="background-color: #ebebeb">
-                                    <div class="card-title" style="margin-top: .75rem;">Thông tin giao hàng</div>
+                                    <div class="card-title" style="margin-top: .75rem;">Thông tin đơn hàng</div>
                                     <div class="row" style="border-top: solid 1px #cecece;padding-top: 10px;">
                                         <label for="order_status_id" class="col-5 control-label">Trạng thái giao</label>
                                         <div class="col-7">
@@ -96,15 +96,18 @@
                                             <p>+{{$order->food[0]->restaurant->phone}}</p>
                                         </div>
 
-                                        <label for="driver" class="col-5 control-label">Driver</label>
+                                        <label for="driver" class="col-5 control-label">Người giao hàng</label>
                                         <div class="col-7">
-                                            <p>Not assigned</p>
+                                            @if($order->userDelivery != null)
+                                                <p>{{$order->userDelivery->username}}</p>
+                                            @endif
+
                                         </div>
 
-                                        <label for="hint" class="col-5 control-label">Hint:</label>
-                                        <div class="col-7">
-                                            <p></p>
-                                        </div>
+                                        {{--                                        <label for="hint" class="col-5 control-label">Hint:</label>--}}
+                                        {{--                                        <div class="col-7">--}}
+                                        {{--                                            <p></p>--}}
+                                        {{--                                        </div>--}}
                                     </div>
                                 </div>
                             </div>

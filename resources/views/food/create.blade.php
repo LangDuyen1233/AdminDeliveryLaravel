@@ -94,11 +94,11 @@
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
-                                                        <label>Thể loại<span class="text-danger">*</span></label>
+                                                        <label>Danh mục<span class="text-danger">*</span></label>
                                                         <select class="custom-select select select2-hidden-accessible"
                                                                 tabindex="-1" aria-hidden="true" name="category_id">
                                                             <option>
-                                                                Chọn thể loại
+                                                                Chọn danh mục
                                                             </option>
                                                             @foreach($category as $c)
                                                                 <option
@@ -166,26 +166,26 @@
                                                 </div>
 
                                             </div>
-                                            <div class="form-group">
-                                                <label class="display-block">Trạng thái</label>
-                                                <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="status"
-                                                           id="employee_inactive"
-                                                           value="0" {{ (old('status' )==0?'checked="checked"':'') }}>
-                                                    <label class="form-check-label" for="employee_inactive">
-                                                        Khóa
-                                                    </label>
-                                                </div>
-                                                <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="status"
-                                                           id="employee_active"
-                                                           value="1" checked=""
-                                                        {{ (old('status' )==1?'checked="checked"':'') }}>
-                                                    <label class="form-check-label" for="employee_active">
-                                                        Hoạt động
-                                                    </label>
-                                                </div>
-                                            </div>
+{{--                                            <div class="form-group">--}}
+{{--                                                <label class="display-block">Trạng thái</label>--}}
+{{--                                                <div class="form-check form-check-inline">--}}
+{{--                                                    <input class="form-check-input" type="radio" name="status"--}}
+{{--                                                           id="employee_inactive"--}}
+{{--                                                           value="0" {{ (old('status' )==0?'checked="checked"':'') }}>--}}
+{{--                                                    <label class="form-check-label" for="employee_inactive">--}}
+{{--                                                        Khóa--}}
+{{--                                                    </label>--}}
+{{--                                                </div>--}}
+{{--                                                <div class="form-check form-check-inline">--}}
+{{--                                                    <input class="form-check-input" type="radio" name="status"--}}
+{{--                                                           id="employee_active"--}}
+{{--                                                           value="1" checked=""--}}
+{{--                                                        {{ (old('status' )==1?'checked="checked"':'') }}>--}}
+{{--                                                    <label class="form-check-label" for="employee_active">--}}
+{{--                                                        Hoạt động--}}
+{{--                                                    </label>--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
                                             <div class="m-t-20 text-center">
                                                 <button type="submit" class="btn btn-outline-primary ms-graph-metrics"
                                                         name="button">Tạo món ăn

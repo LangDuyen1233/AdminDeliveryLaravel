@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('css')
-    <link rel="stylesheet" type="text/css" href="assets/css/jquery.dataTables.css">
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/jquery.dataTables.css')}}">
 @endsection
 @section('content')
     <div class="ms-content-wrapper">
@@ -10,7 +10,7 @@
                     <div class="ms-panel-header">
                         <div class="d-flex justify-content-between">
                             <div class="ms-header-text">
-                                <h6>Danh sách người dùng</h6>
+                                <h6>Danh sách quán ăn</h6>
                             </div>
 
                             <button type="button" class="btn btn-outline-primary ms-graph-metrics" name="button"><a
@@ -430,7 +430,7 @@
 @section('script')
     <script src="{{asset('assets/js/rating.js')}}"></script>
     <script type="text/javascript" charset="utf8"
-            src="assets/js/jquery.dataTables.js"></script>
+            src="{{asset('assets/js/jquery.dataTables.js')}}"></script>
     <script>
         $(document).ready(function () {
             $('#table_id').DataTable();

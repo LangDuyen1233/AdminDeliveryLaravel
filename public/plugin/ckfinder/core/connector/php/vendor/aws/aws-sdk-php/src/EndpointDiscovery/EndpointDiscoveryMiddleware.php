@@ -183,7 +183,7 @@ class EndpointDiscoveryMiddleware
         if (isset($result['Endpoints'])) {
             $endpointData = [];
             foreach ($result['Endpoints'] as $datum) {
-                $endpointData[$datum['AdminAddressController']] = time()
+                $endpointData[$datum['Address']] = time()
                     + ($datum['CachePeriodInMinutes'] * 60);
             }
             $endpointList = new EndpointList($endpointData);

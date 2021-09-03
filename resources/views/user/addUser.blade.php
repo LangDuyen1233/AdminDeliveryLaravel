@@ -75,6 +75,12 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label>Địa chỉ củ thể<span class="text-danger">*</span></label>
+                                                        <input type="text" class="form-control" name="detail" value="{{ old('detail') }}">
+                                                    </div>
+                                                </div>
 
                                                 <div class="col-sm-6">
                                                     <div class="form-group">

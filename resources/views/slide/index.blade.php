@@ -10,22 +10,25 @@
                     <div class="ms-panel-header">
                         <div class="d-flex justify-content-between">
                             <div class="ms-header-text">
-                                <h6>Danh sách trạng thái</h6>
+                                <h6>Danh sách banner</h6>
                             </div>
+
                             <button type="submit" class="btn btn-outline-primary ms-graph-metrics" name="button"><a
-                                    href="{{route('admin-statusOrder.create')}}"
-                                >Thêm trạng thái</a>
+                                    href="{{route('admin-slides.create')}}"
+                                >Thêm banner</a>
                             </button>
                         </div>
                     </div>
-
+                    @error('mes')
+                    <small class="form-text text-danger"><p style="color: green">{{ $message }}</p></small>
+                    @enderror
                     <div class="ms-panel-body">
                         <table id="table_id"
                                class="display table w-100 thead-primary table table-striped table-bordered dataTable no-footer">
                             <thead>
                             <tr style="text-align: center">
-                                <th>ID</th>
-                                <th>Trạng thái</th>
+                                <th style="width: 100px">ID</th>
+                                <th>Hình ảnh</th>
                                 <th>Mô tả</th>
                                 <th style="width: 80px">Thao tác</th>
                             </tr>
@@ -34,30 +37,32 @@
                             @php
                                 $i = 1;
                             @endphp
-                            @foreach($orderStatus as $os)
+                            @foreach($slider as $s)
                                 <tr role="row" class="odd">
                                     <td class="sorting_1" style="text-align: center">{{$i++}}</td>
                                     <td style="text-align: center">
-                                        {{$os->status}}
+                                        <img class=" rounded " style="width:70px" src="{{$s->url}}"
+                                             alt="food1">
                                     </td>
-                                    <td style="text-align: center">
-                                        {{$os->description}}
+                                    <td>
+                                        {{$s->description}}
                                     </td>
 
-                                    <td style="display: flex; justify-content: space-evenly;">
-                                        <a class="edit hvicon" style="color: green"
-                                           href="{{route('admin-statusOrder.edit',$os->id)}}"
+                                    <td style="text-align: center">
+                                        <a class="edit hvicon" style="color: green; padding-right: 8px"
+                                           href="{{route('admin-slides.edit',$s->id)}}"
                                         ><i
                                                 class="material-icons">&#xE254;</i></a>
                                         <a class="delete hvicon" data-toggle="modal"
-                                           href="{{route('admin-statusOrder.destroy',$os->id)}}"
-                                           data-target="#modal-delete{{$os->id}}"
+                                           href="{{route('admin-slides.destroy',$s->id)}}"
+                                           data-target="#modal-delete{{$s->id}}"
                                            style="color: red"><i
                                                 class=" material-icons">&#xE872;</i></a>
                                     </td>
+
                                 </tr>
 
-                                <div class="modal fade" id="modal-delete{{$os->id}}" tabindex="-1"
+                                <div class="modal fade" id="modal-delete{{$s->id}}" tabindex="-1"
                                      role="dialog" aria-labelledby="modal-delete"
                                      style="display: none;" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered modal-min"
@@ -65,7 +70,7 @@
                                         <div class="modal-content">
                                             <div class="modal-body text-center">
                                                 <form method="post"
-                                                      action="{{route('admin-statusOrder.destroy',$os->id)}}">
+                                                      action="{{route('admin-slides.destroy',$s->id)}}">
                                                     {{ method_field('Delete') }}
                                                     {{ csrf_field() }}
                                                     <button type="button" class="close"
@@ -74,16 +79,16 @@
                                                             aria-hidden="true">×</span>
                                                     </button>
                                                     <i class="flaticon-secure-shield d-block"></i>
-                                                    <h1>Xóa trạng thái</h1>
+                                                    <h1>Xóa banner</h1>
                                                     <p>Bạn có chắc chắn muốn xóa không?</p>
                                                     <button type="submit"
                                                             class="btn btn-secondary btn-lg mr-2 rounded-lg"
                                                             data-dismiss="modal">
-                                                        Cancel
+                                                        Hủy
                                                     </button>
                                                     <button type="submit"
                                                             class="btn btn-danger btn-lg rounded-lg">
-                                                        Delete
+                                                        Xóa
                                                     </button>
                                                 </form>
                                             </div>
@@ -91,7 +96,6 @@
                                     </div>
                                 </div>
                             @endforeach
-
                             </tbody>
                         </table>
                     </div>
@@ -101,6 +105,7 @@
     </div>
 @endsection
 @section('script')
+    <script src="{{asset('assets/js/rating.js')}}"></script>
     <script type="text/javascript" charset="utf8"
             src="{{asset('assets/js/jquery.dataTables.js')}}"></script>
     <script>

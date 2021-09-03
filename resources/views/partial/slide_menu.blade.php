@@ -82,6 +82,11 @@
                 <span><i class="fa fa-comment fs-16"></i>Đánh giá</span>
             </a>
         </li>
+        <li class="menu-item">
+            <a href="{{route('admin-slides.index')}}" class="{{(Route::is('admin-slides.*')?'active':'')}}">
+                <span><i class="fas fa-sliders-h"></i>Banner</span>
+            </a>
+        </li>
 
         <!-- /Apps -->
     </ul>

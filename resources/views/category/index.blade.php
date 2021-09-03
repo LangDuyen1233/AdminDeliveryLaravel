@@ -108,7 +108,7 @@
 @endsection
 @section('script')
     <script type="text/javascript" charset="utf8"
-            src="assets/js/jquery.dataTables.js"></script>
+            src="{{asset('assets/js/jquery.dataTables.js')}}"></script>
     <script>
         $(document).ready(function () {
             $('#table_id').DataTable();

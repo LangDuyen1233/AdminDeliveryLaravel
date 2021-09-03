@@ -7,7 +7,7 @@
                     <div class="ms-panel-header">
                         <div class="d-flex justify-content-between">
                             <div class="ms-header-text">
-                                <h6>Thêm khuyến mãi mới</h6>
+                                <h6>Chỉnh sửa khuyến mãi</h6>
                             </div>
                         </div>
                     </div>
@@ -113,28 +113,28 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="form-group">
-                                                <label class="display-block">Trạng thái</label>
-                                                <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="status"
-                                                           id="{{$discount->id}}employee_inactive"
-                                                           value="0" {{ ($discount->status==0?'checked="checked"':'') }}>
-                                                    <label class="form-check-label"
-                                                           for="{{$discount->id}}employee_inactive">
-                                                        Không kích hoạt
-                                                    </label>
-                                                </div>
-                                                <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="status"
-                                                           id="{{$discount->id}}employee_active"
-                                                           value="1" checked=""
-                                                        {{ ($discount->status==1?'checked="checked"':'') }}>
-                                                    <label class="form-check-label"
-                                                           for="{{$discount->id}}employee_active">
-                                                        Kích hoạt
-                                                    </label>
-                                                </div>
-                                            </div>
+{{--                                            <div class="form-group">--}}
+{{--                                                <label class="display-block">Trạng thái</label>--}}
+{{--                                                <div class="form-check form-check-inline">--}}
+{{--                                                    <input class="form-check-input" type="radio" name="status"--}}
+{{--                                                           id="{{$discount->id}}employee_inactive"--}}
+{{--                                                           value="0" {{ ($discount->status==0?'checked="checked"':'') }}>--}}
+{{--                                                    <label class="form-check-label"--}}
+{{--                                                           for="{{$discount->id}}employee_inactive">--}}
+{{--                                                        Không kích hoạt--}}
+{{--                                                    </label>--}}
+{{--                                                </div>--}}
+{{--                                                <div class="form-check form-check-inline">--}}
+{{--                                                    <input class="form-check-input" type="radio" name="status"--}}
+{{--                                                           id="{{$discount->id}}employee_active"--}}
+{{--                                                           value="1" checked=""--}}
+{{--                                                        {{ ($discount->status==1?'checked="checked"':'') }}>--}}
+{{--                                                    <label class="form-check-label"--}}
+{{--                                                           for="{{$discount->id}}employee_active">--}}
+{{--                                                        Kích hoạt--}}
+{{--                                                    </label>--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
                                             <div class="m-t-20 text-center">
                                                 <button type="submit" class="btn btn-outline-primary ms-graph-metrics"
                                                         name="button">Tạo khuyến mãi

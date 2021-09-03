@@ -11,18 +11,19 @@ use App\Models\Image;
 use App\Models\Restaurant;
 use App\Models\TypeDiscount;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class DiscountController extends Controller
 {
     public function index()
     {
-//        $type_discount = TypeDiscount::all();
-        $discount = Discount::with('typeDiscount')->with('restaurant')->get();
+        $discount = Discount::with('typeDiscount')->with('restaurant')->where('status',1)->get();
+        $user = Session::get('auth');
 //        dd($discount);
         return view('discount.index',
             [
-//                'type_discount' => $type_discount,
                 'discount' => $discount,
+                'user' => $user,
             ]
         );
     }
@@ -32,11 +33,13 @@ class DiscountController extends Controller
         $discount = Discount::all();
         $type_discount = TypeDiscount::all();
         $restaurant = Restaurant::all();
+        $user = Session::get('auth');
         return View('discount.create',
             [
                 'discount' => $discount,
                 'type_discount' => $type_discount,
                 'restaurant' => $restaurant,
+                'user' => $user,
             ]);
     }
 
@@ -81,11 +84,13 @@ class DiscountController extends Controller
         $type_discount = TypeDiscount::all();
         $restaurant = Restaurant::all();
         $discount = Discount::where('id', $id)->with('typeDiscount')->with('restaurant')->first();
+        $user = Session::get('auth');
         return View('discount.edit',
             [
                 'discount' => $discount,
                 'type_discount' => $type_discount,
                 'restaurant' => $restaurant,
+                'user' => $user,
             ]);
     }
 
@@ -107,8 +112,8 @@ class DiscountController extends Controller
             $d->name = $request->get('name');
             $d->code = $request->get('code');
             $d->percent = $request->get('percent');
-            $d->start_date = $request->get('start_date');
-            $d->end_date = $request->get('end_date');
+            $d->start_date = date("Y-m-d", strtotime($request->get('start_date')));
+            $d->end_date = date("Y-m-d", strtotime($request->get('end_date')));
             $d->type_discount_id = $request->get('type_discount_id');
             $d->restaurant_id = $request->get('restaurant_id');
             $d->status = $request->get('status');
@@ -129,7 +134,8 @@ class DiscountController extends Controller
         $d = Discount::find($id);
 
         try {
-            $d->delete();
+            $d->status = 0;
+            $d->update();
             return redirect()->back()->withErrors(['mes' => "Xóa khuyến mãi thành công"]);
         } catch (\Exception $e) {
             return response('', 500);

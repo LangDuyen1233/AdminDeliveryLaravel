@@ -86,7 +86,7 @@
                                                             <option>
                                                                 Chọn chủ quán ăn
                                                             </option>
-                                                            @foreach($user as $u)
+                                                            @foreach($userRestaurant as $u)
                                                                 <option
                                                                     {{($restaurant->user_id) == $u->id ? 'selected' : '' }} value="{{$u->id}}">
                                                                     {{$u->username}}
@@ -120,7 +120,7 @@
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
-                                                        <label>Thể loại<span class="text-danger">*</span></label>
+                                                        <label>Danh mục<span class="text-danger">*</span></label>
                                                         <select class="selectpicker w-100"
                                                             tabindex="-1" aria-hidden="true" name="category_id[]"
                                                             multiple="multiple" title="">
