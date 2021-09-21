@@ -35,7 +35,7 @@
                                 <th>Số ĐT</th>
                                 <th>Xếp hạng</th>
                                 {{--                                <th>Mô tả</th>--}}
-{{--                                <th>Danh mục</th>--}}
+                                {{--                                <th>Danh mục</th>--}}
                                 <th>Trạng thái</th>
                                 <th>Thao tác</th>
                             </tr>
@@ -121,14 +121,12 @@
                                             <a class="delete hvicon" data-toggle="modal"
                                                href="{{route('admin-restaurant.destroy',$res->id)}}"
                                                data-target="#modal-delete{{$res->id}}"
-                                               style="color: red"><i
-                                                    class=" material-icons">&#xe897;</i></a>
+                                               style="color: red"><i class=" material-icons">&#xe898;</i></a>
                                         @else
                                             <a class="delete hvicon" data-toggle="modal"
                                                href="{{route('admin-restaurant.destroy',$res->id)}}"
                                                data-target="#modal-delete{{$res->id}}"
-                                               style="color: red"><i
-                                                    class=" material-icons">&#xe898;</i></a>
+                                               style="color: red"><i class=" material-icons">&#xe897;</i></a>
                                         @endif
                                     </td>
                                 </tr>
@@ -151,7 +149,7 @@
                                                     </button>
                                                     @if($res->active == 1)
                                                         <i class="flaticon-secure-shield d-block"></i>
-                                                        <h1>Khóa nhà hàng.</h1>
+                                                        <h1>Khóa quán ăn.</h1>
                                                         <p>Bạn có chắc chắn muốn khóa không?</p>
                                                         <button type="submit"
                                                                 class="btn btn-secondary btn-lg mr-2 rounded-lg"
@@ -164,7 +162,7 @@
                                                         </button>
                                                     @else
                                                         <i class="flaticon-secure-shield d-block"></i>
-                                                        <h1>Mở khóa nhà hàng.</h1>
+                                                        <h1>Mở khóa quán ăn.</h1>
                                                         <p>Bạn có chắc chắn muốn mở khóa không?</p>
                                                         <button type="submit"
                                                                 class="btn btn-secondary btn-lg mr-2 rounded-lg"

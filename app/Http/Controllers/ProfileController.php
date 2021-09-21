@@ -34,7 +34,7 @@ class ProfileController extends Controller
         ], $this->messages());
         try {
             $username = $request->get('username');
-            $email = $request->get('email');
+//            $email = $request->get('email');
             $phone = $request->get('phone');
             $gender = $request->get('gender');
             $dob = date("Y-m-d", strtotime($request->get('dob')));
@@ -42,7 +42,7 @@ class ProfileController extends Controller
 
             $user = User::find($request->id);
             $user->username = $username;
-            $user->email = $email;
+//            $user->email = $email;
             $user->phone = $phone;
             $user->gender = $gender;
             $user->dob = $dob;

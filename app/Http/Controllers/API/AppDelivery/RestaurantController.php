@@ -57,7 +57,7 @@ class RestaurantController extends Controller
         error_log($topping_id);
         error_log($restaurant_id);
 
-        $card = Cart::where('restaurant_id', $restaurant_id)->first();
+        $card = Cart::where('restaurant_id', $restaurant_id)->where('user_id', $user_id)->first();
         if ($card == null) {
             $card = new Cart([
                 'user_id' => $user_id,
@@ -77,7 +77,7 @@ class RestaurantController extends Controller
         $food_id = $request->food_id;
         error_log($card->id);
 
-        $card_order = CartOrder::where('food_id', $food_id)->first();
+        $card_order = CartOrder::where('food_id', $food_id)->where('cart_id',$card->id)->first();
         if ($card_order == null) {
             $card_order = new CartOrder([
                 'quantity' => $quantity,
@@ -116,10 +116,11 @@ class RestaurantController extends Controller
 
     public function getCard(Request $request)
     {
+        $user_id = auth()->user()->id;
         $restaurant_id = $request->restaurant_id;
         error_log('vào đây bè');
         error_log($request->restaurant_id);
-        $card = Cart::with('cardOrder')->with('cardOrder.food')->with('cardOrder.food.toppings')->with('cardOrder.food.image')->where('restaurant_id', $restaurant_id)->first();
+        $card = Cart::with('cardOrder')->with('cardOrder.food')->with('cardOrder.food.toppings')->with('cardOrder.food.image')->where('restaurant_id', $restaurant_id)->where('user_id', $user_id)->first();
         error_log($card);
 
         if ($card != null) {

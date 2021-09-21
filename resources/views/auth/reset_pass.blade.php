@@ -32,7 +32,7 @@
                     <form class="needs-validation" novalidate="" method="POST" action="{{route('resetpass',['email'=>$email,'key'=>$key])}}" style=" border: 0.5px solid lightgray;
     padding: 25px;">
                         @csrf
-                        <h3>Reset password</h3>
+                        <h3>Đổi mật khẩu</h3>
                         @error('mes')
                         <small class="form-text text-danger"><p style="color: red">{{ $message }}</p></small>
                         @enderror
@@ -44,20 +44,20 @@
                             </div>
                         @endif
                         <div class="mb-2">
-                            <label >Password</label>
+                            <label >Mật khẩu</label>
                             <div class="input-group">
                                 <input type="password" class="form-control" name="password" value="">
 {{--                                <div class="invalid-feedback">Vui lòng nhập mật khẩu.</div>--}}
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label >Confirm Password</label>
+                            <label >Xác nhận mật khẩu</label>
                             <div class="input-group">
                                 <input type="password" name="re_password" class="form-control" >
 {{--                                <div class="invalid-feedback">Vui lòng nhập mật khẩu.</div>--}}
                             </div>
                         </div>
-                        <button class="btn btn-primary mt-4 d-block w-100" type="submit">Save</button>
+                        <button class="btn btn-primary mt-4 d-block w-100" type="submit">Đổi mật khẩu</button>
                     </form>
                 </div>
             </div>

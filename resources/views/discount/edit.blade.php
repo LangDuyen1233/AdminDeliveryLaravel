@@ -7,7 +7,7 @@
                     <div class="ms-panel-header">
                         <div class="d-flex justify-content-between">
                             <div class="ms-header-text">
-                                <h6>Chỉnh sửa khuyến mãi</h6>
+                                <h6>Sửa khuyến mãi</h6>
                             </div>
                         </div>
                     </div>
@@ -137,7 +137,7 @@
 {{--                                            </div>--}}
                                             <div class="m-t-20 text-center">
                                                 <button type="submit" class="btn btn-outline-primary ms-graph-metrics"
-                                                        name="button">Tạo khuyến mãi
+                                                        name="button">Sửa khuyến mãi
                                                 </button>
                                             </div>
                                         </form>

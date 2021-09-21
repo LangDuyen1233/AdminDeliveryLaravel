@@ -236,15 +236,15 @@ class AdminOrderController extends Controller
         error_log($token);
         if ($token != null) {
             $order = Order::with('user')->with('statusOrder')->with('foodOrder')
-                ->with('foodOrder.food')->with('foodOrder.toppings')->with('staff')
+                ->with('foodOrder.food')->with('foodOrder.food.restaurant')->with('foodOrder.toppings')->with('staff')
                 ->whereIn('order_status_id', [4, 5])->whereHas("food", function ($f) use ($restaurant) {
                     $f->where('restaurant_id', $restaurant->id);
                 })->get();
             foreach ($order as $o) {
 //                $o->updated_at = date_create_from_format('Y/m/d', $o->updated_at);
                 foreach ($o->foodOrder as $fo) {
-
                     $fo->food->weight = number_format($fo->food->weight, 1);
+                    $fo->food->restaurant->rating = number_format( $fo->food->restaurant->rating, 1);
                 }
             }
             return response()->json(['order' => $order], 200);

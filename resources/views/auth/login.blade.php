@@ -7,7 +7,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Costic Dashboard</title>
+    <title>Food Delivery</title>
     <!-- Iconic Fonts -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('vendors/iconic-fonts/flat-icons/flaticon.css')}}">
@@ -60,38 +60,38 @@
                     <form class="needs-validation" novalidate="" method="POST" action="{{route('login')}}" style=" border: 0.5px solid lightgray;
     padding: 25px;">
                         @csrf
-                        <h3>Login to Account</h3>
+                        <h3>Đăng nhập</h3>
                         @error('mes')
                         <small class="form-text text-danger"><p style="color: red">{{ $message }}</p></small>
                         @enderror
                         <div class="mb-3">
-                            <label for="validationCustom08">Email Address</label>
+                            <label for="validationCustom08">Email</label>
                             <div class="input-group">
                                 <input type="email" name="email" class="form-control" id="validationCustom08"
-                                       placeholder="Email Address" required="">
-                                <div class="invalid-feedback">Please provide a valid email.</div>
+                                       placeholder="Email" required="">
+                                <div class="invalid-feedback">Vui lòng cung cấp Email.</div>
                             </div>
                         </div>
                         <div class="mb-2">
-                            <label for="validationCustom09">Password</label>
+                            <label for="validationCustom09">Mật khẩu</label>
                             <div class="input-group">
                                 <input type="password" name="password" class="form-control" id="validationCustom09"
-                                       placeholder="Password" required="">
-                                <div class="invalid-feedback">Please provide a password.</div>
+                                       placeholder="Mật khẩu" required="">
+                                <div class="invalid-feedback">Vui lòng cung cấp mật khẩu.</div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="ms-checkbox-wrap">
-                                <input class="form-check-input" type="checkbox" value=""> <i
-                                    class="ms-checkbox-check"></i>
-                            </label> <span> Remember Password </span>
+{{--                            <label class="ms-checkbox-wrap">--}}
+{{--                                <input class="form-check-input" type="checkbox" value=""> <i--}}
+{{--                                    class="ms-checkbox-check"></i>--}}
+{{--                            </label> <span> Remember Password </span>--}}
                             <label class="d-block mt-3"><a href="{{route('forgotpass')}}" class="btn-link"
 {{--                                                           data-toggle="modal"--}}
 {{--                                                           data-target="#modal-12"--}}
-                                >Forgot Password?</a>
+                                >Quên mật khẩu?</a>
                             </label>
                         </div>
-                        <button class="btn btn-primary mt-4 d-block w-100" type="submit">Sign In</button>
+                        <button class="btn btn-primary mt-4 d-block w-100" type="submit">Đăng nhập</button>
 {{--                        <p class="mb-0 mt-3 text-center">Don't have an account? <a class="btn-link"--}}
 {{--                                                                                   href="{{route('register')}}">Create--}}
 {{--                                Account</a>--}}

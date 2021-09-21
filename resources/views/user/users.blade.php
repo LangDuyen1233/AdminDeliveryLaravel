@@ -80,21 +80,21 @@
                                     </td>
                                     <td style="display: flex; justify-content: space-around;border-bottom: none;">
                                         <a class="edit hvicon" style="color: green"
-                                           href="{{route('admin-user.edit',$u->id)}}"
-                                        ><i
-                                                class="material-icons">&#xE254;</i></a>
-                                        @if($user->active==1)
-                                            <a class="delete hvicon" data-toggle="modal"
-                                               href="{{route('admin-user.destroy',$u->id)}}"
-                                               data-target="#modal-delete{{$u->id}}"
-                                               style="color: red"><i
-                                                    class=" material-icons">&#xe897;</i></a>
-                                        @else
+                                           href="{{route('admin-user.edit',$u->id)}}">
+                                            <i class="material-icons">&#xE254;</i></a>
+                                        @if($u->active==1)
                                             <a class="delete hvicon" data-toggle="modal"
                                                href="{{route('admin-user.destroy',$u->id)}}"
                                                data-target="#modal-delete{{$u->id}}"
                                                style="color: red"><i
                                                     class=" material-icons">&#xe898;</i></a>
+                                        @elseif($u->active==0)
+
+                                            <a class="delete hvicon" data-toggle="modal"
+                                               href="{{route('admin-user.destroy',$u->id)}}"
+                                               data-target="#modal-delete{{$u->id}}"
+                                               style="color: red"><i
+                                                    class=" material-icons">&#xe897;</i></a>
                                         @endif
                                     </td>
                                 </tr>

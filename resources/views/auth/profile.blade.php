@@ -7,33 +7,9 @@
             <img class="ms-profile-img" src="{{$userAdmin->avatar}}" alt="people">
             <div class="ms-profile-user-info">
                 <h4 class="ms-profile-username text-white">{{$userAdmin->username}}</h4>
-                {{--                    <h2 class="ms-profile-role">Professional Cheff</h2>--}}
             </div>
-            {{--                <div class="ms-profile-user-buttons">--}}
-            {{--                    <a href="#" class="btn btn-primary"> <i class="material-icons">person_add</i> Follow</a>--}}
-            {{--                    <a href="#" class="btn btn-light"> <i class="material-icons">file_download</i> Download Resume</a>--}}
-            {{--                </div>--}}
+
         </div>
-        {{--            <ul class="ms-profile-navigation nav nav-tabs tabs-bordered" role="tablist">--}}
-        {{--                <li role="presentation"><a href="#tab1" aria-controls="tab1" class="active show" role="tab"--}}
-        {{--                                           data-toggle="tab"> Overview </a></li>--}}
-        {{--                <li role="presentation"><a href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab"> Professional--}}
-        {{--                        Skills </a></li>--}}
-        {{--                <li role="presentation"><a href="#tab3" aria-controls="tab3" role="tab" data-toggle="tab">--}}
-        {{--                        Portfolio </a></li>--}}
-        {{--            </ul>--}}
-        {{--            <div class="tab-content">--}}
-        {{--                <div class="tab-pane" id="tab1">--}}
-
-        {{--                </div>--}}
-        {{--                <div class="tab-pane" id="tab2">--}}
-
-        {{--                </div>--}}
-        {{--                <div class="tab-pane" id="tab3">--}}
-
-        {{--                </div>--}}
-        {{--            </div>--}}
-        {{--        </div>--}}
 
         <div class="row" style="padding-top: 4rem">
 
@@ -43,30 +19,6 @@
                         <h2 class="section-title">Tiểu sử</h2>
                         <p>{{$userAdmin->bio}}
                         </p>
-
-                        {{--                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean non elit nisl. Class aptent--}}
-                        {{--                            taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.--}}
-                        {{--                            Aenean luctus, justo id pellentesque imperdiet, augue metus ornare quam, in pulvinar massa--}}
-                        {{--                            erat nec dui. Nam at facilisis nulla.--}}
-                        {{--                        </p>--}}
-                        {{--                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean non elit nisl. Class aptent--}}
-                        {{--                            taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.--}}
-                        {{--                            Aenean luctus, justo id pellentesque imperdiet, augue metus ornare quam, in pulvinar massa--}}
-                        {{--                            erat nec dui. Nam at facilisis nulla.--}}
-                        {{--                        </p>--}}
-
-                        {{--                        <div class="ms-profile-skills">--}}
-                        {{--                            <h2 class="section-title">Professional Skills</h2>--}}
-                        {{--                            <ul class="ms-skill-list">--}}
-                        {{--                                <li class="ms-skill">Web Design</li>--}}
-                        {{--                                <li class="ms-skill">Development</li>--}}
-                        {{--                                <li class="ms-skill">Interface Design</li>--}}
-                        {{--                                <li class="ms-skill">Illustration</li>--}}
-                        {{--                                <li class="ms-skill">Brand Design</li>--}}
-                        {{--                                <li class="ms-skill">Adobe</li>--}}
-                        {{--                            </ul>--}}
-                        {{--                        </div>--}}
-
                     </div>
 
                 </div>
@@ -74,16 +26,6 @@
             <div class="col-xl-5 col-md-12">
                 <div class="ms-panel ms-panel-fh">
                     <div class="ms-panel-body">
-                        {{--                        <ul class="ms-profile-stats">--}}
-                        {{--                            <li>--}}
-                        {{--                                <h3 class="ms-count">5790</h3>--}}
-                        {{--                                <span>Followers</span>--}}
-                        {{--                            </li>--}}
-                        {{--                            <li>--}}
-                        {{--                                <h3 class="ms-count">4.8</h3>--}}
-                        {{--                                <span>User Rating</span>--}}
-                        {{--                            </li>--}}
-                        {{--                        </ul>--}}
                         <div class="" style="display: flex;justify-content: space-between;">
                             <h2 class="section-title">Thông tin cơ bản</h2>
                             <a data-target="#modal-edit{{$userAdmin->id}}" data-toggle="modal"
@@ -141,14 +83,6 @@
                                     <div class="input-group">
                                         <input type="text" name="username" class="form-control" id="validationCustom08"
                                                value="{{$userAdmin->username}}"
-                                               placeholder="" required="">
-                                    </div>
-                                </div>
-                                <div class="mb-3 row">
-                                    <label>Email<span class="text-danger">*</span></label>
-                                    <div class="input-group">
-                                        <input type="email" name="email" class="form-control" id="validationCustom08"
-                                               value="{{$userAdmin->email}}"
                                                placeholder="" required="">
                                     </div>
                                 </div>

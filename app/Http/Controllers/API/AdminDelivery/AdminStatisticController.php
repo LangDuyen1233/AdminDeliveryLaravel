@@ -25,7 +25,7 @@ class AdminStatisticController extends Controller
 
             $order = Order::where('order_status_id', 4)->whereHas("food", function ($f) use ($restaurant) {
                 $f->where('restaurant_id', $restaurant->id);
-            })->whereDay('updated_at', '=', $now)->get();
+            })->whereDate('updated_at', '=', $now)->where('is_delete',1)->get();
             error_log($order);
 
             return response()->json(['order' => $order], 200);
@@ -47,7 +47,7 @@ class AdminStatisticController extends Controller
 
             $order = Order::where('order_status_id', 5)->whereHas("food", function ($f) use ($restaurant) {
                 $f->where('restaurant_id', $restaurant->id);
-            })->whereDay('updated_at', '=', $now)->get();
+            })->whereDate('updated_at', '=', $now)->where('is_delete',1)->get();
             error_log($order);
 
             return response()->json(['order' => $order], 200);
@@ -69,7 +69,7 @@ class AdminStatisticController extends Controller
 
             $order = Order::whereIn('order_status_id', [1, 2, 3, 4, 5, 6])->whereHas("food", function ($f) use ($restaurant) {
                 $f->where('restaurant_id', $restaurant->id);
-            })->whereDay('updated_at', '=', $now)->get();
+            })->whereDate('updated_at', '=',$now)->where('is_delete',1)->get();
             error_log($order);
 
             return response()->json(['order' => $order], 200);
@@ -91,7 +91,7 @@ class AdminStatisticController extends Controller
 
             $order = Order::where('order_status_id', 4)->whereHas("food", function ($f) use ($restaurant) {
                 $f->where('restaurant_id', $restaurant->id);
-            })->whereDate('updated_at', '>=', $now)->get();
+            })->whereDate('updated_at', '>=', $now)->where('is_delete',1)->get();
             return response()->json(['order' => $order], 200);
         } else {
             return response()->json(['error' => 'Unauthorised'], 401);
@@ -124,7 +124,7 @@ class AdminStatisticController extends Controller
             error_log('sdfg');
             $order = Order::where('order_status_id', 4)->whereHas("food", function ($f) use ($restaurant) {
                 $f->where('restaurant_id', $restaurant->id);
-            })->whereDate('updated_at', '>=', $start)->whereDate('updated_at', '<=', $end)->get();
+            })->whereDate('updated_at', '>=', $start)->whereDate('updated_at', '<=', $end)->where('is_delete',1)->get();
             error_log($order);
 
             return response()->json(['order' => $order], 200);
@@ -144,7 +144,7 @@ class AdminStatisticController extends Controller
         if ($token != null) {
             $id = auth()->user()->id;
             $restaurant = Restaurant::where('user_id', $id)->first();
-            $materials = Materials::where('restaurant_id', $restaurant->id)->whereDate('updated_at', '>=', $now)->get();
+            $materials = Materials::where('restaurant_id', $restaurant->id)->whereDate('updated_at', '>=', $now)->where('is_delete',1)->get();
             error_log($materials);
             return response()->json(['materials' => $materials], 200);
         } else {
@@ -175,9 +175,62 @@ class AdminStatisticController extends Controller
             }
 
             $materials = Materials::where('restaurant_id', $restaurant->id)
-                        ->whereDate('updated_at', '>=', $start)->whereDate('updated_at', '<=', $end)->get();
+                ->whereDate('updated_at', '>=', $start)->whereDate('updated_at', '<=', $end)->where('is_delete',1)->get();
 
             return response()->json(['materials' => $materials], 200);
+        } else {
+            return response()->json(['error' => 'Unauthorised'], 401);
+
+        }
+    }
+
+    public function getOrder(Request $request)
+    {
+        $token = $request->bearerToken();
+        error_log($token);
+        $now = Carbon::now();
+        if ($token != null) {
+            $id = auth()->user()->id;
+            $restaurant = Restaurant::where('user_id', $id)->first();
+
+            $order = Order::with('statusOrder')->with('user')->whereHas("food", function ($f) use ($restaurant) {
+                $f->where('restaurant_id', $restaurant->id);
+            })->whereDate('updated_at', '>=', $now)->where('is_delete',1)->get();
+            return response()->json(['order' => $order], 200);
+        } else {
+            return response()->json(['error' => 'Unauthorised'], 401);
+
+        }
+    }
+
+    public function changeOrder(Request $request)
+    {
+        $token = $request->bearerToken();
+        error_log($token);
+        if ($token != null) {
+            $id = auth()->user()->id;
+            $restaurant = Restaurant::where('user_id', $id)->first();
+
+            $range = $request->range;
+
+            error_log($range);
+            if ($range != '0') {
+                $arr = explode(' ', $range);
+                if (count($arr) != 1) {
+                    $start = $arr[0];
+                    $end = $arr[2];
+                } else {
+                    $start = $arr[0];
+                    $end = $arr[0];
+                }
+
+            }
+            $order = Order::with('statusOrder')->with('user')->whereHas("food", function ($f) use ($restaurant) {
+                $f->where('restaurant_id', $restaurant->id);
+            })->whereDate('updated_at', '>=', $start)->whereDate('updated_at', '<=', $end)->where('is_delete',1)->get();
+            error_log($order);
+
+            return response()->json(['order' => $order], 200);
         } else {
             return response()->json(['error' => 'Unauthorised'], 401);
 

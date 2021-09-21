@@ -4,6 +4,8 @@ namespace App\Http\Controllers\API\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Mails\ActiveAcount;
+use App\Mails\ForgotPass;
+use App\Mails\ForgotPassApp;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -275,5 +277,22 @@ class   AuthController extends Controller
         $user->update();
 
         return response()->json(['message' => 'success'], 200);
+    }
+
+    public function forgotPass(Request $request)
+    {
+        $email = $request->email;
+        $user = User::where('email', $email)->where('active', 1)->first();
+        if ($user != null) {
+            $key = Str::random(40);
+            $user->random_key = $key;
+            $user->key_time = Carbon::now()->addHour(24)->format('Y-m-d H:i:s');
+            $user->update();
+
+            Mail::to($user->email)->send(new ForgotPassApp($user->email, $key, $user->username));
+            return response()->json(['mes' => 'Success'], 200);
+        } else {
+            return response()->json(['error' => 'Not Found'], 404);
+        }
     }
 }

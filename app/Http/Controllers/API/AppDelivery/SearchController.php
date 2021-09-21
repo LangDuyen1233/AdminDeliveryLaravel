@@ -14,11 +14,19 @@ class SearchController extends Controller
     public function searchRestaurant(Request $request)
     {
         $restaurant_name = $request->name;
-        $restaurant = Restaurant::where('name', 'like', "%{$restaurant_name}%")->get();
+        $restaurant = Restaurant::with('foods')->with('foods.image')->where('name', 'like', "%{$restaurant_name}%")->get();
         foreach ($restaurant as $r) {
             $r->rating = number_format($r->rating, 1);
+            foreach ($r->foods as $food) {
+                $food->weight = number_format($food->weight, 1);
+            }
         }
-        return response()->json(['restaurants' => $restaurant], 200);
+        if ($restaurant != null) {
+            return response()->json(['restaurants' => $restaurant], 200);
+        } else {
+            return response()->json(['restaurants' => 'No restaurant'], 204);
+        }
+
     }
 
     public function searchFood(Request $request)

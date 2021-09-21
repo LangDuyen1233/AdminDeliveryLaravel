@@ -17,7 +17,7 @@ class FoodController extends Controller
 {
     public function index()
     {
-        $food = Food::with('toppings')->where('status',1)->get();
+        $food = Food::with('toppings')->where('status', 1)->get();
         $image = Image::all();
         $user = Session::get('auth');
 
@@ -74,7 +74,7 @@ class FoodController extends Controller
             'ingredients' => $ingredients,
             'category_id' => $category_id,
             'restaurant_id' => $restaurant_id,
-            'status' => $request->get('status'),
+            'status' => 1,
         ]);
         $food->save();
 //        dd($food);
@@ -137,7 +137,7 @@ class FoodController extends Controller
             $f->ingredients = $request->get('ingredients');
             $f->category_id = $request->get('category_id');
             $f->restaurant_id = $request->get('restaurant_id');
-            $f->status = $request->get('status');
+//            $f->status = $request->get('status');
             $f->save();
 
             $image = $request->get('image');
@@ -166,13 +166,13 @@ class FoodController extends Controller
 
         $f = Food::find($id);
         try {
-            if ($f->status == 0) {
-                $f->status = 1;
-                $f->update();
-            } else {
-                $f->status = 0;
-                $f->update();
-            }
+//            if ($f->status == 0) {
+//                $f->status = 1;
+//                $f->update();
+//            } else {
+            $f->status = 0;
+            $f->update();
+//            }
             return redirect()->back()->withErrors(['mes' => "Cập nhật món ăn thành công"]);
         } catch (\Exception $e) {
             return response('', 500);

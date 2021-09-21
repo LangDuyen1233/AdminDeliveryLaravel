@@ -29,6 +29,12 @@ Route::post('forgotpass', [ForgotPasswordController::class, 'doForgotPass'])->na
 Route::get('confirmforgotpass/{email}/{key}', [ForgotPasswordController::class, 'doConfirmPassword'])->name('doConfirmPassword');
 Route::post('resetpass/{email}/{key}', [ForgotPasswordController::class, 'resetPass'])->name('resetpass');
 
+Route::get('confirmforgotpassapp/{email}/{key}', [ForgotPasswordController::class, 'doConfirmPasswordApp'])->name('doConfirmPasswordApp');
+Route::post('resetpassapp/{email}/{key}', [ForgotPasswordController::class, 'resetPassApp'])->name('resetpassapp');
+Route::get('notifyApp', function () {
+    return view('auth.notifyApp');
+})->name('notifyApp');
+
 Route::get('notify', function () {
     return view('auth.notify');
 })->name('notify');
@@ -56,7 +62,7 @@ Route::middleware([CheckLogin::class])->group(function () {
     Route::get('changePass', [AuthController::class, 'index'])->name('changePass');
     Route::post('updatePass', [AuthController::class, 'update'])->name('updatePass');
 
-    Route::get('home',[HomeController::class, 'index'])->name('home');
+    Route::get('home', [HomeController::class, 'index'])->name('home');
 
 //admin user
     Route::resource('admin-user', UserController::class)->only(['index', 'create', 'store', 'update', 'edit', 'destroy']);
@@ -73,7 +79,7 @@ Route::middleware([CheckLogin::class])->group(function () {
 
     Route::resource('admin-discount', DiscountController::class)->only(['index', 'create', 'store', 'update', 'edit', 'destroy']);
 
-    Route::resource('admin-review', ReviewController::class)->only(['index','create', 'store', 'update', 'edit', 'destroy']);
+    Route::resource('admin-review', ReviewController::class)->only(['index', 'create', 'store', 'update', 'edit', 'destroy']);
 
     Route::resource('admin-topping', ToppingController::class)->only(['index', 'create', 'store', 'update', 'edit', 'destroy']);
 

@@ -6,8 +6,8 @@ namespace App\Http\Controllers\API\AppDelivery;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use http\Header\Parser;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
 {
@@ -41,6 +41,24 @@ class ProfileController extends Controller
             error_log($user);
             error_log($request->username);
             $user->username = $request->username;
+            $user->update();
+            return response()->json(['success' => 'Tạo thành công', 'user' => $user], 200);
+        } else {
+            return response()->json(['error' => 'Unauthorised'], 401);
+        }
+    }
+
+    public function changeEmail(Request $request)
+    {
+        $token = $request->bearerToken();
+        error_log($token);
+        error_log('dsaas');
+        if ($token != null) {
+            $id = auth()->user()->id;
+            error_log($id);
+            $user = User::find($id);
+            error_log($request->email);
+            $user->email = $request->email;
             $user->update();
             return response()->json(['success' => 'Tạo thành công', 'user' => $user], 200);
         } else {
@@ -86,24 +104,6 @@ class ProfileController extends Controller
         }
     }
 
-    public function changePhone(Request $request)
-    {
-        $token = $request->bearerToken();
-        error_log($token);
-        error_log('dsaas');
-        if ($token != null) {
-            $id = auth()->user()->id;
-            error_log($id);
-            $user = User::find($id);
-            error_log($user);
-            error_log($request->dob);
-            $user->gender = $request->gender;
-            $user->update();
-            return response()->json(['success' => 'Tạo thành công', 'user' => $user], 200);
-        } else {
-            return response()->json(['error' => 'Unauthorised'], 401);
-        }
-    }
 
     public function changeAvatar(Request $request)
     {
@@ -115,7 +115,6 @@ class ProfileController extends Controller
             error_log($id);
             $user = User::find($id);
             error_log($user);
-//            error_log($request->dob);
 
             $avatar = $request->avatar;
 
@@ -146,5 +145,24 @@ class ProfileController extends Controller
             return response()->json(['users' => $user], 200);
         }
         return response()->json(['error' => 'Người dùng không tồn tại', 401]);
+    }
+
+    public function changePass(Request $request)
+    {
+        $passwordOld = $request->passwordOld;
+        error_log($passwordOld);
+        $id = auth()->user()->id;
+        $user = User::find($id);
+        if ($user != null) {
+            if (Hash::check($passwordOld, $user->password)) {
+                error_log($request->passwordNew);
+                $user->password = Hash::make($request->passwordNew);
+                $user->update();
+            } else {
+                return response()->json(['error' => 'Forbidden'], 403);
+            }
+        } else {
+            return response()->json(['error' => 'Unauthorised'], 401);
+        }
     }
 }

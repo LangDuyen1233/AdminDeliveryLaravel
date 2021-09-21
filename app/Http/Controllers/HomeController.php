@@ -7,6 +7,7 @@ namespace App\Http\Controllers;
 use App\Models\Food;
 use App\Models\Food_Orders;
 use App\Models\Order;
+use App\Models\Restaurant;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -20,7 +21,7 @@ class HomeController
 
 //        $food = Food::with('image')->get();
         $countUser = User::all()->count();
-        $countFood = Food::all()->count();
+        $countRestaurant = Restaurant::all()->count();
         $countOrder = Order::all()->count();
         $food = Food::all(['id']);
         $sumPrice = Order::all()->sum('price');
@@ -62,7 +63,7 @@ class HomeController
                 'user' => $user,
                 'food' => $food,
                 'countUser' => $countUser,
-                'countFood' => $countFood,
+                'countRestaurant' => $countRestaurant,
                 'countOrder' => $countOrder,
                 'sumPrice' => $sumPrice,
                 'foodOrder' => $foodOrder,
@@ -72,4 +73,5 @@ class HomeController
             ]
         );
     }
+
 }

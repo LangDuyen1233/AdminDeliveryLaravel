@@ -135,7 +135,7 @@
 {{--                                            </div>--}}
                                             <div class="m-t-20 text-center">
                                                 <button type="submit" class="btn btn-outline-primary ms-graph-metrics"
-                                                        name="button">Sửa món ăn
+                                                        name="button">Sửa đánh giá
                                                 </button>
                                             </div>
                                         </form>

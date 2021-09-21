@@ -42,15 +42,15 @@ class AuthController extends Controller
 
             return redirect('changePass')->withErrors(['mes' => "Thay đổi mật khẩu thành công"]);
         } else
-                return redirect('changePass')->withErrors(['mes' => "Thay đổi mật khẩu không thành công"]);
+            return redirect('changePass')->withErrors(['mes' => "Thay đổi mật khẩu không thành công"]);
     }
 
     private function messages()
     {
         return [
-            'passwordOld.required' => 'Bạn cần phải nhập mật khẩu.',
+            'passwordOld.required' => 'Bạn cần phải nhập mật khẩu cũ.',
             'passwordOld.min' => 'Mật khẩu phải nhiều hơn 8 ký tự.',
-            'passwordNew.required' => 'Bạn cần phải nhập mật khẩu.',
+            'passwordNew.required' => 'Bạn cần phải nhập mật khẩu mới.',
             'passwordNew.min' => 'Mật khẩu phải nhiều hơn 8 ký tự.',
             're_passwordNew.same' => 'Xác nhận mật khẩu không trùng với mật khẩu mỚi',
             're_passwordNew.required' => 'Bạn cần nhập nhắc lại mật khẩu',

@@ -6,6 +6,7 @@ namespace App\Http\Controllers\API\AdminDelivery;
 
 use App\Http\Controllers\Controller;
 use App\Models\Notify;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class PushNotificationController extends Controller
@@ -16,6 +17,7 @@ class PushNotificationController extends Controller
         error_log($token);
         if ($token != null) {
             $id = auth()->user()->id;
+            error_log(Carbon::now());
 
             $notify = Notify::with('notifyType')->where('user_id', $id)->get();
 

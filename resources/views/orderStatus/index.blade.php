@@ -79,11 +79,11 @@
                                                     <button type="submit"
                                                             class="btn btn-secondary btn-lg mr-2 rounded-lg"
                                                             data-dismiss="modal">
-                                                        Cancel
+                                                        Hủy
                                                     </button>
                                                     <button type="submit"
                                                             class="btn btn-danger btn-lg rounded-lg">
-                                                        Delete
+                                                        Xóa
                                                     </button>
                                                 </form>
                                             </div>

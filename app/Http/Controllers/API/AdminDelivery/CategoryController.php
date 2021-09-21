@@ -10,6 +10,7 @@ use App\Models\Restaurant;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use phpDocumentor\Reflection\Types\Array_;
 
 class CategoryController extends Controller
 {
@@ -20,10 +21,18 @@ class CategoryController extends Controller
         if ($token != null) {
             $id = auth()->user()->id;
             error_log($id);
-            $restaurant = Restaurant::where('user_id', $id)->first();
+            $restaurant = Restaurant::where('user_id', $id)->with('category')->first();
             $category = $restaurant->category;
-            error_log($category);
-            return response()->json(['category' => $category], 200);
+            $listCategory = [];
+
+
+            foreach ($category as $c) {
+                if ($c->status == 1) {
+                    array_push($listCategory, $c);
+                }
+            }
+//            error_log($category);
+            return response()->json(['category' => $listCategory], 200);
         } else {
             return response()->json(['error' => 'Unauthorised'], 401);
         }
@@ -49,7 +58,6 @@ class CategoryController extends Controller
         // finally store our user
 
 
-
         $category->save();
 
         $id = auth()->user()->id;
@@ -61,5 +69,67 @@ class CategoryController extends Controller
         }
 
         return response()->json(['success' => 'Tạo thành công', 'category' => $category], 200);
+    }
+
+    public function editCategory(Request $request)
+    {
+        $token = $request->bearerToken();
+        error_log($token);
+        if ($token != null) {
+            $category_id = $request->category_id;
+            $category = Category::find($category_id);
+            error_log($category);
+            return response()->json(['category' => $category], 200);
+        } else {
+            return response()->json(['error' => 'Unauthorised'], 401);
+        }
+    }
+
+    public function updateCategory(Request $request)
+    {
+        $token = $request->bearerToken();
+        error_log($token);
+        if ($token != null) {
+            $category_id = $request->category_id;
+            error_log($category_id);
+
+            $category = Category::find($category_id);
+
+            $category->name = $request->name;
+            $category->description = $request->description;
+
+            $image = $request->image;
+
+            if ($image != null) {
+                $urlImage = "/data/files/$image";
+            } else {
+                $urlImage = null;
+            }
+            $category->image = $urlImage;
+
+            $category->update();
+            return response()->json(['success' => 'Tạo thành công', 'materials' => $category], 200);
+        } else {
+            return response()->json(['error' => 'Unauthorised'], 401);
+        }
+    }
+
+    public function deleteCategory(Request $request)
+    {
+        $token = $request->bearerToken();
+        error_log($token);
+        if ($token != null) {
+            $category_id = $request->category_id;
+            error_log($category_id);
+            $category = Category::find($category_id);
+
+            $category->status = 0;
+
+            $category->update();
+
+            return response()->json(['category' => $category], 200);
+        } else {
+            return response()->json(['error' => 'Unauthorised'], 401);
+        }
     }
 }

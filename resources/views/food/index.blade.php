@@ -34,7 +34,7 @@
                                 <th>Danh mục</th>
                                 <th>Quán ăn</th>
                                 <th>Topping</th>
-{{--                                <th>Trạng thái</th>--}}
+                                {{--                                <th>Trạng thái</th>--}}
                                 <th>Thao tác</th>
                             </tr>
                             </thead>
@@ -70,13 +70,13 @@
                                             <li style="list-style-type: none">{{$r->name}}</li>
                                         @endforeach
                                     </td>
-{{--                                    <td style="text-align: center">--}}
-{{--                                        @if($f->status==1)--}}
-{{--                                            <span class="badge badge-success">Họat động</span>--}}
-{{--                                        @elseif($f->status==0)--}}
-{{--                                            <span class="badge badge-danger">Khóa</span>--}}
-{{--                                        @endif--}}
-{{--                                    </td>--}}
+                                    {{--                                    <td style="text-align: center">--}}
+                                    {{--                                        @if($f->status==1)--}}
+                                    {{--                                            <span class="badge badge-success">Họat động</span>--}}
+                                    {{--                                        @elseif($f->status==0)--}}
+                                    {{--                                            <span class="badge badge-danger">Khóa</span>--}}
+                                    {{--                                        @endif--}}
+                                    {{--                                    </td>--}}
                                     <td style="text-align: center">
                                         <a class="edit hvicon" style="color: green;padding: 10px"
                                            href="{{route('admin-food.edit',$f->id)}}"
@@ -87,19 +87,19 @@
                                            data-target="#modal-delete{{$f->id}}"
                                            style="color: red"><i
                                                 class=" material-icons">&#xE872;</i></a>
-{{--                                        @if($f->status==1)--}}
-{{--                                            <a class="delete hvicon" data-toggle="modal"--}}
-{{--                                               href="{{route('admin-food.destroy',$f->id)}}"--}}
-{{--                                               data-target="#modal-delete{{$f->id}}"--}}
-{{--                                               style="color: red"><i--}}
-{{--                                                    class=" material-icons">&#xe897;</i></a>--}}
-{{--                                        @else--}}
-{{--                                            <a class="delete hvicon" data-toggle="modal"--}}
-{{--                                               href="{{route('admin-food.destroy',$f->id)}}"--}}
-{{--                                               data-target="#modal-delete{{$f->id}}"--}}
-{{--                                               style="color: red"><i--}}
-{{--                                                    class=" material-icons">&#xe898;</i></a>--}}
-{{--                                        @endif--}}
+                                        {{--                                        @if($f->status==1)--}}
+                                        {{--                                            <a class="delete hvicon" data-toggle="modal"--}}
+                                        {{--                                               href="{{route('admin-food.destroy',$f->id)}}"--}}
+                                        {{--                                               data-target="#modal-delete{{$f->id}}"--}}
+                                        {{--                                               style="color: red"><i--}}
+                                        {{--                                                    class=" material-icons">&#xe897;</i></a>--}}
+                                        {{--                                        @else--}}
+                                        {{--                                            <a class="delete hvicon" data-toggle="modal"--}}
+                                        {{--                                               href="{{route('admin-food.destroy',$f->id)}}"--}}
+                                        {{--                                               data-target="#modal-delete{{$f->id}}"--}}
+                                        {{--                                               style="color: red"><i--}}
+                                        {{--                                                    class=" material-icons">&#xe898;</i></a>--}}
+                                        {{--                                        @endif--}}
                                     </td>
                                 </tr>
 
@@ -119,33 +119,33 @@
                                                             aria-label="Close"><span
                                                             aria-hidden="true">×</span>
                                                     </button>
-                                                    @if($f->status == 1)
-                                                        <i class="flaticon-secure-shield d-block"></i>
-                                                        <h1>Khóa món ăn.</h1>
-                                                        <p>Bạn có chắc chắn muốn khóa không?</p>
-                                                        <button type="submit"
-                                                                class="btn btn-secondary btn-lg mr-2 rounded-lg"
-                                                                data-dismiss="modal">
-                                                            Hủy
-                                                        </button>
-                                                        <button type="submit"
-                                                                class="btn btn-danger btn-lg rounded-lg">
-                                                            Khóa
-                                                        </button>
-                                                    @else
-                                                        <i class="flaticon-secure-shield d-block"></i>
-                                                        <h1>Mở khóa món ăn.</h1>
-                                                        <p>Bạn có chắc chắn muốn mở khóa không?</p>
-                                                        <button type="submit"
-                                                                class="btn btn-secondary btn-lg mr-2 rounded-lg"
-                                                                data-dismiss="modal">
-                                                            Hủy
-                                                        </button>
-                                                        <button type="submit"
-                                                                class="btn btn-danger btn-lg rounded-lg">
-                                                            Mở khóa
-                                                        </button>
-                                                    @endif
+                                                    {{--                                                    @if($f->status == 1)--}}
+                                                    <i class="flaticon-secure-shield d-block"></i>
+                                                    <h1>Xóa món ăn.</h1>
+                                                    <p>Bạn có chắc chắn muốn xóa không?</p>
+                                                    <button type="submit"
+                                                            class="btn btn-secondary btn-lg mr-2 rounded-lg"
+                                                            data-dismiss="modal">
+                                                        Hủy
+                                                    </button>
+                                                    <button type="submit"
+                                                            class="btn btn-danger btn-lg rounded-lg">
+                                                        Xóa
+                                                    </button>
+                                                    {{--                                                    @else--}}
+                                                    {{--                                                        <i class="flaticon-secure-shield d-block"></i>--}}
+                                                    {{--                                                        <h1>Mở khóa món ăn.</h1>--}}
+                                                    {{--                                                        <p>Bạn có chắc chắn muốn mở xóa không?</p>--}}
+                                                    {{--                                                        <button type="submit"--}}
+                                                    {{--                                                                class="btn btn-secondary btn-lg mr-2 rounded-lg"--}}
+                                                    {{--                                                                data-dismiss="modal">--}}
+                                                    {{--                                                            Hủy--}}
+                                                    {{--                                                        </button>--}}
+                                                    {{--                                                        <button type="submit"--}}
+                                                    {{--                                                                class="btn btn-danger btn-lg rounded-lg">--}}
+                                                    {{--                                                            XÓa--}}
+                                                    {{--                                                        </button>--}}
+                                                    {{--                                                    @endif--}}
                                                 </form>
                                             </div>
                                         </div>

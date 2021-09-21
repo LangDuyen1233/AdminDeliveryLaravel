@@ -32,7 +32,6 @@ class ForgotPass extends Mailable
     public function build()
     {
         return $this
-//            ->from('Greenteawindowsservice@gmail.com')
             ->view('mail.forgetPass')
             ->subject("FoodDelivery")
             ->with([

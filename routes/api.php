@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\AdminDelivery\AdminDiscountController;
+use App\Http\Controllers\API\AdminDelivery\AdminHomeController;
 use App\Http\Controllers\API\AdminDelivery\AdminMaterialsController;
 use App\Http\Controllers\API\AdminDelivery\AdminOrderController;
 use App\Http\Controllers\API\AdminDelivery\AdminRestaurantController;
@@ -51,6 +52,7 @@ Route::post('/checkUser', [AuthController::class, 'checkUser']);
 Route::post('/loginPhone', [AuthController::class, 'loginPhone']);
 Route::post('/updateUid', [AuthController::class, 'updateUid']);
 Route::post('/sendNotification', [NotificationController::class, 'sendNotification']);
+Route::post('/forgotPass', [AuthController::class, 'forgotPass']);
 
 Route::middleware('auth:api')->group(function () {
 
@@ -58,7 +60,7 @@ Route::middleware('auth:api')->group(function () {
 
     // home
     Route::get('/sliders', [SliderController::class, 'getSliders']);
-    Route::get('/listfood', [HomeComtroller::class, 'getFood']);
+    Route::get('/listFoodHome', [HomeComtroller::class, 'getFood']);
     Route::get('/listrestaurants', [HomeComtroller::class, 'getRestaurant']);
 
     //profile
@@ -94,7 +96,7 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/deleteCard', [RestaurantController::class, 'deleteCard']);
     Route::post('/increaseQuantity', [RestaurantController::class, 'increaseQuantity']);
     Route::post('/decreaseQuantity', [RestaurantController::class, 'decreaseQuantity']);
-    Route::get('/getOrder', [OrderController::class, 'getOrder']);
+    Route::get('/getOrderComing', [OrderController::class, 'getOrder']);
     Route::get('/getHistory', [OrderController::class, 'getHistory']);
     Route::get('/getdraftOrder', [OrderController::class, 'getdraftOrder']);
     Route::post('/deleteDraftOrder', [OrderController::class, 'deleteDraftOrder']);
@@ -114,9 +116,12 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/addReview', [ReviewsController::class, 'addReview']);
     Route::get('/reviewRestaurant', [ReviewsController::class, 'reviewRestaurant']);
 
-    //admin
+    //admin category
     Route::get('/getCategory', [CategoryController::class, 'getCategory']);
     Route::post('/addCategory', [CategoryController::class, 'addCategory']);
+    Route::get('/editCategory', [CategoryController::class, 'editCategory']);
+    Route::post('/updateCategory', [CategoryController::class, 'updateCategory']);
+    Route::post('/deleteCategory', [CategoryController::class, 'deleteCategory']);
 
     //admin food
     Route::get('/getFood', [FoodController::class, 'getFood']);
@@ -183,6 +188,9 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/changeDob', [ProfileController::class, 'changeDob']);
     Route::post('/changeGender', [ProfileController::class, 'changeGender']);
     Route::post('/changeAvatar', [ProfileController::class, 'changeAvatar']);
+    Route::post('/changeEmail', [ProfileController::class, 'changeEmail']);
+    Route::post('/changePass', [ProfileController::class, 'changePass']);
+    Route::post('/changePhoneRestaurant', [AdminHomeController::class, 'changePhoneRestaurant']);
 
     //admin restaurant
     Route::get('/getRestaurant', [AdminRestaurantController::class, 'getRestaurant']);
@@ -197,12 +205,17 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/getSum', [AdminStatisticController::class, 'getSum']);
     Route::get('/getRevenue', [AdminStatisticController::class, 'getRevenue']);
     Route::get('/changeRevenue', [AdminStatisticController::class, 'changeRevenue']);
+    Route::get('/getOrder', [AdminStatisticController::class, 'getOrder']);
+    Route::get('/changeOrder', [AdminStatisticController::class, 'changeOrder']);
 
     Route::get('/getWarehouse', [AdminStatisticController::class, 'getWarehouse']);
     Route::get('/changeWarehouse', [AdminStatisticController::class, 'changeWarehouse']);
 
     //admin address
     Route::post('/updateAddressMap', [AdminAddressController::class, 'updateAddressMap']);
+
+    //admin home
+    Route::get('/revenueWeek', [AdminHomeController::class, 'revenueWeek']);
 
 
 });

@@ -6,17 +6,30 @@ namespace App\Http\Controllers\API\AppDelivery;
 
 use App\Http\Controllers\Controller;
 use App\Models\Food;
+use App\Models\Food_Orders;
 use App\Models\Restaurant;
 use Illuminate\Http\Request;
-use PhpParser\Node\Expr\Cast\Double;
+use Illuminate\Support\Facades\DB;
 
 class HomeComtroller extends Controller
 {
     public function getFood()
     {
-        $foods = Food::with('image')->with('restaurant')->with('category')->get();
-        if ($foods != null) {
-            return response()->json(['foods' => $foods], 200);
+        $foodOrder = DB::table('food_orders')->selectRaw('foods.name,foods.price,images.url,restaurants.id as restaurant_id,COUNT(food_orders.food_id) as total_food')
+            ->join('foods', 'foods.id', '=', 'food_orders.food_id')
+            ->join('image_foods', 'foods.id', '=', 'image_foods.food_id')
+            ->join('images', 'images.id', '=', 'image_foods.image_id')
+            ->join('restaurants','restaurants.id','=','foods.restaurant_id')
+            ->groupBy('food_orders.food_id', 'foods.name', 'foods.price', 'images.url','restaurants.id')
+            ->orderBy('total_food', 'DESC')
+            ->limit(20)
+            ->get();
+//        $foodOrder = DB::table('food_orders')->get();
+//        $foodOrder = Food::all();
+        error_log($foodOrder);
+//        $foods = Food::with('image')->with('restaurant')->with('category')->get();
+        if ($foodOrder != null) {
+            return response()->json(['foods' => $foodOrder], 200);
         } else {
             return response()->json(['mes' => 'not exist'], 204);
         }

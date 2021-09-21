@@ -7,7 +7,7 @@
                     <div class="ms-panel-header">
                         <div class="d-flex justify-content-between">
                             <div class="ms-header-text">
-                                <h6>Thêm danh mục mới</h6>
+                                <h6>Sửa trạng thái đơn hàng</h6>
                             </div>
                         </div>
                     </div>

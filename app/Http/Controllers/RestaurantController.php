@@ -77,6 +77,8 @@ class RestaurantController extends Controller
             'description' => $description,
             'user_id' => $user_id,
             'active' => $request->get('active'),
+            'lattitude'=>0.0,
+            'longtitude'=>0.0,
         ]);
 //        dd($restaurant);
         $restaurant->save();

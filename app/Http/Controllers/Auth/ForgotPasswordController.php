@@ -93,6 +93,55 @@ class ForgotPasswordController extends Controller
         }
     }
 
+    public function doConfirmPasswordApp($email, $key)
+    {
+        error_log('whyuwegyewhfbwehjgbweg');
+        $u = User::select('email', 'random_key', 'key_time', 'active')
+            ->where('email', '=', $email)
+            ->where('active', '=', '1')
+            ->where('random_key', $key)
+            ->first();
+        error_log($email);
+//        dd($u);
+        if ($u != null) {
+            $kt = Carbon::parse($u->key_time);
+            $now = Carbon::now();
+            if ($now->lt($kt) == true) {
+                return view('auth.reset_pass_app')->with([
+                    'email' => $email,
+                    'key' => $key,
+                ]);
+            } else {
+                return redirect('notifyApp')->withErrors('mes', 'Mail đã hết hạn sử dụng');
+            }
+        } else {
+            return redirect('notifyApp')->withErrors(['mes' => 'Đường dẫn này chỉ được sử dụng được một lần']);
+        }
+    }
+
+    public function resetPassApp($email, $key, Request $request)
+    {
+        error_log('và đây k');
+        $request->validate([
+            'password' => 'required|min:8',
+            're_password' => 'required|same:password',
+        ], $this->messages());
+
+        $u = User::where('email', '=', $email)
+            ->where('random_key', '=', $key)
+            ->where('active', '=', '1')->first();
+        if ($u != null) {
+            $u->password = Hash::make($request->password);
+            $u->random_key = null;
+            $u->key_time = null;
+            $u->update();
+
+            return view('auth.forgotPassSuccess')->withErrors(['mes'=> 'Đổi mật khẩu thành công']);
+        } else {
+            return redirect('/')->withErrors(['mes' => 'Liên kết đã hết hạn!']);
+        }
+    }
+
     private function messages()
     {
         return [

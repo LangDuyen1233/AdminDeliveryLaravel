@@ -103,7 +103,7 @@
         {{--        </li>--}}
 
         <li class="ms-nav-item ms-nav-user dropdown" style="display: flex">
-            <span style="padding-right: 1rem; margin-top: 0.5rem; color: blue; font-size: 18px">{{$user->username}}</span>
+            <span style="padding-right: 1rem; margin-top: 0.5rem; color: #0095ff; font-size: 18px">{{$user->username}}</span>
             <a href="#" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <img class="ms-user-img ms-img-round float-right"
                      src="{{$user->avatar}}"
@@ -118,7 +118,7 @@
                 <li class="dropdown-divider"></li>
                 <li class="ms-dropdown-list">
                     <a class="media fs-14 p-2" href="{{route('profile')}}"> <span><i
-                                class="flaticon-user mr-2"></i> Profile</span>
+                                class="flaticon-user mr-2"></i>Thông tin cá nhân</span>
                     </a>
                 {{--                    <a class="media fs-14 p-2" href="pages/apps/email.html"> <span><i--}}
                 {{--                                class="flaticon-mail mr-2"></i> Inbox</span> <span--}}
@@ -134,7 +134,7 @@
                 </li>
                 <li class="dropdown-menu-footer">
                     <a class="media fs-14 p-2" href="{{route('logout')}}"> <span><i
-                                class="flaticon-shut-down mr-2"></i> Logout</span>
+                                class="flaticon-shut-down mr-2"></i>Đăng xuất</span>
                     </a>
                 </li>
                 {{--                </li>--}}

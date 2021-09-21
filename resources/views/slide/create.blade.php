@@ -7,7 +7,7 @@
                     <div class="ms-panel-header">
                         <div class="d-flex justify-content-between">
                             <div class="ms-header-text">
-                                <h6>Thêm banner mới</h6>
+                                <h6>Thêm banner</h6>
                             </div>
                         </div>
                     </div>
@@ -55,7 +55,7 @@
                                             </div>
                                             <div class="m-t-20 text-center">
                                                 <button type="submit" class="btn btn-outline-primary ms-graph-metrics"
-                                                        name="button">Tạo danh mục
+                                                        name="button">Tạo banner
                                                 </button>
                                             </div>
                                         </form>

@@ -29,7 +29,8 @@ class Order extends Model
         'staff_id',
         'latitude',
         'longitude',
-        'is_delete'
+        'is_delete',
+        'time_delivery',
     ];
 
     public function statusOrder()
