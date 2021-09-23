@@ -95,6 +95,7 @@ class DeliveryController extends Controller
                 $workflow->apply($order, 'DELIVERED');
                 $order->payment->status = 'Đã thanh toán';
                 $order->payment->update();
+                $order->status = 0;
                 $order->save();
                 return response()->json(['success' => 'Thay đổi thành công', 'order' => $order], 200);
             } else {

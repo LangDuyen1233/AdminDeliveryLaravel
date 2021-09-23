@@ -120,11 +120,17 @@ class OrderController extends Controller
         $user_id = auth()->user()->id;
         error_log($user_id);
         $order = Order::where('user_id', $user_id)
-            ->where('status', 1)->with('food')
+            ->where('status', 1)
+            ->with('food')
             ->with('food.toppings')
-            ->with('statusOrder')->with('food.restaurant')->with('payment')
+            ->with('statusOrder')
+            ->with('food.restaurant')
+            ->with('food.restaurant.user')
+            ->with('payment')
             ->with('user')
             ->where('is_delete', 1)
+            ->where('order_status_id', '<>', 4)
+            ->where('order_status_id', '<>', 5)
             ->first();
 
         error_log($order);
@@ -136,7 +142,7 @@ class OrderController extends Controller
             }
             return response()->json(['order' => $order], 200);
         } else {
-            return response()->json(['error' => 'Unauthorised'], 401);
+            return response()->json(['order' => ''], 204);
         }
 
 

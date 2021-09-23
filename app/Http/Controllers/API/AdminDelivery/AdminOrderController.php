@@ -22,7 +22,6 @@ class AdminOrderController extends Controller
         $restaurant = Restaurant::where('user_id', $user_id)->first();
         error_log($restaurant->id);
 
-
         if ($token != null) {
 //            $order = Order::with('user')->with('statusOrder')->with('foodOrder')
 //                ->with('foodOrder.food')->with('foodOrder.toppings')
@@ -58,6 +57,7 @@ class AdminOrderController extends Controller
 
                 $workflow->apply($order, 'CANCEL');
                 $order->reason = $request->reason;
+                $order->status = 0;
                 $order->save();
                 return response()->json(['success' => 'Thay đổi thành công', 'order' => $order], 200);
             } else {
@@ -193,6 +193,7 @@ class AdminOrderController extends Controller
             $workflow = $order->workflow_get();
             if ($workflow->can($order, 'DELIVERED') == true) {
                 $workflow->apply($order, 'DELIVERED');
+                $order->status=0;
                 $order->save();
                 return response()->json(['success' => 'Thay đổi thành công', 'order' => $order], 200);
             } else {

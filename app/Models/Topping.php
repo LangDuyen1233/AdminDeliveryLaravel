@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Model;
 class Topping extends Model
 {
     protected $table = "toppings";
-    public $timestamps = false;
     protected $fillable = [
         'id',
         'name',

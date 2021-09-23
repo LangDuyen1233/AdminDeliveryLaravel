@@ -61,6 +61,16 @@ class NotificationController extends Controller
 
         error_log($result);
 
+        $user = User::where('uid',$uid)->first();
+
+        $notify = Notify::create([
+            'title' => $title,
+            'body' => $body,
+            'user_id' => $user->id,
+            'notification_type_id' => $request->notification_type_id,
+        ]);
+        $notify->save();
+
         return response()->json([], 200);
     }
 
