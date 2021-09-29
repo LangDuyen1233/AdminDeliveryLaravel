@@ -136,10 +136,16 @@ class RestaurantController extends Controller
     public function getFoodCard(Request $request)
     {
         $card_id = $request->card_id;
-        $card = Cart::with('cardOrder')->with('cardOrder.food')->with('cardOrder.food.image')->with('cardOrder.toppings')->where('id', $card_id)->first();
+        $card = Cart::with('cardOrder')
+            ->with('cardOrder.food')
+            ->with('restaurant')
+            ->with('cardOrder.food.image')
+            ->with('cardOrder.toppings')
+            ->where('id', $card_id)->first();
         foreach ($card->cardOrder as $co) {
             $co->food->weight = number_format($co->food->weight, 1);
         }
+        $card->restaurant->rating = number_format($card->restaurant->rating,1);
         return response()->json(['card' => $card], 200);
     }
 

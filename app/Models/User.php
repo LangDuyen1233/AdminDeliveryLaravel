@@ -36,6 +36,7 @@ class  User extends Authenticatable
         'expires_at',
         'avatar',
         'uid',
+        'mssv',
     ];
 
     /**

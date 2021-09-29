@@ -86,7 +86,7 @@ Route::middleware('auth:api')->group(function () {
 
     //search
     Route::get('/searchRestaurant', [SearchController::class, 'searchRestaurant']);
-    Route::get('/searchFood', [SearchController::class, 'searchFood']);
+    Route::get('/search', [SearchController::class, 'searchFood']);
 
     // card and order
     Route::post('/addorder', [OrderController::class, 'addOrder']);

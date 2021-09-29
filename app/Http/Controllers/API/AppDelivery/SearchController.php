@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Food;
 use App\Models\Restaurant;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SearchController extends Controller
 {
@@ -31,12 +32,33 @@ class SearchController extends Controller
 
     public function searchFood(Request $request)
     {
-        $food_name = $request->name;
-        $food = Food::where('name', 'like', "%{$food_name}%")->with('restaurant')->get();
-        foreach ($food as $f) {
-            $f->weight = number_format($f->weight, 1);
-            $f->restaurant->rating = number_format($f->restaurant->rating, 1);
+        $name = $request->name;
+//        $food = Restaurant::with('foods')->where('name','like',"%{$food_name}%")->get();
+//        foreach ($food as $f) {
+//            $f->weight = number_format($f->weight, 1);
+//            $f->restaurant->rating = number_format($f->restaurant->rating, 1);
+//        }
+        $result = DB::table('restaurants')
+            ->selectRaw('restaurants.id,restaurants.name,restaurants.address,restaurants.image,
+                restaurants.lattitude, restaurants.longtitude, restaurants.rating, foods.name as foodname, foods.price,images.url')
+            ->join('foods', 'restaurants.id', '=', 'foods.restaurant_id')
+            ->join('image_foods', 'foods.id', '=', 'image_foods.food_id')
+            ->join('images', 'image_foods.image_id', '=', 'images.id')
+            ->where('restaurants.active', 1)
+            ->where('foods.status', 1)
+            ->where('foods.name', 'LIKE', "%$name%")
+            ->orWhere('restaurants.name', 'LIKE', "%$name%")
+            ->groupBy('restaurants.name')
+            ->get();
+        foreach ($result as $r) {
+            $r->rating = number_format($r->rating, 1);
         }
-        return response()->json(['foods' => $food], 200);
+        if ($result != null) {
+            return response()->json(['result' => $result], 200);
+        } else {
+            return response()->json([], 204);
+        }
+
+
     }
 }
