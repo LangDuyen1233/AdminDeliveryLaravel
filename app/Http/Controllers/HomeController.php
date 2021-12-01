@@ -17,9 +17,6 @@ class HomeController
     public function index()
     {
         $user = Session::get('auth');
-//        dd($user);
-
-//        $food = Food::with('image')->get();
         $countUser = User::all()->count();
         $countRestaurant = Restaurant::all()->count();
         $countOrder = Order::all()->count();
@@ -48,15 +45,10 @@ class HomeController
             ->orderBy('countOrder','DESC')
             ->limit(4)
             ->get();
-//        dd($restaurantSelling);
 
         foreach ($monthlyRevenue as $mr) {
             $mr->total = number_format($mr->total, 0, '', ',');
         }
-
-//        dd($monthlyRevenue);
-
-//        dd($sumPrice);
 
         return view('home.home',
             [
@@ -73,5 +65,4 @@ class HomeController
             ]
         );
     }
-
 }

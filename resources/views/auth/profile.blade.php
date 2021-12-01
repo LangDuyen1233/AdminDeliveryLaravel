@@ -2,7 +2,6 @@
 @section('content')
     <div class="ms-content-wrapper">
 
-        {{--        <div class="ms-profile-overview">--}}
         <div class="ms-profile-cover">
             <img class="ms-profile-img" src="{{$userAdmin->avatar}}" alt="people">
             <div class="ms-profile-user-info">

@@ -5,8 +5,6 @@ namespace App\Http\Controllers\API\AppDelivery;
 
 
 use App\Http\Controllers\Controller;
-use App\Models\Food;
-use App\Models\Food_Orders;
 use App\Models\Restaurant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -19,15 +17,11 @@ class HomeComtroller extends Controller
             ->join('foods', 'foods.id', '=', 'food_orders.food_id')
             ->join('image_foods', 'foods.id', '=', 'image_foods.food_id')
             ->join('images', 'images.id', '=', 'image_foods.image_id')
-            ->join('restaurants','restaurants.id','=','foods.restaurant_id')
-            ->groupBy('food_orders.food_id', 'foods.name', 'foods.price', 'images.url','restaurants.id')
+            ->join('restaurants', 'restaurants.id', '=', 'foods.restaurant_id')
+            ->groupBy('food_orders.food_id', 'foods.name', 'foods.price', 'images.url', 'restaurants.id')
             ->orderBy('total_food', 'DESC')
             ->limit(20)
             ->get();
-//        $foodOrder = DB::table('food_orders')->get();
-//        $foodOrder = Food::all();
-        error_log($foodOrder);
-//        $foods = Food::with('image')->with('restaurant')->with('category')->get();
         if ($foodOrder != null) {
             return response()->json(['foods' => $foodOrder], 200);
         } else {
@@ -38,18 +32,13 @@ class HomeComtroller extends Controller
     public function getRestaurant(Request $request)
     {
         $limit = $request->limit;
-        error_log('kjehfjkewfnwefewf');
-        error_log($limit);
         $restaurant = Restaurant::with('foods')->with('foods.image')->with('foods.toppings')->limit($limit)->get();
-        error_log($restaurant);
         foreach ($restaurant as $r) {
-            foreach ($r->foods as $f){
+            foreach ($r->foods as $f) {
                 $f->weight = number_format($f->weight, 1);
             }
-//
             $r->rating = number_format($r->rating, 1);
         }
-        error_log($restaurant);
         if ($restaurant != null) {
             return response()->json(['restaurants' => $restaurant], 200);
         } else {

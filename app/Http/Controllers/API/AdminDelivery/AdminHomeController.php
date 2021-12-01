@@ -6,7 +6,6 @@ namespace App\Http\Controllers\API\AdminDelivery;
 
 use App\Http\Controllers\Controller;
 use App\Models\Restaurant;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -26,7 +25,6 @@ class AdminHomeController extends Controller
                 ->where('orders.order_status_id', '=', 4)
                 ->groupBy('orders.updated_at', 'orders.price')
                 ->get();
-            error_log($revenueWeek);
             return response()->json(['revenueWeek' => $revenueWeek], 200);
         } else {
             return response()->json(['error' => 'Unauthorised'], 401);
@@ -38,12 +36,9 @@ class AdminHomeController extends Controller
     public function changePhoneRestaurant(Request $request)
     {
         $token = $request->bearerToken();
-        error_log($token);
         if ($token != null) {
             $id = auth()->user()->id;
-            error_log($id);
             $restaurant = Restaurant::where('user_id',$id)->first();
-            error_log($restaurant);
             $restaurant->phone = $request->phone;
             $restaurant->update();
 

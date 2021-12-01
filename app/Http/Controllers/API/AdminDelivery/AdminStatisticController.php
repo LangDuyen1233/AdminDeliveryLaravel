@@ -16,17 +16,14 @@ class AdminStatisticController extends Controller
     public function getSales(Request $request)
     {
         $token = $request->bearerToken();
-        error_log($token);
         if ($token != null) {
             $id = auth()->user()->id;
             $restaurant = Restaurant::where('user_id', $id)->first();
             $now = Carbon::now();
-            error_log($now);
 
             $order = Order::where('order_status_id', 4)->whereHas("food", function ($f) use ($restaurant) {
                 $f->where('restaurant_id', $restaurant->id);
-            })->whereDate('updated_at', '=', $now)->where('is_delete',1)->get();
-            error_log($order);
+            })->whereDate('updated_at', '=', $now)->where('is_delete', 1)->get();
 
             return response()->json(['order' => $order], 200);
         } else {
@@ -38,17 +35,14 @@ class AdminStatisticController extends Controller
     public function getCancel(Request $request)
     {
         $token = $request->bearerToken();
-        error_log($token);
         if ($token != null) {
             $id = auth()->user()->id;
             $restaurant = Restaurant::where('user_id', $id)->first();
             $now = Carbon::now();
-            error_log($now);
 
             $order = Order::where('order_status_id', 5)->whereHas("food", function ($f) use ($restaurant) {
                 $f->where('restaurant_id', $restaurant->id);
-            })->whereDate('updated_at', '=', $now)->where('is_delete',1)->get();
-            error_log($order);
+            })->whereDate('updated_at', '=', $now)->where('is_delete', 1)->get();
 
             return response()->json(['order' => $order], 200);
         } else {
@@ -60,17 +54,14 @@ class AdminStatisticController extends Controller
     public function getSum(Request $request)
     {
         $token = $request->bearerToken();
-        error_log($token);
         if ($token != null) {
             $id = auth()->user()->id;
             $restaurant = Restaurant::where('user_id', $id)->first();
             $now = Carbon::now();
-            error_log($now);
 
             $order = Order::whereIn('order_status_id', [1, 2, 3, 4, 5, 6])->whereHas("food", function ($f) use ($restaurant) {
                 $f->where('restaurant_id', $restaurant->id);
-            })->whereDate('updated_at', '=',$now)->where('is_delete',1)->get();
-            error_log($order);
+            })->whereDate('updated_at', '=', $now)->where('is_delete', 1)->get();
 
             return response()->json(['order' => $order], 200);
         } else {
@@ -79,11 +70,9 @@ class AdminStatisticController extends Controller
         }
     }
 
-    //revenue
     public function getRevenue(Request $request)
     {
         $token = $request->bearerToken();
-        error_log($token);
         $now = Carbon::now();
         if ($token != null) {
             $id = auth()->user()->id;
@@ -91,7 +80,7 @@ class AdminStatisticController extends Controller
 
             $order = Order::where('order_status_id', 4)->whereHas("food", function ($f) use ($restaurant) {
                 $f->where('restaurant_id', $restaurant->id);
-            })->whereDate('updated_at', '>=', $now)->where('is_delete',1)->get();
+            })->whereDate('updated_at', '>=', $now)->where('is_delete', 1)->get();
             return response()->json(['order' => $order], 200);
         } else {
             return response()->json(['error' => 'Unauthorised'], 401);
@@ -102,14 +91,11 @@ class AdminStatisticController extends Controller
     public function changeRevenue(Request $request)
     {
         $token = $request->bearerToken();
-        error_log($token);
         if ($token != null) {
             $id = auth()->user()->id;
             $restaurant = Restaurant::where('user_id', $id)->first();
-
             $range = $request->range;
 
-            error_log($range);
             if ($range != '0') {
                 $arr = explode(' ', $range);
                 if (count($arr) != 1) {
@@ -121,11 +107,9 @@ class AdminStatisticController extends Controller
                 }
 
             }
-            error_log('sdfg');
             $order = Order::where('order_status_id', 4)->whereHas("food", function ($f) use ($restaurant) {
                 $f->where('restaurant_id', $restaurant->id);
-            })->whereDate('updated_at', '>=', $start)->whereDate('updated_at', '<=', $end)->where('is_delete',1)->get();
-            error_log($order);
+            })->whereDate('updated_at', '>=', $start)->whereDate('updated_at', '<=', $end)->where('is_delete', 1)->get();
 
             return response()->json(['order' => $order], 200);
         } else {
@@ -134,18 +118,14 @@ class AdminStatisticController extends Controller
         }
     }
 
-    //warehouse
-
     public function getWarehouse(Request $request)
     {
         $token = $request->bearerToken();
-        error_log($token);
         $now = Carbon::now();
         if ($token != null) {
             $id = auth()->user()->id;
             $restaurant = Restaurant::where('user_id', $id)->first();
-            $materials = Materials::where('restaurant_id', $restaurant->id)->whereDate('updated_at', '>=', $now)->where('is_delete',1)->get();
-            error_log($materials);
+            $materials = Materials::where('restaurant_id', $restaurant->id)->whereDate('updated_at', '>=', $now)->where('is_delete', 1)->get();
             return response()->json(['materials' => $materials], 200);
         } else {
             return response()->json(['error' => 'Unauthorised'], 401);
@@ -155,14 +135,12 @@ class AdminStatisticController extends Controller
     public function changeWarehouse(Request $request)
     {
         $token = $request->bearerToken();
-        error_log($token);
         if ($token != null) {
             $id = auth()->user()->id;
             $restaurant = Restaurant::where('user_id', $id)->first();
 
             $range = $request->range;
 
-            error_log($range);
             if ($range != '0') {
                 $arr = explode(' ', $range);
                 if (count($arr) != 1) {
@@ -175,7 +153,7 @@ class AdminStatisticController extends Controller
             }
 
             $materials = Materials::where('restaurant_id', $restaurant->id)
-                ->whereDate('updated_at', '>=', $start)->whereDate('updated_at', '<=', $end)->where('is_delete',1)->get();
+                ->whereDate('updated_at', '>=', $start)->whereDate('updated_at', '<=', $end)->where('is_delete', 1)->get();
 
             return response()->json(['materials' => $materials], 200);
         } else {
@@ -187,7 +165,6 @@ class AdminStatisticController extends Controller
     public function getOrder(Request $request)
     {
         $token = $request->bearerToken();
-        error_log($token);
         $now = Carbon::now();
         if ($token != null) {
             $id = auth()->user()->id;
@@ -195,7 +172,7 @@ class AdminStatisticController extends Controller
 
             $order = Order::with('statusOrder')->with('user')->whereHas("food", function ($f) use ($restaurant) {
                 $f->where('restaurant_id', $restaurant->id);
-            })->whereDate('updated_at', '>=', $now)->where('is_delete',1)->get();
+            })->whereDate('updated_at', '>=', $now)->where('is_delete', 1)->get();
             return response()->json(['order' => $order], 200);
         } else {
             return response()->json(['error' => 'Unauthorised'], 401);
@@ -206,14 +183,11 @@ class AdminStatisticController extends Controller
     public function changeOrder(Request $request)
     {
         $token = $request->bearerToken();
-        error_log($token);
         if ($token != null) {
             $id = auth()->user()->id;
             $restaurant = Restaurant::where('user_id', $id)->first();
-
             $range = $request->range;
 
-            error_log($range);
             if ($range != '0') {
                 $arr = explode(' ', $range);
                 if (count($arr) != 1) {
@@ -227,8 +201,7 @@ class AdminStatisticController extends Controller
             }
             $order = Order::with('statusOrder')->with('user')->whereHas("food", function ($f) use ($restaurant) {
                 $f->where('restaurant_id', $restaurant->id);
-            })->whereDate('updated_at', '>=', $start)->whereDate('updated_at', '<=', $end)->where('is_delete',1)->get();
-            error_log($order);
+            })->whereDate('updated_at', '>=', $start)->whereDate('updated_at', '<=', $end)->where('is_delete', 1)->get();
 
             return response()->json(['order' => $order], 200);
         } else {

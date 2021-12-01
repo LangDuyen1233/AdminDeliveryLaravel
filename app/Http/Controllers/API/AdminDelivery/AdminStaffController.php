@@ -7,7 +7,6 @@ namespace App\Http\Controllers\API\AdminDelivery;
 use App\Http\Controllers\Controller;
 use App\Models\Restaurant;
 use App\Models\Staff;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
 class AdminStaffController extends Controller
@@ -15,7 +14,6 @@ class AdminStaffController extends Controller
     public function getStaff(Request $request)
     {
         $token = $request->bearerToken();
-        error_log($token);
         if ($token != null) {
             $id = auth()->user()->id;
             $restaurant = Restaurant::where('user_id', $id)->first();
@@ -31,11 +29,7 @@ class AdminStaffController extends Controller
     public function addStaff(Request $request)
     {
         $id = auth()->user()->id;
-        error_log($id);
         $restaurant = Restaurant::where('user_id', $id)->first();
-        error_log($restaurant);
-
-        error_log($request->bearerToken());
 
         $name = $request->name;
         $salary = $request->salary;
@@ -53,10 +47,6 @@ class AdminStaffController extends Controller
         } else {
             $urlImage = null;
         }
-//        $images = new Image([
-//                'url' => $urlImage,
-//            ]
-//        );
 
         $staff = new Staff([
             'name' => $name,
@@ -78,11 +68,9 @@ class AdminStaffController extends Controller
     public function editStaff(Request $request)
     {
         $token = $request->bearerToken();
-        error_log($token);
         if ($token != null) {
             $staff_id = $request->staffId;
             $staff = Staff::find($staff_id);
-            error_log($staff);
             return response()->json(['staff' => $staff], 200);
         } else {
             return response()->json(['error' => 'Unauthorised'], 401);
@@ -92,14 +80,10 @@ class AdminStaffController extends Controller
     public function updateStaff(Request $request)
     {
         $token = $request->bearerToken();
-        error_log($token);
         if ($token != null) {
             $id = auth()->user()->id;
-            error_log($id);
             $restaurant = Restaurant::where('user_id', $id)->first();
-            error_log($restaurant);
             $staff_id = $request->staffId;
-            error_log($staff_id);
 
             $staff = Staff::find($staff_id);
 
@@ -132,7 +116,6 @@ class AdminStaffController extends Controller
     public function deleteStaff(Request $request)
     {
         $token = $request->bearerToken();
-        error_log($token);
         if ($token != null) {
             $staff_id = $request->staff_id;
             $staff = Staff::find($staff_id);

@@ -2,7 +2,6 @@
 
 
 namespace App\Http\Controllers;
-//
 use App\Import\UserImport;
 use App\Models\Address;
 use App\Models\User;
@@ -77,7 +76,6 @@ class UserController extends Controller
     {
         $users = User::where('id', $id)->with('address')->first();
         $user = Session::get('auth');
-//        dd($users);
         return View('user.editUser',
             [
                 'users' => $users,
@@ -135,9 +133,7 @@ class UserController extends Controller
                 }
             }
 
-//            dd($u);
             $u->save();
-//            $u->address()
             return redirect('admin-user')->withErrors(['mes' => "Cập nhật người dùng thành công"]);
 
         } catch (\Exception $e) {
@@ -174,11 +170,9 @@ class UserController extends Controller
             ]);
         }
         $ui = new UserImport();
-//        dd($ui->count);
         try {
             Excel::import($ui, $r->file('data'));
             error_log($ui->count);
-//
             return redirect('admin-user')->withErrors(['mes' => 'Nhập thành công ' . $ui->count . ' người dùng.']);
         } catch (NoTypeDetectedException $e) {
             return redirect('admin-user')->withErrors(['mes' => 'Nhập người dùng Lỗi, Vui lòng kiểm tra lại File Excel']);

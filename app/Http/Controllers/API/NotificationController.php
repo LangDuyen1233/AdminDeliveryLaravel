@@ -23,8 +23,6 @@ class NotificationController extends Controller
         (
             'body' => $body,
             'title' => $title,
-//            'icon' => 'myicon',/*Default Icon*/
-//            'sound' => 'mySound'/*Default sound*/
         );
 
         $d = array(
@@ -41,14 +39,12 @@ class NotificationController extends Controller
             'priority' => 'high',
         );
 
-
         $headers = array
         (
             'Authorization: key= AAAAuF_j3Z0:APA91bHA3HT60bRLgcYvh_spCAUERJavZpMVtpEirZ4fRstzArIq0aDeICqHRDZ_NFIT6VdfuCMD_kqWW1XQiuDo3EZDXc3K5nhILfdsCsfXPhHC6S67kDJrZbNCGxCiRlm1mmhIPA3P',
             'Content-Type: application/json'
         );
 
-#Send Reponse To FireBase Server
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
         curl_setopt($ch, CURLOPT_POST, true);
@@ -59,9 +55,7 @@ class NotificationController extends Controller
         $result = curl_exec($ch);
         curl_close($ch);
 
-        error_log($result);
-
-        $user = User::where('uid',$uid)->first();
+        $user = User::where('uid', $uid)->first();
 
         $notify = Notify::create([
             'title' => $title,

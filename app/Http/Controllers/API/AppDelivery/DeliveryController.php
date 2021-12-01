@@ -5,16 +5,17 @@ namespace App\Http\Controllers\API\AppDelivery;
 
 
 use App\Http\Controllers\Controller;
+use App\Mails\ConfirmDelivery;
 use App\Models\Order;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class DeliveryController extends Controller
 {
     public function getDelivery(Request $request)
     {
         $token = $request->bearerToken();
-        error_log($token);
-        error_log('dsaas');
         if ($token != null) {
             $order = Order::where('order_status_id', 6)->with('foodOrder')->with('user')->with('userDelivery')
                 ->with('foodOrder.food')->with('foodOrder.toppings')->with('foodOrder.food.restaurant')->with('foodOrder.food.restaurant.user')->get();
@@ -35,18 +36,13 @@ class DeliveryController extends Controller
     public function received(Request $request)
     {
         $token = $request->bearerToken();
-        error_log($token);
         if ($token != null) {
-            error_log($request->orderId);
             $orderId = $request->orderId;
             $order = Order::where('id', $orderId)->first();
-            error_log($order);
-
 
             $workflow = $order->workflow_get();
             if ($workflow->can($order, 'RECEIVED') == true) {
                 $workflow->apply($order, 'RECEIVED');
-                error_log($request->userId);
                 $order->user_delivery_id = $request->userId;
                 $order->save();
                 return response()->json(['success' => 'Thay đổi thành công', 'order' => $order], 200);
@@ -59,8 +55,6 @@ class DeliveryController extends Controller
     public function isDelivery(Request $request)
     {
         $token = $request->bearerToken();
-        error_log($token);
-        error_log('is delivery');
         $userId = $request->userId;
         if ($token != null) {
             $order = Order::where('order_status_id', 3)->where('user_delivery_id', $userId)
@@ -81,14 +75,10 @@ class DeliveryController extends Controller
 
     public function changeDelivery(Request $request)
     {
-        error_log('vào đây đi bạn');
         $token = $request->bearerToken();
-        error_log($token);
         if ($token != null) {
             $orderId = $request->orderId;
-            error_log($orderId);
             $order = Order::where('id', $orderId)->with('payment')->first();
-            error_log($order);
 
             $workflow = $order->workflow_get();
             if ($workflow->can($order, 'DELIVERED') == true) {
@@ -107,10 +97,7 @@ class DeliveryController extends Controller
     public function historyDelivery(Request $request)
     {
         $token = $request->bearerToken();
-        error_log($token);
-        error_log('is historyDelivery');
         $userId = $request->userId;
-        error_log($userId);
         if ($token != null) {
             $order = Order::where('order_status_id', 4)->where('user_delivery_id', $userId)
                 ->with('foodOrder')->with('user')->with('userDelivery')->with('payment')
@@ -123,6 +110,45 @@ class DeliveryController extends Controller
                 }
             }
             return response()->json(['order' => $order], 200);
+        } else {
+            return response()->json(['error' => 'Unauthorised'], 401);
+        }
+    }
+
+    public function registerDelivery()
+    {
+        $user_id = auth()->user()->id;
+        $user = User::where('id', $user_id)->first();
+        if ($user != null) {
+            $code = random_int(100000, 999999);
+
+            $user->code_confirm = $code;
+
+            $user->update();
+            Mail::to($user->email)->send(new ConfirmDelivery($code, $user->username));
+
+            return response()->json([], 200);
+        } else {
+            return response()->json([], 401);
+        }
+    }
+
+    public function confirmCode(Request $request)
+    {
+        $user_id = auth()->user()->id;
+        $user = User::where('id', $user_id)->first();
+        if ($user != null) {
+            $code = $request->code;
+            if ($user->code_confirm == $code) {
+                $user->role_id = 4;
+                $user->code_confirm = null;
+
+                $user->update();
+
+                return response()->json([], 200);
+            } else {
+                return response()->json([], 204);
+            }
         } else {
             return response()->json(['error' => 'Unauthorised'], 401);
         }

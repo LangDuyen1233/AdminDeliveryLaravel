@@ -4,8 +4,6 @@
 namespace App\Http\Controllers;
 
 
-use App\Models\Category;
-use App\Models\Food;
 use App\Models\Image;
 use App\Models\Restaurant;
 use App\Models\Review;
@@ -20,7 +18,6 @@ class ReviewController extends Controller
         $image = Image::all();
         $review = Review::with('user')->with('restaurant')->get();
         $user = Session::get('auth');
-//        dd($review);
         return view('review.index',
             [
                 'review' => $review,
@@ -56,7 +53,6 @@ class ReviewController extends Controller
         $restaurant_id = $request->get('restaurant_id');
         $description = $request->get('description');
         $rating = $request->get('rating');
-        $image = $request->get('image');
         $review = new Review([
             'review' => $description,
             'rate' => $rating,
@@ -70,14 +66,11 @@ class ReviewController extends Controller
 
     public function edit($id)
     {
-//        $user = User::all();
         $restaurant = Restaurant::all();
         $review = Review::where('id', $id)->with('image')->with('user')->with('restaurant')->first();
         $user = Session::get('auth');
-//        dd(count($review->image));
         return View('review.edit',
             [
-//                'user' => $user,
                 'restaurant' => $restaurant,
                 'review' => $review,
                 'user' => $user,
@@ -87,16 +80,6 @@ class ReviewController extends Controller
     public function update(Request $request, $id)
     {
         $r = Review::find($id);
-//        dd($f->image[0]->id);
-//        $image = Image::find($f->image[0]->id);
-//        $request->validate([
-//            'name' => 'required|max:100',
-//            'price' => 'required|max:100',
-//            'image' => 'required|max:100',
-//            'ingredients' => 'required|max:100',
-//            'restaurant_id' => 'required|max:100',
-//            'category_id' => 'required|max:100',
-//        ], $this->messages());
         try {
             $r->review = $request->get('review');
             $r->rate = $request->get('rate');
@@ -104,10 +87,7 @@ class ReviewController extends Controller
             $r->save();
 
             $image = $request->get('image');
-//            dd($image);
             $r->image()->update(['url' => $image]);
-
-//            dd($r);
 
             return redirect('admin-review')->withErrors(['mes' => "Cập nhật đánh giá thành công"]);
 
@@ -122,14 +102,8 @@ class ReviewController extends Controller
     {
 
         $r = Review::find($id);
-//
-
         try {
             $r->image()->delete();
-//            if ($r->has('image')) {
-//                    $r->photos()->detach();
-//            }
-//            dd($r);
             $r->delete();
             return redirect()->back()->withErrors(['mes' => "Xóa đánh giá thành công"]);
         } catch (\Exception $e) {

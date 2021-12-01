@@ -30,7 +30,6 @@
                                 <th>Đánh giá</th>
                                 <th>Xếp hạng</th>
                                 <th>Quán ăn</th>
-{{--                                <th>Trạng thái</th>--}}
                                 <th>Thao tác</th>
                             </tr>
                             </thead>
@@ -50,8 +49,6 @@
                                             <img class=" rounded " style="width:70px" src="{{$r->image[0]->url}}"
                                                  alt="food1">
                                         @else
-                                            {{--                                            <img class="rounded " style="width:70px" src=""--}}
-                                            {{--                                                 alt="food1">--}}
                                             <p></p>
                                         @endif
                                     </td>
@@ -99,13 +96,6 @@
                                         </div>
                                     </td>
                                     <td>{{$r->restaurant->name}}</td>
-{{--                                    <td style="text-align: center">--}}
-{{--                                        @if($r->status==1)--}}
-{{--                                            <span class="badge badge-success">Hoạt động</span>--}}
-{{--                                        @elseif($r->status==0)--}}
-{{--                                            <span class="badge badge-danger">Khóa</span>--}}
-{{--                                        @endif--}}
-{{--                                    </td>--}}
                                     <td style="align-content: center">
                                         <a class="edit hvicon" style="color: green; padding-right: 8px"
                                            href="{{route('admin-review.edit',$r->id)}}"

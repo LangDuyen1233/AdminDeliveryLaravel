@@ -6,26 +6,19 @@ namespace App\Http\Controllers\API\AdminDelivery;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
-use App\Models\OrderStatus;
 use App\Models\Restaurant;
 use Illuminate\Http\Request;
-use Symfony\Component\Workflow\Workflow;
 
 class AdminOrderController extends Controller
 {
     public function getNewCard(Request $request)
     {
         $token = $request->bearerToken();
-        error_log($token);
         $user_id = auth()->user()->id;
 
         $restaurant = Restaurant::where('user_id', $user_id)->first();
-        error_log($restaurant->id);
 
         if ($token != null) {
-//            $order = Order::with('user')->with('statusOrder')->with('foodOrder')
-//                ->with('foodOrder.food')->with('foodOrder.toppings')
-//                ->where('order_status_id', 1)->get();
 
             $order = Order::with('user')->with('statusOrder')->with('foodOrder')
                 ->with('foodOrder.food')->with('foodOrder.toppings')
@@ -47,7 +40,6 @@ class AdminOrderController extends Controller
     public function cancelOrder(Request $request)
     {
         $token = $request->bearerToken();
-        error_log($token);
         if ($token != null) {
             $orderId = $request->orderId;
             $order = Order::find($orderId);
@@ -69,7 +61,6 @@ class AdminOrderController extends Controller
     public function prepareOrder(Request $request)
     {
         $token = $request->bearerToken();
-        error_log($token);
         if ($token != null) {
             $orderId = $request->orderId;
             $order = Order::find($orderId);
@@ -92,8 +83,6 @@ class AdminOrderController extends Controller
         $user_id = auth()->user()->id;
 
         $restaurant = Restaurant::where('user_id', $user_id)->first();
-        error_log($restaurant->id);
-        error_log($token);
         if ($token != null) {
             $order = Order::with('user')->with('statusOrder')->with('foodOrder')
                 ->with('foodOrder.food')->with('foodOrder.toppings')
@@ -115,7 +104,6 @@ class AdminOrderController extends Controller
     public function deliveryByRestaurant(Request $request)
     {
         $token = $request->bearerToken();
-        error_log($token);
         if ($token != null) {
             $orderId = $request->orderId;
             $order = Order::find($orderId);
@@ -124,7 +112,6 @@ class AdminOrderController extends Controller
             if ($workflow->can($order, 'DELIVERING') == true) {
 
                 $workflow->apply($order, 'DELIVERING');
-                error_log($request->staffId);
                 $order->staff_id = (int)$request->staffId;
                 $order->save();
                 return response()->json(['success' => 'Thay đổi thành công', 'order' => $order], 200);
@@ -137,12 +124,9 @@ class AdminOrderController extends Controller
     public function deliveryByUser(Request $request)
     {
         $token = $request->bearerToken();
-        error_log($token);
         if ($token != null) {
-            error_log($request->orderId);
             $orderId = $request->orderId;
             $order = Order::find($orderId);
-            error_log($order);
 
             $workflow = $order->workflow_get();
             if ($workflow->can($order, 'WAITING') == true) {
@@ -161,8 +145,6 @@ class AdminOrderController extends Controller
         $user_id = auth()->user()->id;
 
         $restaurant = Restaurant::where('user_id', $user_id)->first();
-        error_log($restaurant->id);
-        error_log($token);
         if ($token != null) {
             $order = Order::with('user')->with('statusOrder')->with('foodOrder')
                 ->with('foodOrder.food')->with('foodOrder.toppings')->with('staff')
@@ -183,12 +165,9 @@ class AdminOrderController extends Controller
     public function delivered(Request $request)
     {
         $token = $request->bearerToken();
-        error_log($token);
         if ($token != null) {
-            error_log($request->orderId);
             $orderId = $request->orderId;
             $order = Order::find($orderId);
-            error_log($order);
 
             $workflow = $order->workflow_get();
             if ($workflow->can($order, 'DELIVERED') == true) {
@@ -208,8 +187,6 @@ class AdminOrderController extends Controller
         $user_id = auth()->user()->id;
 
         $restaurant = Restaurant::where('user_id', $user_id)->first();
-        error_log($restaurant->id);
-        error_log($token);
         if ($token != null) {
             $order = Order::with('user')->with('statusOrder')->with('foodOrder')
                 ->with('foodOrder.food')->with('foodOrder.toppings')->with('staff')
@@ -233,8 +210,6 @@ class AdminOrderController extends Controller
         $user_id = auth()->user()->id;
 
         $restaurant = Restaurant::where('user_id', $user_id)->first();
-        error_log($restaurant->id);
-        error_log($token);
         if ($token != null) {
             $order = Order::with('user')->with('statusOrder')->with('foodOrder')
                 ->with('foodOrder.food')->with('foodOrder.food.restaurant')->with('foodOrder.toppings')->with('staff')
@@ -242,7 +217,6 @@ class AdminOrderController extends Controller
                     $f->where('restaurant_id', $restaurant->id);
                 })->get();
             foreach ($order as $o) {
-//                $o->updated_at = date_create_from_format('Y/m/d', $o->updated_at);
                 foreach ($o->foodOrder as $fo) {
                     $fo->food->weight = number_format($fo->food->weight, 1);
                     $fo->food->restaurant->rating = number_format( $fo->food->restaurant->rating, 1);

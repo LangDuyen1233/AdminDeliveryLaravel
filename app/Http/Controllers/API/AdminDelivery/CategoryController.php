@@ -17,10 +17,8 @@ class CategoryController extends Controller
     public function getCategory(Request $request)
     {
         $token = $request->bearerToken();
-        error_log($token);
         if ($token != null) {
             $id = auth()->user()->id;
-            error_log($id);
             $restaurant = Restaurant::where('user_id', $id)->with('category')->first();
             $category = $restaurant->category;
             $listCategory = [];
@@ -31,7 +29,6 @@ class CategoryController extends Controller
                     array_push($listCategory, $c);
                 }
             }
-//            error_log($category);
             return response()->json(['category' => $listCategory], 200);
         } else {
             return response()->json(['error' => 'Unauthorised'], 401);
@@ -40,10 +37,6 @@ class CategoryController extends Controller
 
     public function addCategory(Request $request)
     {
-        error_log($request->bearerToken());
-        error_log($request->name);
-        error_log($request->image);
-
         $name = $request->name;
         $description = $request->description;
 
@@ -55,14 +48,11 @@ class CategoryController extends Controller
             'image' => $urlImage,
             'description' => $description,
         ]);
-        // finally store our user
-
 
         $category->save();
 
         $id = auth()->user()->id;
         $restaurant = Restaurant::where('user_id', $id)->first();
-        error_log($restaurant);
 
         if (!empty($category->id)) {
             $category->restaurant()->attach($category->id, ['category_id' => $category->id, 'restaurant_id' => $restaurant->id]);
@@ -74,11 +64,9 @@ class CategoryController extends Controller
     public function editCategory(Request $request)
     {
         $token = $request->bearerToken();
-        error_log($token);
         if ($token != null) {
             $category_id = $request->category_id;
             $category = Category::find($category_id);
-            error_log($category);
             return response()->json(['category' => $category], 200);
         } else {
             return response()->json(['error' => 'Unauthorised'], 401);
@@ -88,13 +76,9 @@ class CategoryController extends Controller
     public function updateCategory(Request $request)
     {
         $token = $request->bearerToken();
-        error_log($token);
         if ($token != null) {
             $category_id = $request->category_id;
-            error_log($category_id);
-
             $category = Category::find($category_id);
-
             $category->name = $request->name;
             $category->description = $request->description;
 
@@ -117,14 +101,10 @@ class CategoryController extends Controller
     public function deleteCategory(Request $request)
     {
         $token = $request->bearerToken();
-        error_log($token);
         if ($token != null) {
             $category_id = $request->category_id;
-            error_log($category_id);
             $category = Category::find($category_id);
-
             $category->status = 0;
-
             $category->update();
 
             return response()->json(['category' => $category], 200);

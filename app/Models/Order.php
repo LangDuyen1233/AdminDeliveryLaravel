@@ -53,12 +53,6 @@ class Order extends Model
         return $this->belongsTo(User::class, 'user_delivery_id');
     }
 
-
-//    public function cart()
-//    {
-//        return $this->belongsTo(Cart::class, 'cart_id');
-//    }
-
     public function discount()
     {
         return $this->belongsTo(Discount::class, 'discount_id');

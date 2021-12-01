@@ -8,7 +8,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Discount;
 use App\Models\Food;
 use App\Models\Restaurant;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
 class AdminDiscountController extends Controller
@@ -16,7 +15,6 @@ class AdminDiscountController extends Controller
     public function getDiscountVoucher(Request $request)
     {
         $token = $request->bearerToken();
-        error_log($token);
         if ($token != null) {
             $id = auth()->user()->id;
             $restaurant = Restaurant::where('user_id', $id)->first();
@@ -34,11 +32,7 @@ class AdminDiscountController extends Controller
     public function addDiscountVoucher(Request $request)
     {
         $id = auth()->user()->id;
-        error_log($id);
         $restaurant = Restaurant::where('user_id', $id)->first();
-        error_log($restaurant);
-
-        error_log($request->bearerToken());
 
         $name = $request->name;
         $code = $request->code;
@@ -67,7 +61,6 @@ class AdminDiscountController extends Controller
     public function editDiscountVoucher(Request $request)
     {
         $token = $request->bearerToken();
-        error_log($token);
         if ($token != null) {
             $discount_id = $request->discountId;
             $discount = Discount::find($discount_id);
@@ -81,19 +74,12 @@ class AdminDiscountController extends Controller
     public function updateDiscountVoucher(Request $request)
     {
         $token = $request->bearerToken();
-        error_log($token);
         if ($token != null) {
             $id = auth()->user()->id;
-            error_log($id);
             $restaurant = Restaurant::where('user_id', $id)->first();
-            error_log($restaurant);
             $discount_id = $request->discountId;
-            error_log($discount_id);
 
             $discount = Discount::find($discount_id);
-            error_log($discount);
-
-            error_log($request->code);
 
             $discount->name = $request->name;
             $discount->code = $request->code;
@@ -116,7 +102,6 @@ class AdminDiscountController extends Controller
     public function deleteDiscountVoucher(Request $request)
     {
         $token = $request->bearerToken();
-        error_log($token);
         if ($token != null) {
             $discount_id = $request->discount_id;
             $discount = Discount::find($discount_id);
@@ -134,7 +119,6 @@ class AdminDiscountController extends Controller
     public function getDiscountFood(Request $request)
     {
         $token = $request->bearerToken();
-        error_log($token);
         if ($token != null) {
             $id = auth()->user()->id;
             $restaurant = Restaurant::where('user_id', $id)->first();
@@ -170,12 +154,10 @@ class AdminDiscountController extends Controller
         $discount->percent = number_format($discount->percent, 1);
         $discount->save();
 
-        error_log($request->food);
         if ($food != '') {
             $arrTopping = explode(',', $request->food);
             foreach ($arrTopping as $f) {
                 if (!empty($f)) {
-                    error_log($f);
                     $foods = Food::find($f);
                     $discount->food()->save($foods);
                 }
@@ -188,11 +170,9 @@ class AdminDiscountController extends Controller
     public function editDiscountFood(Request $request)
     {
         $token = $request->bearerToken();
-        error_log($token);
         if ($token != null) {
             $discount_id = $request->discount_id;
             $discount = Discount::where('id', $discount_id)->with('food')->first();
-//            error_log($discount);
             $discount->percent = number_format($discount->percent, 1);
             foreach ($discount->food as $f) {
                 $f->weight = number_format($f->weight, 1);
@@ -209,26 +189,18 @@ class AdminDiscountController extends Controller
         $token = $request->bearerToken();
         if ($token != null) {
             $id = auth()->user()->id;
-            $restaurant = Restaurant::where('user_id', $id)->first();
             $discount_id = $request->discountId;
-            error_log($discount_id);
 
             $discount = Discount::find($discount_id);
-//            error_log($discount);
 
             $discount->name = $request->name;
             $discount->percent = (double)$request->percent;
-//            $discount->restaurant_id = (int)$restaurant->id;
-//            $discount->type_discount_id = (int)$request->type_discount_id;
 
             $discount->update();
 
             $food = $request->food;
-            error_log($food);
 
             $listFood = Food::where('discount_id', $discount_id)->get();
-
-            error_log($listFood);
 
             foreach ($listFood as $food) {
                 $food->discount_id = null;
@@ -237,16 +209,13 @@ class AdminDiscountController extends Controller
 
             if ($food != '') {
                 $arrTopping = explode(',', $request->food);
-//                error_log($arrTopping[0]);
                 foreach ($arrTopping as $f) {
                     if (!empty($f)) {
-                        error_log($f);
                         $foods = Food::find($f);
                         $discount->food()->save($foods);
                     }
                 }
             }
-            error_log($discount);
             $discount->percent = number_format($discount->percent, 1);
 
             return response()->json(['discount' => $discount], 200);
@@ -258,13 +227,9 @@ class AdminDiscountController extends Controller
     public function deleteDiscountFood(Request $request)
     {
         $token = $request->bearerToken();
-        error_log($token);
         if ($token != null) {
             $discount_id = $request->discount_id;
-            error_log($discount_id);
             $listFood = Food::where('discount_id', $discount_id)->get();
-
-            error_log($listFood);
 
             foreach ($listFood as $food) {
                 $food->discount_id = null;

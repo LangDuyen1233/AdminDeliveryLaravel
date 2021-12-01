@@ -24,14 +24,9 @@ class   AuthController extends Controller
             'avatar' => 'required',
         ]);
 
-        error_log($request->email);
-        error_log($request->phone);
-        error_log($request->username);
-        error_log($request->avatar);
         $user = User::where('email', '=', $request->email)->first();
 
         if ($user == null) {
-            error_log('vaof daay nef');
             $user = User::create([
                 'username' => $request->username,
                 'email' => $request->email,
@@ -39,9 +34,7 @@ class   AuthController extends Controller
                 'avatar' => $request->avatar,
                 'role_id' => 1,
                 'active' => 1,
-
             ]);
-            error_log($user);
 
             $user->save();
 
@@ -67,7 +60,6 @@ class   AuthController extends Controller
 
             $email = $request->email;
             $username = $request->username;
-            error_log($email);
 
             $user = User::create([
                 'username' => $username,
@@ -79,9 +71,7 @@ class   AuthController extends Controller
                 'key_time' => Carbon::now()->addHour(24)->format('Y-m-d H:i:s'),
                 'active' => 0,
             ]);
-            error_log($user);
             Mail::to($email)->send(new ActiveAcount($email, $key, $username));
-            error_log('dsjadkaj');
 
             $user->save();
 
@@ -110,7 +100,6 @@ class   AuthController extends Controller
             ->where('random_key', $key)
             ->where('active', '=', '0')
             ->first();
-        error_log($u);
         if ($u == null) {
             return response()->json(['mes' => 'Xác nhận email không thành công! Email hoặc mã xác thực không đúng.'], 400);
         } else {
@@ -159,9 +148,7 @@ class   AuthController extends Controller
     public function logout(Request $request)
     {
         $token = $request->bearerToken();
-        error_log($token);
         if ($token != null) {
-            error_log(auth()->user()->id);
             $user = User::where('id', '=', auth()->user()->id)->first();
             if ($user != null) {
                 $request->user()->token()->revoke();
@@ -183,13 +170,8 @@ class   AuthController extends Controller
             'email' => $request->email,
             'password' => $request->password,
         ];
-        error_log($request->email);
-        error_log($request->password);
-//
         if (auth()->attempt($dataLogin) && auth()->user()->role_id == 3 && auth()->user()->active == 1) {
-            error_log($request->password);
             $token = auth()->user()->token;
-            error_log($token);
             $checkExpire = Carbon::parse(auth()->user()->expires_at);
             $now = Carbon::now();
             if ($token == null) {
@@ -214,7 +196,7 @@ class   AuthController extends Controller
         $username = $request->username;
         $email = $request->email;
         $uid = $request->uid;
-        error_log($phone);
+        $mssv = $request->mssv;
 
         $expires_at = Carbon::now()->addMinute(5)->format('Y-m-d H:i:s');
         $user = User::create([
@@ -225,11 +207,11 @@ class   AuthController extends Controller
             'active' => 1,
             'expires_at' => $expires_at,
             'uid' => $uid,
+            'mssv' => $mssv,
         ]);
         $user->save();
 
         $token = $user->createToken('authToken')->accessToken;
-        error_log($token);
         $user->token = $token;
         $user->update();
 
@@ -248,7 +230,6 @@ class   AuthController extends Controller
     public function loginPhone(Request $request)
     {
         $phone = $request->phone;
-        error_log($phone);
         $user = User::where('phone', $phone)->first();
         $token = $user->token;
         $checkExpire = Carbon::parse($user->expires_at);
@@ -264,7 +245,6 @@ class   AuthController extends Controller
             $user->token = $token;
             $user->update();
         }
-        error_log($user);
         return response()->json(['token' => $token, 'users' => $user], 200);
     }
 

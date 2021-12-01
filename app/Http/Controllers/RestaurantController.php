@@ -5,11 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Restaurant;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
-use phpDocumentor\Reflection\Types\Array_;
-use function Complex\add;
 
 class RestaurantController extends Controller
 {
@@ -66,8 +63,6 @@ class RestaurantController extends Controller
         $description = $request->get('description');
         $category_id = $request->get('category_id');
         $user_id = $request->get('user_id');
-        error_log('tao ở đây');
-        error_log($user_id);
         $restaurant = new Restaurant([
             'name' => $name,
             'address' => $address,
@@ -77,10 +72,9 @@ class RestaurantController extends Controller
             'description' => $description,
             'user_id' => $user_id,
             'active' => $request->get('active'),
-            'lattitude'=>0.0,
-            'longtitude'=>0.0,
+            'lattitude' => 0.0,
+            'longtitude' => 0.0,
         ]);
-//        dd($restaurant);
         $restaurant->save();
         foreach ($category_id as $c) {
             error_log($c);
@@ -104,7 +98,6 @@ class RestaurantController extends Controller
         }
 
         $userNotRestaurant = User::whereNotIn('id', $data)->where('active', 1)->where('role_id', 3)->get();
-//        dd($user);
         return View('restaurant.edit',
             [
                 'category' => $category,
@@ -161,7 +154,6 @@ class RestaurantController extends Controller
         $r = Restaurant::find($id);
 
         try {
-//            dd($r->category);
             if ($r->active == 0) {
                 $r->active = 1;
                 $r->update();
@@ -189,5 +181,4 @@ class RestaurantController extends Controller
             'user_id.required' => 'Bạn cần chọn chủ quán ăn',
         ];
     }
-
 }

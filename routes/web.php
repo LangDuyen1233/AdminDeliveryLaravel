@@ -39,24 +39,17 @@ Route::get('notify', function () {
     return view('auth.notify');
 })->name('notify');
 
-//Route::post('resetpass/{email}/{key}', 'Auth\ForgetPasswordController@resetPass')->name('resetpass');
-
 Route::get('register', "AuthController@getRegister")->name('register');
-//Route::get('profile', [AuthController::class, 'getProfile'])->name('profile');
 
 Route::get('logout', [LogoutController::class, 'doLogout'])->name('logout');
 
 Route::get('policy.html', function () {
-//    return File::get(public_path().'/resources/views/policy.blade.php');
     return View('policy');
 });
 
 
 //auth
 Route::middleware([CheckLogin::class])->group(function () {
-//    Route::get('home', function () {
-//        return view('home.home');
-//    })->name('home');
     Route::get('profile', [ProfileController::class, 'index'])->name('profile');
     Route::post('updateProfile', [ProfileController::class, 'update'])->name('updateProfile');
     Route::get('changePass', [AuthController::class, 'index'])->name('changePass');
@@ -88,42 +81,3 @@ Route::middleware([CheckLogin::class])->group(function () {
     Route::resource('admin-slides', SlidesController::class)->only(['index', 'create', 'store', 'update', 'edit', 'destroy']);
 
 });
-//Route::get('addUser', function () {
-//    return view('user.addUser');
-//})->name('addUser'
-//
-//Route::get('editUser', function () {
-//    return view('pages.edit');
-//})->name('editUser');
-
-//page
-
-//Route::get('index', function () {
-//    return view('layouts.master');
-//});
-
-
-//Route::get('user', function () {
-//    return view('pages.user');
-//})->name('user');
-
-
-//Route::get('orders', function () {
-//    return view('pages.orders');
-//})->name('orders');
-//
-//Route::get('sales', function () {
-//    return view('pages.sales');
-//})->name('sales');
-//
-//Route::get('listMenu', function () {
-//    return view('pages.listMenu');
-//})->name('listMenu');
-//Route::get('addMenu', function () {
-//    return view('pages.addMenu');
-//})->name('addMenu');
-//
-//Route::get('feedback', function () {
-//    return view('pages.feedback');
-//})->name('feedback');
-//end page

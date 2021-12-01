@@ -103,11 +103,6 @@
                                             @endif
 
                                         </div>
-
-                                        {{--                                        <label for="hint" class="col-5 control-label">Hint:</label>--}}
-                                        {{--                                        <div class="col-7">--}}
-                                        {{--                                            <p></p>--}}
-                                        {{--                                        </div>--}}
                                     </div>
                                 </div>
                             </div>
@@ -198,31 +193,4 @@
             $('a[href$="/admin-order"]').addClass('active');
         });
     </script>
-    {{--    <script>--}}
-    {{--        function avatar(elementId, ava) {--}}
-    {{--            CKFinder.popup({--}}
-    {{--                chooseFiles: true,--}}
-    {{--                // type: "Avatar",--}}
-    {{--                width: 800,--}}
-    {{--                height: 600,--}}
-    {{--                onInit: function (finder) {--}}
-    {{--                    finder.on("files:choose", function (evt) {--}}
-    {{--                        var file = evt.data.files.first();--}}
-    {{--                        var output = document.getElementById(elementId);--}}
-    {{--                        var out = document.getElementById(ava);--}}
-    {{--                        output.value = file.getUrl();--}}
-    {{--                        out.src = file.getUrl();--}}
-    {{--                    });--}}
-
-    {{--                    finder.on("file:choose:res ", function (--}}
-    {{--                        evt--}}
-    {{--                    ) {--}}
-    {{--                        var output = document.getElementById(elementId);--}}
-    {{--                        output.value = evt.data.resizedUrl;--}}
-    {{--                    });--}}
-    {{--                },--}}
-    {{--            });--}}
-    {{--        }--}}
-    {{--    </script>--}}
-    {{--    <script src="{{asset('plugin/ckfinder/ckfinder.js')}}"></script>--}}
 @endsection

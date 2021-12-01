@@ -52,9 +52,6 @@
     <!-- Body Content Wrapper -->
     <div class="ms-content-wrapper ms-auth">
         <div class="ms-auth-container">
-            {{--            <div class="ms-auth-col">--}}
-            {{--                <div class="ms-auth-bg"></div>--}}
-            {{--            </div>--}}
             <div class="ms-auth-col">
                 <div class="ms-auth-form">
                     <form class="needs-validation" novalidate="" method="POST" action="{{route('login')}}" style=" border: 0.5px solid lightgray;
@@ -81,53 +78,16 @@
                             </div>
                         </div>
                         <div class="form-group">
-{{--                            <label class="ms-checkbox-wrap">--}}
-{{--                                <input class="form-check-input" type="checkbox" value=""> <i--}}
-{{--                                    class="ms-checkbox-check"></i>--}}
-{{--                            </label> <span> Remember Password </span>--}}
                             <label class="d-block mt-3"><a href="{{route('forgotpass')}}" class="btn-link"
-{{--                                                           data-toggle="modal"--}}
-{{--                                                           data-target="#modal-12"--}}
                                 >Quên mật khẩu?</a>
                             </label>
                         </div>
                         <button class="btn btn-primary mt-4 d-block w-100" type="submit">Đăng nhập</button>
-{{--                        <p class="mb-0 mt-3 text-center">Don't have an account? <a class="btn-link"--}}
-{{--                                                                                   href="{{route('register')}}">Create--}}
-{{--                                Account</a>--}}
-{{--                        </p>--}}
                     </form>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Forgot Password Modal -->
-    {{--    @include("auth.changePassword")--}}
-    {{--    <div class="modal fade" id="modal-12" tabindex="-1" role="dialog" aria-labelledby="modal-12">--}}
-    {{--        <div class="modal-dialog modal-dialog-centered modal-min" role="document">--}}
-    {{--            <div class="modal-content">--}}
-    {{--                <div class="modal-body text-center">--}}
-    {{--                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span--}}
-    {{--                            aria-hidden="true">&times;</span>--}}
-    {{--                    </button>--}}
-    {{--                    <i class="flaticon-secure-shield d-block"></i>--}}
-    {{--                    <h1>Forgot Password?</h1>--}}
-    {{--                    <p>Enter your email to recover your password</p>--}}
-    {{--                    <form method="post" action="forgetpass">--}}
-    {{--                        @csrf--}}
-    {{--                        @error('mes')--}}
-    {{--                        <small class="form-text text-danger"><p style="color: red">{{ $message }}</p></small>--}}
-    {{--                        @enderror--}}
-    {{--                        <div class="ms-form-group has-icon">--}}
-    {{--                            <input type="text" placeholder="Email Address" class="form-control" name="forgot-password"--}}
-    {{--                                   value=""> <i class="material-icons">email</i>--}}
-    {{--                        </div>--}}
-    {{--                        <button type="submit" class="btn btn-primary shadow-none">Reset Password</button>--}}
-    {{--                    </form>--}}
-    {{--                </div>--}}
-    {{--            </div>--}}
-    {{--        </div>--}}
-    {{--    </div>--}}
 </main>
 <!-- SCRIPTS -->
 <!-- Global Required Scripts Start -->

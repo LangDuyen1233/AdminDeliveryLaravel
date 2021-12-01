@@ -14,10 +14,8 @@ class PushNotificationController extends Controller
     public function getNotify(Request $request)
     {
         $token = $request->bearerToken();
-        error_log($token);
         if ($token != null) {
             $id = auth()->user()->id;
-            error_log(Carbon::now());
 
             $notify = Notify::with('notifyType')->where('user_id', $id)->get();
 
@@ -26,5 +24,4 @@ class PushNotificationController extends Controller
             return response()->json(['error' => 'Unauthorised'], 401);
         }
     }
-
 }

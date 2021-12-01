@@ -9,9 +9,6 @@
                             <form class="needs-validation" novalidate="" method="POST" action="{{route('updatePass',['id'=>$user->id])}}" style=" border: 0.5px solid lightgray;padding: 25px;width: 40%!important;">
                                 @csrf
                                 <h3>Đổi mật khẩu</h3>
-{{--                                @error('mes')--}}
-{{--                                <small class="form-text text-danger"><p style="color: red">{{ $message }}</p></small>--}}
-{{--                                @enderror--}}
                                 @if ($errors->any())
                                     <div class="alert alert-warning" style="display: block !important;">
                                         @foreach ($errors->all() as $error)

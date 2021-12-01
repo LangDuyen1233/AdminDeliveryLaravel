@@ -96,22 +96,6 @@
                         var out = document.getElementById(ava);
                         output.value = file.getUrl();
                         out.src = file.getUrl();
-
-                        // $.ajax({
-                        //     type: "POST",
-                        //     url: "/create",
-                        //     contentType: "application/json; charset=utf-8",
-                        //     dataType: "json",
-                        //     headers: {
-                        //         "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
-                        //             "content"
-                        //         ),
-                        //     },
-                        //     data: { avt: file.getUrl() },
-                        //     success: function (result) {
-                        //         console.log("result: " + result);
-                        //     },
-                        // });
                     });
 
                     finder.on("file:choose:res ", function (
@@ -124,21 +108,6 @@
             });
         }
 
-        // function openPopup() {
-        //     CKFinder.popup({
-        //         chooseFiles: true,
-        //         onInit: function (finder) {
-        //             finder.on('files:choose', function (evt) {
-        //                 var file = evt.data.files.first();
-        //                 document.getElementById('url').value = pa
-        //                     file.getUrl();
-        //             });
-        //             finder.on('file:choose:resizedImage', function (evt) {
-        //                 document.getElementById('url').value = evt.data.resizedUrl;
-        //             });
-        //         }
-        //     });
-        // }
     </script>
     <script src="{{asset('plugin/ckfinder/ckfinder.js')}}"></script>
 @endsection

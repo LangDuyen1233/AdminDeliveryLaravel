@@ -16,7 +16,6 @@ class FoodController extends Controller
     public function getFood(Request $request)
     {
         $token = $request->bearerToken();
-        error_log($token);
         if ($token != null) {
             $category_id = $request->category_id;
             $id = auth()->user()->id;
@@ -35,7 +34,6 @@ class FoodController extends Controller
                     $f->discount->percent = number_format($f->discount->percent, 1);
                 }
             }
-            error_log($food);
             return response()->json(['food' => $food], 200);
         } else {
             return response()->json(['error' => 'Unauthorised'], 401);
@@ -45,11 +43,7 @@ class FoodController extends Controller
     public function addFood(Request $request)
     {
         $id = auth()->user()->id;
-        error_log($id);
         $restaurant = Restaurant::where('user_id', $id)->first();
-        error_log($restaurant);
-
-        error_log($request->bearerToken());
 
         $name = $request->name;
         $size = $request->size;
@@ -73,7 +67,6 @@ class FoodController extends Controller
 
         $food->save();
 
-        error_log($topping);
         if ($topping != '') {
             $arrTopping = explode(',', $request->topping);
             foreach ($arrTopping as $tp) {
@@ -99,7 +92,6 @@ class FoodController extends Controller
     public function editFood(Request $request)
     {
         $token = $request->bearerToken();
-        error_log($token);
         if ($token != null) {
             $id = auth()->user()->id;
             $category_id = $request->category_id;
@@ -124,13 +116,11 @@ class FoodController extends Controller
     public function updateFood(Request $request)
     {
         $token = $request->bearerToken();
-        error_log($token);
         if ($token != null) {
             $id = auth()->user()->id;
             $category_id = $request->category_id;
             $food_id = $request->food_id;
             $topping = $request->topping;
-            error_log($topping);
             $restaurant = Restaurant::where('user_id', $id)->first();
 
             $food = Food::find($food_id);
@@ -150,11 +140,6 @@ class FoodController extends Controller
 
                 if ($topping != '') {
                     $arrTopping = explode(',', $request->topping);
-//                    foreach ($arrTopping as $tp) {
-//                        if (!empty($tp)) {
-//                            $food->toppings()->sync($tp);
-//                        }
-//                    }
                     $food->toppings()->sync($arrTopping);
                 }
 
@@ -173,28 +158,18 @@ class FoodController extends Controller
             } catch (\Exception $e) {
                 error_log($e->getMessage());
             }
-
-
         } else {
             return response()->json(['error' => 'Unauthorised'], 401);
         }
-
-
     }
 
     public function deleteFood(Request $request)
     {
         $token = $request->bearerToken();
-        error_log($token);
         if ($token != null) {
-            $id = auth()->user()->id;
-//            $category_id = $request->category_id;
             $food_id = $request->food_id;
-            error_log($food_id);
-//            $restaurant = Restaurant::where('user_id', $id)->first();
 
             $food = Food::find($food_id);
-            error_log($food->name);
 
             $food->status = 0;
             $food->update();
@@ -210,7 +185,6 @@ class FoodController extends Controller
     public function getTopping(Request $request)
     {
         $token = $request->bearerToken();
-        error_log($token);
         if ($token != null) {
             $id = auth()->user()->id;
             $restaurant = Restaurant::where('user_id', $id)->first();
@@ -228,14 +202,8 @@ class FoodController extends Controller
     public function addTopping(Request $request)
     {
         $id = auth()->user()->id;
-        error_log($id);
-        $restaurant = Restaurant::where('user_id', $id)->first();
         $name = $request->name;
         $price = $request->price;
-
-//        error_log(explode(',',$topping));
-        error_log($name);
-        error_log($price);
 
         $topping = new Topping([
             'name' => $name,
@@ -244,10 +212,8 @@ class FoodController extends Controller
         ]);
 
         $topping->save();
-        error_log($topping->id);
 
         $food = $request->food;
-        error_log($food);
         if ($food != '') {
             $arrTopping = explode(',', $request->food);
             foreach ($arrTopping as $f) {
@@ -263,7 +229,6 @@ class FoodController extends Controller
     public function editTopping(Request $request)
     {
         $token = $request->bearerToken();
-        error_log($token);
         if ($token != null) {
             $id = auth()->user()->id;
             $topping_id = $request->topping_id;
@@ -272,7 +237,6 @@ class FoodController extends Controller
             $topping = Topping::whereHas("food", function ($f) use ($restaurant) {
                 $f->where('restaurant_id', $restaurant->id);
             })->with('food')->where('id', $topping_id)->first();
-
 
             foreach ($topping->food as $f) {
                 $f->weight = number_format($f->weight, 1);
@@ -286,16 +250,10 @@ class FoodController extends Controller
     public function updateTopping(Request $request)
     {
         $token = $request->bearerToken();
-        error_log($token);
         if ($token != null) {
-            $id = auth()->user()->id;
             $topping_id = $request->topping;
-            error_log($topping_id);
-//            $restaurant = Restaurant::where('user_id', $id)->first();
 
             $topping = Topping::find($topping_id);
-            error_log($topping);
-            error_log($request->name);
 
             try {
                 $topping->name = $request->name;
@@ -303,10 +261,8 @@ class FoodController extends Controller
                 $topping->update();
 
                 $food = $request->food;
-                error_log($food);
                 if ($food != '') {
                     $ar = explode(',', $request->food);
-                    error_log($ar[0]);
                     $topping->food()->sync($ar);
                 }
 
@@ -315,29 +271,18 @@ class FoodController extends Controller
             } catch (\Exception $e) {
                 error_log($e->getMessage());
             }
-
-
         } else {
             return response()->json(['error' => 'Unauthorised'], 401);
         }
-
-
     }
 
     public function deleteTopping(Request $request)
     {
         $token = $request->bearerToken();
-        error_log($token);
         if ($token != null) {
-            $id = auth()->user()->id;
-//            $category_id = $request->category_id;
             $topping_id = $request->topping_id;
-            error_log($topping_id);
-//            $restaurant = Restaurant::where('user_id', $id)->first();
 
             $topping = Topping::find($topping_id);
-            error_log($topping);
-            error_log($topping->name);
 
             $topping->food()->detach();
             $topping->delete();

@@ -12,7 +12,6 @@
     </style>
 @endsection
 @section('content')
-    {{--    {{ $arr = $restaurant->category}}--}}
     <div class="ms-content-wrapper">
         <div class="row">
             <div class="col-md-12">

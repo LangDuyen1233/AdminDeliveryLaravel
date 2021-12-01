@@ -23,8 +23,6 @@ class AdminAddressController extends Controller
             $restaurant->longtitude =(String) $longtitude;
             $restaurant->update();
 
-//            $restaurant->longtitude = number_format($restaurant->longtitude);
-//            $restaurant->lattitude = number_format($restaurant->lattitude);
             $restaurant->rating=  number_format($restaurant->rating,1);
 
             return response()->json(['restaurants' => $restaurant], 200);

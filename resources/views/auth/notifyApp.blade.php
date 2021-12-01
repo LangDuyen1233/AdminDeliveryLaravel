@@ -32,28 +32,8 @@
                 {{$message}}
             </p>
             <hr/>
-{{--            <p class="mb-0">--}}
-{{--                <button type="button" class="btn btn-primary border-0">--}}
-{{--                    Home Page--}}
-{{--                </button>--}}
-{{--            </p>--}}
         </div>
         @enderror
-
-{{--        @if(Session::has('ok'))--}}
-{{--        <div class="alert alert-success" role="alert">--}}
-{{--            <h4 class="alert-heading">Notification!</h4>--}}
-{{--            <p>--}}
-{{--                {{Session::get('ok')}}--}}
-{{--            </p>--}}
-{{--            <hr/>--}}
-{{--            <p class="mb-0">--}}
-{{--                <a href="{{route('home')}}" type="button" class="btn btn-primary border-0">--}}
-{{--                    Home Page--}}
-{{--                </a>--}}
-{{--            </p>--}}
-{{--        </div>--}}
-{{--        @endif--}}
 
     </div>
 </div>

@@ -12,10 +12,8 @@ class AdminRestaurantController extends Controller
     public function getRestaurant(Request $request)
     {
         $token = $request->bearerToken();
-        error_log($token);
         if ($token != null) {
             $id = auth()->user()->id;
-            error_log($id);
             $restaurant = Restaurant::where('user_id', $id)->first();
             $restaurant->rating= number_format( $restaurant->rating,1);
             return response()->json(['restaurants' => $restaurant], 200);
@@ -26,12 +24,9 @@ class AdminRestaurantController extends Controller
     public function changeImageRestaurant(Request $request)
     {
         $token = $request->bearerToken();
-        error_log($token);
-        error_log('dsaas');
         if ($token != null) {
             $id = auth()->user()->id;
             $restaurant = Restaurant::where('user_id', $id)->first();
-            error_log($id);
 
             $image = $request->image;
 

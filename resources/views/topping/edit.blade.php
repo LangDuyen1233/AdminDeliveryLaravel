@@ -48,27 +48,6 @@
                                                 </div>
 
                                             </div>
-{{--                                            <div class="form-group">--}}
-{{--                                                <label class="display-block">Trạng thái</label>--}}
-{{--                                                <div class="form-check form-check-inline">--}}
-{{--                                                    <input class="form-check-input" type="radio" name="status"--}}
-{{--                                                           id="{{$topping->id}}employee_inactive"--}}
-{{--                                                           value="0" {{ ($topping->status==0?'checked="checked"':'') }}>--}}
-{{--                                                    <label class="form-check-label"--}}
-{{--                                                           for="{{$topping->id}}employee_inactive">--}}
-{{--                                                        Không kích hoạt--}}
-{{--                                                    </label>--}}
-{{--                                                </div>--}}
-{{--                                                <div class="form-check form-check-inline">--}}
-{{--                                                    <input class="form-check-input" type="radio" name="status"--}}
-{{--                                                           id="{{$topping->id}}employee_active"--}}
-{{--                                                           value="1" checked=""--}}
-{{--                                                        {{ ($topping->status==1?'checked="checked"':'') }}>--}}
-{{--                                                    <label class="form-check-label" for="{{$topping->id}}employee_active">--}}
-{{--                                                        Kích hoạt--}}
-{{--                                                    </label>--}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
                                             <div class="m-t-20 text-center">
                                                 <button type="submit" class="btn btn-outline-primary ms-graph-metrics"
                                                         name="button">Sửa topping

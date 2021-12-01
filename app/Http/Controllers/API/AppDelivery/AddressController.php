@@ -14,9 +14,7 @@ class AddressController extends Controller
     public function getAddress(Request $request)
     {
         $user = $request->user();
-        error_log($user);
         if ($user != null) {
-            error_log($user->id);
             $address = Address::where('user_id', $user->id)->get();
             if ($address != null) {
                 return response()->json(['address' => $address], 200);
@@ -29,7 +27,6 @@ class AddressController extends Controller
     public function getAddressUser(Request $request)
     {
         $user_id = $request->user()->id;
-        error_log($user_id);
         $user = User::with('address')->where('id', $user_id)->first();
 
         return response()->json(['users' => $user], 200);
@@ -38,8 +35,6 @@ class AddressController extends Controller
     public function addAddress(Request $request)
     {
         $user_id = $request->user()->id;
-        error_log('dsadask');
-        error_log($user_id);
         $detail = $request->detail;
         $addressDetail = $request->address;
         $longtitude = $request->longtitude;
@@ -47,11 +42,9 @@ class AddressController extends Controller
         $status = $request->status;
 
         $address = Address::where('user_id', $user_id)->get();
-        error_log($address);
         if ($address != null) {
             if ($status == 1) {
                 foreach ($address as $a) {
-                    error_log('dakdsajk');
                     $a->status = 0;
                     $a->update();
                 }
@@ -66,7 +59,6 @@ class AddressController extends Controller
             ]);
             $address->save();
         } else {
-            error_log('vào elsel đi bạ ơi');
             $address = new Address([
                 'detail' => $detail,
                 'user_id' => $user_id,
@@ -122,7 +114,6 @@ class AddressController extends Controller
     public function deleteAddress(Request $request)
     {
         $token = $request->bearerToken();
-        error_log($token);
         if ($token != null) {
             $address_id = $request->address_id;
             $address = Address::find($address_id);
@@ -138,7 +129,6 @@ class AddressController extends Controller
     public function updateLocation(Request $request)
     {
         $address_id = $request->address_id;
-        error_log($address_id);
         $address = Address::where('id', $address_id)->first();
         $address->longtitude = (string)$request->longtitude;
         $address->lattitude = (string)$request->lattitude;

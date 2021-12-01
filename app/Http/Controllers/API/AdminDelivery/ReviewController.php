@@ -13,15 +13,10 @@ class ReviewController extends Controller
     public function getReview(Request $request)
     {
         $token = $request->bearerToken();
-        error_log($token);
         if ($token != null) {
-            $category_id = $request->category_id;
-            $id = auth()->user()->id;
-
             $review = Review::with('user')->with('restaurant')->with('image')->get();
 
             foreach ($review as $r) {
-                error_log($r->name);
                 $r->rate = number_format($r->rate, 1);
                 $r->restaurant->rating = number_format($r->restaurant->rating, 1);
             }

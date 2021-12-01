@@ -4,8 +4,6 @@
 namespace App\Http\Controllers;
 
 
-use App\Models\Category;
-use App\Models\Restaurant;
 use App\Models\Topping;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -16,7 +14,6 @@ class ToppingController extends Controller
     {
         $topping = Topping::with('food')->get();
         $user = Session::get('auth');
-//        dd($topping);
         return view('topping.index',
             [
                 'topping' => $topping,
@@ -47,7 +44,6 @@ class ToppingController extends Controller
             'price' => $price,
             'status' => $request->get('status'),
         ]);
-//        dd($category);
         $topping->save();
         return redirect('admin-topping')->withErrors(['mes' => "Thêm topping thành công"]);
     }

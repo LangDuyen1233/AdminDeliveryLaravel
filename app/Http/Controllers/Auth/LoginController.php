@@ -9,7 +9,6 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 
 class LoginController extends Controller
@@ -27,7 +26,6 @@ class LoginController extends Controller
             'password' => 'required|min:8',
         ], $this->messages());
         $users = User::where('email', '=', $request->get('email'))
-//            role=2 is admin
             ->where('role_id', '=', '2')
             ->where('active', '=', '1')
             ->first();
@@ -40,7 +38,6 @@ class LoginController extends Controller
                     ->where('active', '=', '1')->first();
                 Session::put('auth', $u);
                 $_SESSION['auth']  = true;
-//                $url               = Session::get( 'url' );
                 return redirect('/home');
             } else {
                 return redirect()->back()
@@ -52,7 +49,6 @@ class LoginController extends Controller
         }
     }
 
-//
     private function messages()
     {
         return [

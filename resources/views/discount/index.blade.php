@@ -55,13 +55,6 @@
                                     <td>{{$d->end_date}}</td>
                                     <td>{{$d->typeDiscount->type}}</td>
                                     <td>{{$d->restaurant->name}}</td>
-{{--                                    <td style="text-align: center">--}}
-{{--                                        @if($d->status==1)--}}
-{{--                                            <span class="badge badge-success">Hoạt động</span>--}}
-{{--                                        @elseif($d->status==0)--}}
-{{--                                            <span class="badge badge-danger">Khóa</span>--}}
-{{--                                        @endif--}}
-{{--                                    </td>--}}
                                     <td style="display: flex;justify-content: space-around;border-bottom: none;">
                                         <a class="edit hvicon" style="color: green"
                                            href="{{route('admin-discount.edit',$d->id)}}"

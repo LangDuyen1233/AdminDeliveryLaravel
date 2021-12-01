@@ -37,6 +37,8 @@ class  User extends Authenticatable
         'avatar',
         'uid',
         'mssv',
+        'email_delivery',
+        'code_confirm',
     ];
 
     /**

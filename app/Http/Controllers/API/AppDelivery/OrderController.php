@@ -52,13 +52,10 @@ class OrderController extends Controller
             }
 
             $setStatus = Order::where('user_id', $user_id)->get();
-//        error_log($setStatus);
             foreach ($setStatus as $ss) {
-                error_log($ss);
                 $ss->status = 0;
                 $ss->update();
             }
-//        $setStatus->update();
 
             $order = new Order([
                 'price' => $sumprice,
@@ -118,7 +115,6 @@ class OrderController extends Controller
     public function getOrder()
     {
         $user_id = auth()->user()->id;
-        error_log($user_id);
         $order = Order::where('user_id', $user_id)
             ->where('status', 1)
             ->with('food')
@@ -132,8 +128,6 @@ class OrderController extends Controller
             ->where('order_status_id', '<>', 4)
             ->where('order_status_id', '<>', 5)
             ->first();
-
-        error_log($order);
 
         if ($order != null) {
             foreach ($order->food as $f) {
@@ -151,23 +145,17 @@ class OrderController extends Controller
     public function getHistory()
     {
         $user_id = auth()->user()->id;
-        error_log($user_id);
         $order = Order::with('statusOrder')
-//            ->with('foodOrder.food')
             ->with('foodOrder.food.restaurant')
             ->with('foodOrder.toppings')
             ->whereIn('order_status_id', [4, 5])->where('user_id', $user_id)->get();
 
-//        if ($order != null) {
         foreach ($order as $o) {
             foreach ($o->foodOrder as $fo) {
-                error_log('vaof ddaay ddi');
-//                    $fo->weight = number_format($fo->weight, 1);
                 $fo->food->restaurant->rating = number_format($fo->food->restaurant->rating, 1);
                 $fo->food->weight = number_format($fo->food->weight, 1);
             }
         }
-//        }
         return response()->json(['order' => $order], 200);
     }
 
@@ -184,11 +172,9 @@ class OrderController extends Controller
     public function deleteDraftOrder(Request $request)
     {
         $token = $request->bearerToken();
-        error_log($token);
         if ($token != null) {
             $id = $request->card_id;
             $card = Cart::where('id', $id)->with('cardOrder')->first();
-            error_log($card);
 
             foreach ($card->cardOrder as $c) {
                 $c->delete();

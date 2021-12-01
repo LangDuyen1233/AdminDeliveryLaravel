@@ -6,8 +6,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\OrderStatus;
-use App\Models\Payment;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -18,10 +16,9 @@ class OrderController extends Controller
 
         $order = Order::with('statusOrder')->with('payment')->with('discount')->with('user')->where('is_delete', 1)->get();
         $user = Session::get('auth');
-//        dd($order);
         return view('order.index',
             [
-               'user' => $user,
+                'user' => $user,
                 'order' => $order,
             ]
         );
@@ -31,7 +28,6 @@ class OrderController extends Controller
     {
         $order = Order::with('food.restaurant')->with('food.toppings')->with('user.address')->with('userDelivery')->find($id);
         $user = Session::get('auth');
-//        dd($order);
         return view('order.show',
             [
                 'order' => $order,
@@ -92,13 +88,8 @@ class OrderController extends Controller
         $o = Order::find($id);
 
         try {
-//            if ($o->is_delete == 0) {
-//                $o->is_delete = 1;
-//                $o->update();
-//            } else {
             $o->is_delete = 0;
             $o->update();
-//            }
             return redirect()->back()->withErrors(['mes' => "Cập nhật đơn hàng thành công"]);
         } catch (\Exception $e) {
             return response('', 500);

@@ -30,7 +30,6 @@
                                 <th>ID</th>
                                 <th>Tên topping</th>
                                 <th>Giá</th>
-{{--                                <th>Trạng thái</th>--}}
                                 <th style="width: 80px">Thao tác</th>
                             </tr>
                             </thead>
@@ -45,13 +44,6 @@
                                         {{$tp-> name}}
                                     </td>
                                     <td style="text-align: center">{{$tp->price}}</td>
-{{--                                    <td style="text-align: center">--}}
-{{--                                        @if($tp->status==1)--}}
-{{--                                            <span class="badge badge-success">Hoạt động</span>--}}
-{{--                                        @elseif($tp->status==0)--}}
-{{--                                            <span class="badge badge-danger">Khóa</span>--}}
-{{--                                        @endif--}}
-{{--                                    </td>--}}
                                     <td style="text-align: center">
                                         <a class="edit hvicon" style="color: green; padding-right: 8px"
                                            href="{{route('admin-topping.edit',$tp->id)}}"
@@ -63,7 +55,6 @@
                                            style="color: red"><i
                                                 class=" material-icons">&#xE872;</i></a>
                                     </td>
-
                                 </tr>
 
                                 <div class="modal fade" id="modal-delete{{$tp->id}}" tabindex="-1"

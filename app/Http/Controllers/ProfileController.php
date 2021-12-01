@@ -34,7 +34,6 @@ class ProfileController extends Controller
         ], $this->messages());
         try {
             $username = $request->get('username');
-//            $email = $request->get('email');
             $phone = $request->get('phone');
             $gender = $request->get('gender');
             $dob = date("Y-m-d", strtotime($request->get('dob')));
@@ -42,7 +41,6 @@ class ProfileController extends Controller
 
             $user = User::find($request->id);
             $user->username = $username;
-//            $user->email = $email;
             $user->phone = $phone;
             $user->gender = $gender;
             $user->dob = $dob;
@@ -52,8 +50,6 @@ class ProfileController extends Controller
 
             Session::put('auth',$user);
             $_SESSION['auth']  = true;
-
-//            dd($user);
 
             return redirect('profile')->withErrors(['mes' => "Chỉnh sửa thông tin thành công"]);
 

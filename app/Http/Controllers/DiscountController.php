@@ -19,7 +19,6 @@ class DiscountController extends Controller
     {
         $discount = Discount::with('typeDiscount')->with('restaurant')->where('status',1)->get();
         $user = Session::get('auth');
-//        dd($discount);
         return view('discount.index',
             [
                 'discount' => $discount,
@@ -73,7 +72,6 @@ class DiscountController extends Controller
             'restaurant_id' => $restaurant_id,
             'status' => $request->get('status'),
         ]);
-//        dd($discount);
         $discount->save();
 
         return redirect('admin-discount')->withErrors(['mes' => "Thêm khuyến mãi thành công"]);
@@ -118,7 +116,6 @@ class DiscountController extends Controller
             $d->restaurant_id = $request->get('restaurant_id');
             $d->status = $request->get('status');
             $d->save();
-//dd($d);
             return redirect('admin-discount')->withErrors(['mes' => "Cập nhật khuyến mãi thành công"]);
 
         } catch (\Exception $e) {

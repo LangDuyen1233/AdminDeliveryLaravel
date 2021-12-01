@@ -5,7 +5,6 @@ namespace App\Http\Controllers\API\AppDelivery;
 
 
 use App\Http\Controllers\Controller;
-use App\Models\Food;
 use App\Models\Restaurant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -33,11 +32,6 @@ class SearchController extends Controller
     public function searchFood(Request $request)
     {
         $name = $request->name;
-//        $food = Restaurant::with('foods')->where('name','like',"%{$food_name}%")->get();
-//        foreach ($food as $f) {
-//            $f->weight = number_format($f->weight, 1);
-//            $f->restaurant->rating = number_format($f->restaurant->rating, 1);
-//        }
         $result = DB::table('restaurants')
             ->selectRaw('restaurants.id,restaurants.name,restaurants.address,restaurants.image,
                 restaurants.lattitude, restaurants.longtitude, restaurants.rating, foods.name as foodname, foods.price,images.url')
@@ -58,7 +52,5 @@ class SearchController extends Controller
         } else {
             return response()->json([], 204);
         }
-
-
     }
 }

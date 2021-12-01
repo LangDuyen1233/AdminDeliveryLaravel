@@ -77,16 +77,12 @@ class FoodController extends Controller
             'status' => 1,
         ]);
         $food->save();
-//        dd($food);
 
         $images = new Image([
                 'url' => $image,
             ]
         );
-//        $image->url = $image;
         $food->image()->save($images);
-
-//        dd(count($topping_id));
 
         if (!empty($topping_id)) {
 
@@ -137,7 +133,6 @@ class FoodController extends Controller
             $f->ingredients = $request->get('ingredients');
             $f->category_id = $request->get('category_id');
             $f->restaurant_id = $request->get('restaurant_id');
-//            $f->status = $request->get('status');
             $f->save();
 
             $image = $request->get('image');
@@ -145,7 +140,6 @@ class FoodController extends Controller
                     'url' => $image,
                 ]
             );
-//            dd($f->image);
 
             $f->image()->update($images->toArray());
 
@@ -166,13 +160,8 @@ class FoodController extends Controller
 
         $f = Food::find($id);
         try {
-//            if ($f->status == 0) {
-//                $f->status = 1;
-//                $f->update();
-//            } else {
             $f->status = 0;
             $f->update();
-//            }
             return redirect()->back()->withErrors(['mes' => "Cập nhật món ăn thành công"]);
         } catch (\Exception $e) {
             return response('', 500);

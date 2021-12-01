@@ -38,10 +38,6 @@ use App\Http\Controllers\API\AdminDelivery\AdminAddressController;
 |
 */
 
-//Route::middleware('auth:api')->get('/user', function (Request $request) {
-//    return $request->user();
-//});
-
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/registerSocial', [AuthController::class, 'registerSocial']);
 Route::post('/login', [AuthController::class, 'login']);
@@ -111,6 +107,8 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/historyDelivery', [DeliveryController::class, 'historyDelivery']);
     Route::post('/received', [DeliveryController::class, 'received']);
     Route::post('/changeDelivery', [DeliveryController::class, 'changeDelivery']);
+    Route::post('/registerDelivery', [DeliveryController::class, 'registerDelivery']);
+    Route::post('/confirmCode', [DeliveryController::class, 'confirmCode']);
 
     //review
     Route::post('/addReview', [ReviewsController::class, 'addReview']);
